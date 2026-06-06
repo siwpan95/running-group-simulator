@@ -1,0 +1,43 @@
+{
+  "__template__": "物品模板 — Mirror of the Lost v2.0",
+  "__usage__": "添加到 data/items.json 对象中（以物品 ID 为键）。",
+
+  "item_id": {
+    "name": "物品显示名",
+    "type": "weapon|armor|tool|consumable|key_item",
+    "slot": "hand|body|head|backpack|feet|neck",
+    "description": "物品简要描述",
+
+    "__weapon__": {
+      "damage": "1d6+1 cut|2d6 pi+|1d6 cr"
+    },
+
+    "__armor__": {
+      "dr": 4,
+      "dr_location": "躯干|头|臂|腿|full",
+      "penalty": { "dx": -1 }
+    },
+
+    "__tool__": {
+      "effects": [
+        { "tool_bonus": 2, "skill": "ST" },
+        { "tag_mod": "remove:低能见度", "range": "5m" }
+      ]
+    },
+
+    "__consumable__": {
+      "uses": 1,
+      "effects": [
+        { "restore_hp": "1d6" },
+        { "restore_fp": "1d3" },
+        { "remove_tag": "中毒" }
+      ]
+    },
+
+    "__key_item__": {
+      "effects": [
+        { "psychic_resistance": -1 }
+      ]
+    }
+  }
+}

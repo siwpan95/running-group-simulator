@@ -1,0 +1,42 @@
+{
+  "__template__": "角色卡模板 — Mirror of the Lost v2.0",
+  "__usage__": "复制此文件到 characters/ 目录，填写字段后即可加载。",
+
+  "character_id": "your_character_id",
+  "name": "角色名",
+  "version": 1,
+  "attributes": { "ST": 10, "DX": 10, "IQ": 10, "HT": 10 },
+  "secondary": { "HP": 10, "FP": 10, "Will": 10, "Per": 10 },
+  "skills": [
+    { "name": "技能名", "level": 10, "difficulty": "Easy|Avg|Hard", "base_attribute": "DX|IQ|ST|HT", "points_spent": 1 }
+  ],
+  "advantages": ["优势 1", "优势 2"],
+  "disadvantages": ["劣势 1"],
+  "features": [
+    {
+      "name": "特征名",
+      "trigger_condition": "触发条件（自然语言，如：闪避成功后）",
+      "cost": 1,
+      "effect": "效果描述",
+      "per_scene_limit": 1
+    }
+  ],
+  "anchors": ["对你重要的人/物/信念"],
+  "equipment": [
+    {
+      "name": "物品名",
+      "type": "weapon|armor|tool|consumable|key_item",
+      "slot": "hand|body|head|backpack|feet|neck",
+      "dr": 0,
+      "damage": "如: 1d6 cut",
+      "dr_location": "躯干|头|臂|腿|full|无",
+      "effects": [],
+      "uses": -1,
+      "description": "简要描述"
+    }
+  ],
+  "focus_max": 3,
+  "luck_max": 2,
+  "xp_log": [],
+  "total_xp": 0
+}

@@ -1,0 +1,44 @@
+{
+  "__template__": "敌人模板 — Mirror of the Lost v2.0",
+  "__usage__": "添加到 data/enemies.json 的 enemies[] 数组中。",
+
+  "enemies": [
+    {
+      "name": "敌人名称",
+      "enemy_type": "mook|elite|wildcard|boss",
+      "hp": 10,
+      "hp_max": 10,
+
+      "__elite_wildcard_boss_extra__": {
+        "fp": 10,
+        "st": 10,
+        "dx": 10,
+        "iq": 10,
+        "ht": 10
+      },
+
+      "attack_skill": 12,
+      "damage": "1d6 cut",
+      "dodge": 8,
+      "dr": 0,
+      "description": "敌人外观/背景描述",
+      "flavor_text": "战斗时的风味文字",
+
+      "__mook_only__": {
+        "minion_threshold": {
+          ">=6": "立即移除/消散",
+          "2-5": "丧失行动力/溃逃",
+          "<2": "轻微干扰/畏缩"
+        }
+      },
+
+      "special_abilities": [
+        {
+          "name": "能力名",
+          "effect": "效果描述",
+          "trigger": "always|attack|defense|damaged|on_death"
+        }
+      ]
+    }
+  ]
+}

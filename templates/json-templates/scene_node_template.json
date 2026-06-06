@@ -1,0 +1,114 @@
+{
+  "__template__": "单个场景节点模板 — 直接粘贴到 module.json 的 nodes[] 中",
+  "__scene_types__": {
+    "perception": "感知检定节点 — 听觉/视觉/嗅觉等",
+    "investigation": "调查节点 — 搜索/分析/互动 (支持嵌套检定)",
+    "feat": "壮举节点 — 力量/敏捷/耐力挑战",
+    "combat": "战斗节点 — 遇敌与战斗",
+    "explore": "探索节点 — 纯叙事/环境互动"
+  },
+
+  "__PERCEPTION__": {
+    "node_id": "N.N_perception",
+    "scene_type": "perception",
+    "trigger": "触发条件",
+    "prerequisite_nodes": [],
+    "next_nodes": [],
+    "layer_physics": {
+      "skill_check": "感知（听觉/视觉/嗅觉）",
+      "modifier": 0,
+      "target_value_source": "PC.感知 + 修正",
+      "critical_effects": { "crit_success": "额外信息", "crit_failure": "误判信息" }
+    },
+    "layer_narrative": {
+      "anchor_phrases": {
+        "success": "成功叙事",
+        "crit_success": "大成功叙事",
+        "failure": "失败叙事"
+      }
+    }
+  },
+
+  "__INVESTIGATION__": {
+    "node_id": "N.N_investigation",
+    "scene_type": "investigation",
+    "trigger": "调查触发条件",
+    "prerequisite_nodes": [],
+    "next_nodes": [],
+    "layer_physics": {
+      "skill_checks": [
+        { "skill": "技能A", "result": "检定A成功结果", "flag": "flag_name_A" },
+        { "skill": "技能B", "result": "检定B成功结果", "flag": "flag_name_B" }
+      ]
+    },
+    "psychic_marks": {
+      "trigger_level": "接触",
+      "check": "感知 vs 诡异度(10)",
+      "failure_cost": 1,
+      "effect_description": "失败效果描述"
+    },
+    "layer_narrative": {
+      "anchor_phrases": { "success": "成功叙事", "failure": "失败叙事" }
+    }
+  },
+
+  "__FEAT__": {
+    "node_id": "N.N_feat",
+    "scene_type": "feat",
+    "trigger": "壮举触发条件",
+    "prerequisite_nodes": [],
+    "next_nodes": [],
+    "layer_physics": {
+      "skill_check": "力量|敏捷|体力",
+      "modifier": -2,
+      "tool_bonus": "+2（工具类型）",
+      "success_effect": "成功效果"
+    },
+    "layer_narrative": {
+      "anchor_phrases": { "success": "成功叙事", "crit_success": "大成功叙事", "failure": "失败叙事" }
+    }
+  },
+
+  "__COMBAT__": {
+    "node_id": "N.N_combat",
+    "scene_type": "combat",
+    "trigger": "遇敌触发条件",
+    "prerequisite_nodes": [],
+    "next_nodes": [],
+    "layer_physics": {
+      "enemy_type": "杂兵/精英/Boss",
+      "unit_stats": {
+        "name": "敌人名",
+        "attack_skill": 12,
+        "damage": "1d6 cut",
+        "dodge": 8,
+        "hp": 10,
+        "dr": 0
+      },
+      "minion_threshold": { ">=6": "移除", "2-5": "溃逃", "<2": "干扰" },
+      "special_mechanic": {
+        "name": "特殊机制名",
+        "effect": "效果",
+        "counter_play": "反制方法"
+      }
+    },
+    "layer_pacing": { "initiative": "先攻规则" },
+    "layer_narrative": {
+      "anchor_phrases": { "success": "成功回击叙事", "failure": "失败受击叙事" }
+    }
+  },
+
+  "__EXPLORE__": {
+    "node_id": "N.N_explore",
+    "scene_type": "explore",
+    "trigger": "探索触发条件",
+    "prerequisite_nodes": [],
+    "next_nodes": [],
+    "layer_physics": {
+      "auto_success": true
+    },
+    "layer_narrative": {
+      "anchor_phrases": { "success": "探索叙事" }
+    }
+  }
+}

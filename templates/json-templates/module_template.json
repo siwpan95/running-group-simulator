@@ -1,0 +1,149 @@
+{
+  "__template__": "模组模板 — Mirror of the Lost v2.0",
+  "__usage__": "复制此文件到 modules/<your_module>/module.json，填写所有字段。支持 1-3 个 Act。",
+
+  "meta": {
+    "module_id": "your_module_id",
+    "system_name": "Mirror of the Lost",
+    "module_title": "模组标题",
+    "version": "2.0",
+    "author": "你的名字",
+    "compatible_core": "GURPS 4e",
+    "playstyle": "都市恐怖 / 生存谜团 / 奇幻冒险 / 科幻惊悚",
+    "estimated_duration": "2-4 小时",
+    "player_count": "2-4 人",
+    "synopsis": "一句话简介",
+    "base_xp": 3
+  },
+
+  "global_context_tags": [
+    { "id": "tag_id", "name": "标签显示名", "effect": "效果描述，如：感知 -2" }
+  ],
+
+  "act_1": {
+    "scene_id": "act1_intro",
+    "title": "第一幕标题",
+    "description": "场景描述文字",
+    "environment": {
+      "mood": "氛围描述",
+      "tags": [
+        { "id": "tag_id", "name": "标签名", "effect": "效果" }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_node_name",
+        "scene_type": "perception|investigation|feat|combat|explore",
+        "trigger": "触发条件描述",
+        "prerequisite_nodes": [],
+        "next_nodes": ["1.2_next_node"],
+
+        "__perception_node__": "感知类节点：侦测、听觉、视觉等",
+        "layer_physics": {
+          "skill_check": "技能名（如：感知（听觉））",
+          "modifier": -2,
+          "target_value_source": "描述目标值来源",
+          "critical_effects": {
+            "crit_success": "大成功额外效果",
+            "crit_failure": "大失败后果"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "成功叙事文本",
+            "crit_success": "大成功叙事文本",
+            "failure": "失败叙事文本"
+          }
+        },
+
+        "__investigation_node__": "调查类节点：搜索、分析、互动",
+        "__nested_checks__": [
+          { "skill": "技能名", "result": "成功结果描述", "flag": "设置的 flag 名（可选）" }
+        ],
+
+        "__feat_node__": "壮举类节点：力量、敏捷挑战",
+        "__tool_bonus__": "+2（工具类型）",
+
+        "__combat_node__": "战斗类节点",
+        "__enemy_type__": "mook|elite|wildcard|boss",
+        "__unit_stats__": {
+          "name": "敌人名",
+          "attack_skill": 12,
+          "damage": "1d6 cut",
+          "dodge": 8,
+          "hp": 10,
+          "dr": 0
+        },
+        "__special_mechanic__": {
+          "name": "特殊机制名",
+          "effect": "效果描述",
+          "counter_play": "反制方法"
+        },
+
+        "__psychic_marks__": {
+          "trigger_level": "接触|对峙|崩溃",
+          "check": "检定类型 vs 难度",
+          "failure_cost": 1,
+          "effect_description": "失败效果描述"
+        },
+
+        "layer_pacing": {
+          "initiative": "先攻规则说明",
+          "time_pressure": "时间压力（可选）"
+        }
+      }
+    ]
+  },
+
+  "__act_2_optional__": {
+    "scene_id": "act2_middle",
+    "title": "第二幕标题",
+    "description": "场景描述",
+    "environment_update": {
+      "remove_tags": ["要移除的标签 id"],
+      "add_tags": [
+        { "id": "new_tag", "name": "新标签", "effect": "效果" }
+      ]
+    },
+    "nodes": []
+  },
+
+  "__act_3_optional__": {
+    "scene_id": "act3_finale",
+    "title": "第三幕标题（终章）",
+    "description": "最终场景描述",
+    "environment": {
+      "mood": "最终氛围",
+      "tags": []
+    },
+    "nodes": [
+      {
+        "node_id": "3.N_final",
+        "scene_type": "combat|feat",
+        "trigger": "最终触发",
+        "prerequisite_nodes": [],
+        "next_nodes": [],
+        "resolution_paths": [
+          { "path": "路线名", "method": "方法", "success": "成功结果" }
+        ],
+        "layer_physics": {
+          "skill_check": "最终检定",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "结局成功",
+            "failure": "结局失败",
+            "crit_success": "完美结局"
+          }
+        }
+      }
+    ]
+  },
+
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      { "场景": "node_id", "检定": "技能/属性", "失败": "失败后果简述" }
+    ]
+  }
+}
