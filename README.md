@@ -327,3 +327,11 @@ python tests/test_excel_roundtrip.py
 ---
 
 *"镜子从不撒谎——它只是展现一个方向。"*
+
+
+---
+
+## 仓库索引标注（2026-08-25 · siwpan 统一治理）
+
+> 跑团模拟器（Mirror of the Lost）；本地对应 G:\games\paotuan。
+> 本标注为发布面统一追加，不改变原有内容。
