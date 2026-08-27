@@ -1,25 +1,2 @@
-# Mirror of the Lost — Python 依赖清单
-# 全部使用 Python 标准库，无需额外安装。
-#
-# 最低版本：Python 3.10+
-# 推荐版本：Python 3.11+
-
-# ===== 标准库（自动包含，无需 pip install）=====
-#
-# json          — 数据文件解析（角色卡/模组/敌人/物品/系统配置）
-# os            — 文件系统操作（路径/目录/存档管理）
-# sys           — 运行时路径管理
-# random        — 骰子系统（3d6 / nd6判定）
-# time          — 存档时间戳
-# copy          — 角色快照（深拷贝）
-# dataclasses   — 数据模型定义（Character/Enemy/ResolutionPacket 等）
-# typing        — 类型注解
-# io            — 测试用输出重定向
-# traceback     — 测试用异常追踪
-#
-# ===== 可选开发工具 =====
-# 以下工具仅推荐用于开发调试，非运行必需：
-#
-# pytest        — 更强大的测试运行器
-# mypy          — 静态类型检查
-# ruff          — 代码风格检查与格式化
+# paotuan dependencies (auto-generated 2026-08-20)
+openpyxl
