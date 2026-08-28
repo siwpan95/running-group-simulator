@@ -15,6 +15,10 @@
   - 本仓专有规则（部位表/穿透倍率/附庸阈值/休克阈值/XP 定价）保留仓内；引擎 GURPS 4e 角色模型（ST/DX/IQ/HT）与 alloy.trpg 的 D&D 六属性模型异构，不强行映射（行为钉住 + MVVM 三层不变）。
   - 测试 +11（`test_rule_kernel`：内核同种子同值/成功率表/引擎接入面/roll_info 直通），套件 546 项全绿；Excel 生态验证 53 项不变。
 
+### Removed
+
+- 移除误跟踪的 `__pycache__/*.pyc`（47 个历史构建产物，跨 Python 3.13/3.14）；`.gitignore` 重写为 Python 口径并补齐 `__pycache__/`、`build/`、`dist/`、`*.spec`（spec 含本地路径不入库）；删除本地备份 `CHANGELOG.md.local-bak-*`。
+
 ## [1.0.0] - 2026-08-27
 
 ### Added
