@@ -7,6 +7,7 @@ import random
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass, field
 from core.character import Character
+from core.dice import roll_3d6 as kernel_roll_3d6
 from core.enemy import Enemy
 
 
@@ -39,7 +40,8 @@ class CombatEngine:
 
     @staticmethod
     def roll_3d6() -> int:
-        return sum(random.randint(1, 6) for _ in range(3))
+        """GURPS 3d6（委托 alloy 规则内核，R2）。"""
+        return kernel_roll_3d6()
 
     @staticmethod
     def roll_damage(damage_str: str) -> int:

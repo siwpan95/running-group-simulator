@@ -7,10 +7,10 @@ v2.0: 数据驱动场景引擎 + 完整 MVVM 分离
 """
 import json
 import os
-import random
 import sys
 
 from core.character import Character, CharacterFeature, Skill, Equipment
+from core.dice import gurps_success_chance, roll_3d6 as kernel_roll_3d6
 from core.enemy import Enemy
 from core.scene_engine import SceneEngine
 from core.environment_system import EnvironmentSystem
@@ -101,7 +101,8 @@ class MirrorOfLost:
     # === 物理层 (Model) ===
 
     def roll_3d6(self) -> int:
-        return sum(random.randint(1, 6) for _ in range(3))
+        """GURPS 3d6（委托 alloy 规则内核，R2）。"""
+        return kernel_roll_3d6()
 
     def physical_resolve(self, skill_level: int, modifier: int = 0) -> dict:
         """执行物理裁决，返回 ResolutionPacket"""
@@ -115,6 +116,7 @@ class MirrorOfLost:
             "margin": target - roll,
             "is_crit_success": roll <= 4,
             "is_fumble": roll >= 17,
+            "success_chance": gurps_success_chance(target),
         }
 
     # === 战斗 ===

@@ -119,7 +119,9 @@ class TerminalRenderer:
         # 显示掷骰信息（如果 VM 包含）
         if hasattr(vm_result, 'roll_info') and vm_result.roll_info:
             ri = vm_result.roll_info
-            print(f"   🎲 掷出 {ri['roll']}（目标 {ri['target']}）— {'✓ 成功' if ri['success'] else '✗ 失败'}")
+            chance = ri.get("success_chance")
+            chance_str = f" · 成功率 {chance}%" if chance is not None else ""
+            print(f"   🎲 掷出 {ri['roll']}（目标 {ri['target']}）{chance_str} — {'✓ 成功' if ri['success'] else '✗ 失败'}")
 
         # 衍生标签
         if vm_result.derived_tags:

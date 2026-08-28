@@ -3,12 +3,12 @@
 迷失之镜 — 数据驱动场景引擎 (Model 层 · 阶段 1)
 读取 module.json nodes[] → 解析 scene_type → 驱动检定 → 调用 ViewModel → 状态变更
 """
-import random
 import json
 import os
 import re
 from typing import Dict, List, Optional, Tuple, Any
 from core.character import Character
+from core.dice import gurps_success_chance, roll_3d6
 from core.environment_system import EnvironmentSystem
 from core.viewmodel import ViewModel, ViewModelResult
 from core.combat_engine import CombatEngine
@@ -179,7 +179,7 @@ class SceneEngine:
         modifier += tag_mod
 
         target = skill_level + modifier + tool_bonus
-        roll = sum(random.randint(1, 6) for _ in range(3))
+        roll = roll_3d6()
 
         packet = {
             "roll": roll,
@@ -188,6 +188,7 @@ class SceneEngine:
             "margin": target - roll,
             "is_crit_success": roll <= 4,
             "is_fumble": roll >= 17,
+            "success_chance": gurps_success_chance(target),
             "action_type": node.get("scene_type", "check"),
             "skill_used": skill_check,
             "modifiers": {"base": modifier, "env": env_mod, "tag": tag_mod, "tool": tool_bonus},
@@ -203,6 +204,7 @@ class SceneEngine:
 
         # ViewModel 转换
         vm_result = self.vm.convert(packet, node, self.pc)
+        vm_result.roll_info = packet  # 检定明细供 View 层渲染（R2：成功率显示）
 
         # 应用状态变更
         self._apply_status_changes(vm_result.status_changes)
@@ -256,11 +258,12 @@ class SceneEngine:
                 skill_level = skill_map.get(skill_name, self.pc.get_skill_level(skill_name) or 10)
 
                 target = skill_level
-                roll = sum(random.randint(1, 6) for _ in range(3))
+                roll = roll_3d6()
                 success = roll <= dc
 
                 result = {"check_id": check.get("id", ""), "success": success,
-                          "roll": roll, "dc": dc}
+                          "roll": roll, "dc": dc,
+                          "success_chance": gurps_success_chance(dc)}
                 all_results.append(result)
 
                 if success:

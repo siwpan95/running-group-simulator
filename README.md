@@ -47,6 +47,7 @@ pt/
 │
 ├── core/                        ← Model + ViewModel 层
 │   ├── character.py             │  GURPS 角色数据模型（四属性/衍生/技能/特征/装备）
+│   ├── dice.py                  │  规则原语接入层（3d6 掷骰 + GURPS 成功率表 → alloy 内核，R2）
 │   ├── enemy.py                 │  敌人模型（mook/elite/wildcard/boss）
 │   ├── scene_engine.py          │  数据驱动场景引擎（module.json → 节点执行）
 │   ├── combat_engine.py         │  战斗引擎（先攻/攻击/防御/休克/部位）
@@ -121,7 +122,11 @@ pt/
 ### 环境要求
 
 - Python 3.10+
-- 零外部依赖（纯标准库）
+- 依赖 **alloy**（统一引擎规则内核；零第三方库）：
+
+```bash
+pip install -e G:\repos\an-engine
+```
 
 ### 运行游戏
 
@@ -149,7 +154,7 @@ cd pt
 python tests/test_comprehensive.py
 ```
 
-535 项测试覆盖所有 15 个模块，验证核心路径与边缘情况。
+546 项测试覆盖 16 个模块，验证核心路径与边缘情况。
 
 ### Excel 生态验证
 
@@ -281,6 +286,20 @@ python tests/test_excel_roundtrip.py
 | <2 | 轻微干扰 |
 
 ---
+
+## 规则原语接入（R2 · 2026-08-27）
+
+3d6 掷骰与 GURPS 成功率表**不在本仓重复实现**：单一事实来源为统一引擎 alloy 的
+`alloy.trpg.dice`（TRPG 规则内核，自 D20 并入 alloy，R2），经 `core/dice.py`
+签名适配后供全仓调用。检定包 `success_chance` 字段与终端「成功率 N%」显示即来自
+该内核数据。
+
+**保留仓内**（引擎专有规则，不进引擎）：部位表（3d6）、伤害穿透倍率、附庸阈值、
+休克阈值、XP 定价（ST/HT=10、DX/IQ=20）与 GURPS 4e 角色模型（ST/DX/IQ/HT 四属性
+——与 alloy.trpg 的 D&D 六属性模型异构，按「行为钉住 + MVVM 三层不变」不强行映射）。
+
+借鉴必记账：3d6 掷骰 + GURPS 成功率表 ← alloy.trpg.dice（自 D20 并入，R2）；
+接入测试见 `tests/test_comprehensive.py` §16（内核同种子同值/成功率表/引擎接入面）。
 
 ## 开发指南
 

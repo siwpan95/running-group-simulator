@@ -20,6 +20,7 @@ class ViewModelResult:
         self.choices: List[Dict] = []  # 提供给 View 层的选择项
         self.environment_update: Dict = {"added_tags": [], "removed_tags": [], "narrative": ""}
         self.status_changes: Dict = {}  # {"hp_delta": -4, "fp_delta": 0, "focus_delta": 0}
+        self.roll_info: Optional[Dict] = None  # 检定明细（Model → View 直通，R2 成功率显示）
 
     def to_dict(self) -> dict:
         return {
@@ -32,6 +33,7 @@ class ViewModelResult:
             "choices": self.choices,
             "environment_update": self.environment_update,
             "status_changes": self.status_changes,
+            "roll_info": self.roll_info,
         }
 
 

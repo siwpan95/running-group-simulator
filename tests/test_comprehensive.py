@@ -1874,6 +1874,55 @@ def test_edge_cases():
     check("DX极低 dodge≥0", pc_neg.dodge >= 0)
 
 
+# ════════════════════════════════════════════════════════════════
+#  规则原语接入（R2 反向重构：alloy.trpg 内核）
+# ════════════════════════════════════════════════════════════════
+
+def test_rule_kernel():
+    module("16. core/dice.py（规则原语接入 · R2）")
+    import random as _random
+    from core.dice import gurps_success_chance, roll_3d6
+    from core.combat_engine import CombatEngine, HIT_LOCATIONS
+    from core.viewmodel import ViewModelResult
+    from mirror_mvp import MirrorOfLost
+    from alloy.trpg.dice import roll_3d6 as _kernel_roll_3d6
+
+    # ── roll_3d6：范围 + 与内核同种子同值 ──
+    check("roll_3d6 范围 3-18 (200次)", all(3 <= roll_3d6() <= 18 for _ in range(200)))
+    _random.seed(20260827)
+    ours = roll_3d6()
+    _random.seed(20260827)
+    kernel_total = _kernel_roll_3d6()[1]
+    check("与 alloy 内核同种子同总和", ours == kernel_total)
+
+    # ── gurps_success_chance：GURPS 成功率表 ──
+    check("success_chance(3)=0", gurps_success_chance(3) == 0)
+    check("success_chance(10)=50", gurps_success_chance(10) == 50)
+    check("success_chance(12)=74", gurps_success_chance(12) == 74)
+    check("success_chance(18)=100", gurps_success_chance(18) == 100)
+    check("success_chance 单调不减", all(
+        gurps_success_chance(l) <= gurps_success_chance(l + 1) for l in range(3, 18)))
+
+    # ── 引擎接入面 ──
+    check("CombatEngine.roll_3d6 委托内核 (50次)",
+          all(3 <= CombatEngine.roll_3d6() <= 18 for _ in range(50)))
+    check("roll_hit_location 返回合法部位",
+          CombatEngine.roll_hit_location() in set(HIT_LOCATIONS.values()))
+
+    game = MirrorOfLost(
+        os.path.join(BASE_DIR, "config", "system.json"),
+        os.path.join(BASE_DIR, "modules", "mirror_house_alley", "module.json"),
+    )
+    pkt = game.physical_resolve(12)
+    check("physical_resolve 带 success_chance", pkt.get("success_chance") == gurps_success_chance(12))
+
+    # ── ViewModelResult.roll_info 直通 ──
+    vr = ViewModelResult()
+    vr.roll_info = {"roll": 10, "target": 12, "success": True, "success_chance": 74}
+    d = vr.to_dict()
+    check("to_dict 含 roll_info", d.get("roll_info") == vr.roll_info)
+
+
 # ────────────────────────────────────────────────────────────────
 #  MAIN
 # ────────────────────────────────────────────────────────────────
@@ -1927,6 +1976,7 @@ if __name__ == "__main__":
         test_terminal_renderer,
         test_mirror_mvp,
         test_edge_cases,
+        test_rule_kernel,
     ]
 
     for test_fn in modules_tested:
