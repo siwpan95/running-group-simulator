@@ -24,6 +24,10 @@ class SystemProfile:
          success_chance, system}"""
         raise NotImplementedError
 
+    def skill_target(self, character, skill_name: str):
+        """从角色折算技能目标值（系统各自的属性映射/倍率）。返回 int 或 None。"""
+        raise NotImplementedError
+
     # ---- 伤害 ----
     def roll_damage(self, damage_str) -> tuple:
         """掷伤害骰，返回 (raw 伤害值, 伤害类型名)。"""
@@ -37,11 +41,16 @@ class SystemProfile:
         """护甲穿透：raw 伤害 - DR 后按类型倍率修正。"""
         raise NotImplementedError
 
+    def crit_damage(self, raw) -> int:
+        """大成功时的伤害处理（GURPS 双倍 / CoC 不变等）。"""
+        raise NotImplementedError
+
     # ---- 防御 / 状态 ----
     def active_defense(self, dodge) -> dict:
         """主动防御判定，返回 {"result": "dodged"|"hit", "roll":..., ...}"""
         raise NotImplementedError
 
-    def shock_check(self, ht, threshold, damage_taken) -> dict:
-        """受创震荡判定，返回 {"status": "ok"|"stunned", ...}"""
+    def shock_check(self, ht, hp_max, damage_taken) -> dict:
+        """受创震荡判定（阈值由各系统自算：GURPS HP/3、CoC HP/2 等）。
+        返回 {"status": "ok"|"stunned", ...}"""
         raise NotImplementedError

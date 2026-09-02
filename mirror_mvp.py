@@ -66,12 +66,27 @@ class MirrorOfLost:
         self.env.load_tags(tags)
 
     def set_character(self, pc: Character):
-        """设置玩家角色"""
+        """设置玩家角色（v3.3：按 module meta.systems 路由系统画像）"""
         self.pc = pc
-        # 创建场景引擎
-        self.engine = SceneEngine(self.module, self.pc, self.vm, self.env)
+        system_id = self._resolve_system_id()
+        # 创建场景引擎（战斗引擎同步切系统画像）
+        self.engine = SceneEngine(self.module, self.pc, self.vm, self.env, system_id)
+        self.combat = CombatEngine(system_id)
         # 加载锚点
         self._load_anchors()
+
+    def _resolve_system_id(self) -> str:
+        """模块声明的系统：meta.systems 首个 → compatible_core 映射 → 默认 gurps。"""
+        meta = self.module.get("meta", {})
+        systems = meta.get("systems") or []
+        if systems:
+            return str(systems[0])
+        core = str(meta.get("compatible_core", ""))
+        if "coc" in core.lower() or "克苏鲁" in core:
+            return "coc7"
+        if "dnd" in core.lower() or "d20" in core.lower():
+            return "dnd5e"
+        return "gurps"
 
     def create_default_character(self) -> Character:
         """创建默认角色"""

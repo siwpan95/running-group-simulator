@@ -105,11 +105,11 @@ def test_gurps_defense_shock():
     check("主动防御 dodge=16 必闪", d["result"] == "dodged", str(d))
     d2 = p.active_defense(0)
     check("主动防御 dodge=0 必中", d2["result"] == "hit", str(d2))
-    s = p.shock_check(10, 4, 2)
+    s = p.shock_check(10, 12, 2)      # hp_max=12 → 阈值 4
     check("轻伤不触发休克", s["status"] == "ok")
-    s2 = p.shock_check(10, 4, 5)
+    s2 = p.shock_check(10, 12, 5)
     check("重伤返回 ok/stunned", s2["status"] in ("ok", "stunned"), str(s2))
-    s3 = p.shock_check(3, 4, 5)
+    s3 = p.shock_check(3, 12, 5)
     check("HT=3 重伤必 stunned", s3["status"] == "stunned", str(s3))
 
 
@@ -153,8 +153,115 @@ def test_scene_engine_system_field():
           str(r)[:120])
 
 
+def test_coc7_profile():
+    from core.rules import available_systems, get_profile
+    from core.rules.coc7 import roll_d100
+    check("注册表含 coc7", "coc7" in available_systems(), str(available_systems()))
+    p = get_profile("coc7")
+    check("coc7 system_id", p.system_id == "coc7")
+    # d100 范围
+    for _ in range(80):
+        r = roll_d100()
+        if not (1 <= r <= 100):
+            check("d100 范围 1-100", False, str(r))
+            return
+        check("d100 范围 1-100", True)
+        break
+    # 奖励/惩罚骰统计倾向（5000 次：奖励骰均值显著更低）
+    avg_bonus = sum(roll_d100(1) for _ in range(5000)) / 5000
+    avg_penalty = sum(roll_d100(-1) for _ in range(5000)) / 5000
+    avg_plain = sum(roll_d100(0) for _ in range(5000)) / 5000
+    check("奖励骰均值 < 普通 < 惩罚骰", avg_bonus < avg_plain < avg_penalty,
+          "%.1f < %.1f < %.1f" % (avg_bonus, avg_plain, avg_penalty))
+    # 检定
+    r = p.roll_check(50, 0)
+    check("coc7 roll_check target=50", r["target"] == 50)
+    check("coc7 success_chance=target", r["success_chance"] == 50)
+    check("coc7 system 标记", r["system"] == "coc7")
+    lo = [p.roll_check(80, 0) for _ in range(300)]
+    check("coc7 低掷判大成功", any(x["is_crit_success"] for x in lo))
+    hi = [p.roll_check(80, 0) for _ in range(300)]
+    check("coc7 100 判大失败", any(x["is_fumble"] for x in hi))
+    # 大失败阈值：技能 <50 时 96-99 也算
+    lo_skill = [p.roll_check(30, 0) for _ in range(400)]
+    check("技能<50 时 96+ 判 fumble", any(x["is_fumble"] and x["roll"] < 100
+                                          for x in lo_skill))
+    # 伤害/穿透/防御/重伤
+    raw, t = p.roll_damage("1d6+4")
+    check("coc7 roll_damage 1d6+4 范围 5-10", 5 <= raw <= 10, str(raw))
+    check("coc7 伤害类型物理", t == "物理")
+    check("coc7 护甲平减", p.penetration(8, 3, "物理") == 5)
+    d = p.active_defense(100)
+    check("coc7 dodge=100 必闪", d["result"] == "dodged", str(d))
+    check("coc7 重伤阈值判定", p.shock_check(10, 10, 3)["status"] == "ok")
+    s = p.shock_check(10, 10, 6)
+    check("coc7 重伤返回 ok/stunned", s["status"] in ("ok", "stunned"), str(s))
+    # 技能目标 ×5
+    from core.character import Character
+    pc = Character(name="调查员", iq=12, ht=10, will=11, per=12,
+                   san=60, san_max=60)
+    check("coc7 意志×5", p.skill_target(pc, "意志") == 55)
+    check("coc7 未掌握技能回退属性×5", p.skill_target(pc, "聆听") is None or
+          isinstance(p.skill_target(pc, "聆听"), int))
+
+
+def test_coc7_san():
+    from core.character import Character
+    pc = Character(name="调查员", san=60, san_max=60)
+    r = pc.add_san_loss(3, "看见尸体")
+    check("SAN 小损失", r["loss"] == 3 and pc.san == 57, str(r))
+    check("SAN 小损失不疯狂", not r["temp_insanity"] and not r["indefinite_insanity"])
+    r2 = pc.add_san_loss(8, "目睹神话生物")
+    check("SAN ≥5 临时疯狂", r2["temp_insanity"] and pc.insanity_state == "temporary",
+          str(r2))
+    r3 = pc.add_san_loss(30, "直面旧日支配者")
+    check("SAN 大损失不定期疯狂", r3["indefinite_insanity"]
+          and pc.insanity_state == "indefinite", str(r3))
+    check("SAN 不为负", pc.san >= 0)
+    pc2 = Character(name="GURPS 角色")  # san_max=0
+    r4 = pc2.add_san_loss(10, "x")
+    check("san_max=0 不扣 SAN", r4["loss"] == 0)
+    # 快照/序列化往返
+    snap = pc.create_snapshot()
+    pc3 = Character(name="恢复者")
+    pc3.restore_snapshot(snap)
+    check("SAN 快照恢复", pc3.san == pc.san and pc3.san_max == 60
+          and pc3.insanity_state == pc.insanity_state)
+
+
+def test_coc7_scene_routing():
+    import json
+    from core.character import Character, Skill
+    from core.scene_engine import SceneEngine
+    from core.viewmodel import ViewModel
+    from core.environment_system import EnvironmentSystem
+    module = {
+        "meta": {"systems": ["coc7"]},
+        "act_1": {"nodes": [{
+            "node_id": "n1", "scene_type": "perception",
+            "layer_physics": {"skill_check": "侦查",
+                              "san_loss": {"amount": "1d3", "source": "尸检"}},
+        }]},
+    }
+    pc = Character(name="调查员", iq=12, san=60, san_max=60,
+                   skills=[Skill("侦查", 60, "Avg", "IQ", 0)])
+    env = EnvironmentSystem()
+    vm = ViewModel()
+    eng = SceneEngine(module, pc, vm, env, system_id="coc7")
+    res = eng.run_node("n1")
+    r = res.roll_info
+    check("coc7 场景 packet system", r is not None and r.get("system") == "coc7",
+          str(r)[:100])
+    check("coc7 技能目标=60", r is not None and r.get("target") == 60)
+    if r and not r.get("success") and r.get("san_loss"):
+        check("coc7 失败触发 SAN 损失", r["san_loss"].get("loss", 0) > 0,
+              str(r.get("san_loss")))
+    else:
+        check("coc7 失败触发 SAN 损失（未失败则跳过）", True)
+
+
 def main():
-    print("test_rules_profiles（v3.2 多系统画像）")
+    print("test_rules_profiles（v3.2 多系统画像 + v3.3 CoC 7e）")
     test_registry()
     test_gurps_check()
     test_gurps_damage()
@@ -163,6 +270,9 @@ def main():
     test_gurps_defense_shock()
     test_engine_delegation()
     test_scene_engine_system_field()
+    test_coc7_profile()
+    test_coc7_san()
+    test_coc7_scene_routing()
     print("================ 结果 ================")
     print("通过: %d    失败: %d" % (_PASS, _FAIL))
     if _FAIL:

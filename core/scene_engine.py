@@ -28,6 +28,24 @@ def _parse_int(value, default=0):
     return default
 
 
+def _parse_dice_amount(value, default=1):
+    """解析伤害/损失数额：int 或 'XdY' / 'XdY±Z' 骰子表达式。"""
+    if isinstance(value, (int, float)):
+        return max(0, int(value))
+    if isinstance(value, str):
+        m = re.match(r'(\d+)?d(\d+)([+-]\d+)?', value.strip())
+        if m:
+            import random
+            count = int(m.group(1) or 1)
+            sides = int(m.group(2))
+            mod = int(m.group(3) or 0)
+            return max(0, sum(random.randint(1, sides) for _ in range(count)) + mod)
+        m2 = re.match(r'([+-]?\d+)', value.strip())
+        if m2:
+            return max(0, int(m2.group(1)))
+    return default
+
+
 class SceneEngine:
     """
     数据驱动场景引擎
@@ -156,25 +174,10 @@ class SceneEngine:
         env_mod = self.env.get_active_modifiers()
         modifier += env_mod
 
-        # 查找技能等级
-        skill_level = 10  # 默认
-        if "感知" in skill_check or "Per" in skill_check:
-            skill_level = self.pc.per
-        elif "力量" in skill_check or "ST" in skill_check:
-            skill_level = self.pc.st
-        elif "意志" in skill_check or "Will" in skill_check:
-            skill_level = self.pc.will
-        elif "体质" in skill_check or "HT" in skill_check:
-            skill_level = self.pc.ht
-        elif "敏捷" in skill_check or "DX" in skill_check:
-            skill_level = self.pc.dx
-        elif "智力" in skill_check or "IQ" in skill_check:
-            skill_level = self.pc.iq
-        else:
-            # 尝试匹配技能名
-            sl = self.pc.get_skill_level(skill_check)
-            if sl is not None:
-                skill_level = sl
+        # 查找技能等级（v3.2 起委托系统画像的技能目标折算）
+        skill_level = self.profile.skill_target(self.pc, skill_check)
+        if skill_level is None:
+            skill_level = 10
 
         # 角色标签修正
         tag_mod = self.pc.calc_tag_modifier()
@@ -197,6 +200,21 @@ class SceneEngine:
         # ViewModel 转换
         vm_result = self.vm.convert(packet, node, self.pc)
         vm_result.roll_info = packet  # 检定明细供 View 层渲染（R2：成功率显示）
+
+        # 失败时 SAN 损失（v3.3 · CoC 7e；节点 layer_physics.san_loss 配置）
+        san_cfg = physics.get("san_loss")
+        if san_cfg and not packet["success"] and self.pc.san_max > 0:
+            loss = _parse_dice_amount(san_cfg.get("amount", 1))
+            r = self.pc.add_san_loss(loss, san_cfg.get("source", skill_check))
+            packet["san_loss"] = r
+            if r["indefinite_insanity"]:
+                vm_result.derived_tags.append(
+                    {"name": "不定期疯狂", "modifier": -20, "duration": "permanent"})
+                vm_result.narrative += " 理智之堤彻底崩塌——你被卷入不定期疯狂。"
+            elif r["temp_insanity"]:
+                vm_result.derived_tags.append(
+                    {"name": "临时疯狂", "modifier": -20, "duration": "scene"})
+                vm_result.narrative += " 精神防线崩塌——你陷入了短暂的疯狂！"
 
         # 应用状态变更
         self._apply_status_changes(vm_result.status_changes)

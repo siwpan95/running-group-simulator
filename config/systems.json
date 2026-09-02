@@ -8,6 +8,14 @@
       "dice": "3d6 roll-low（3-4 大成功 / 17-18 大失败）",
       "based_on": "GURPS 4e Basic Set（Steve Jackson Games）",
       "source": "内置参考实现（v3.1 行为原样迁移）"
+    },
+    "coc7": {
+      "display_name": "克苏鲁的呼唤 7 版",
+      "module": "core.rules.coc7",
+      "class": "Coc7Profile",
+      "dice": "d100 roll-low（01/五分之一大成功；100 大失败；奖励/惩罚骰）",
+      "based_on": "Call of Cthulhu 7th Edition（Chaosium）",
+      "source": "资源库 coc_pdf 三宝书 + trow CoC 扩展帖（取材校对）"
     }
   },
   "notes": "module.json 的 meta.compatible_core 为向后兼容字段；新增模组建议用 meta.systems: [\"gurps\", ...] 声明可用系统。"

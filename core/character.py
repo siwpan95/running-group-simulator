@@ -86,6 +86,12 @@ class Character:
     psychic_marks: int = 0
     anchors: List[str] = field(default_factory=list)  # 角色的锚定物
 
+    # === 理智 SAN（v3.3 · CoC 7e；san_max=0 表示未启用，GURPS 角色不受影响）===
+    san: int = 0
+    san_max: int = 0
+    san_loss_log: List[Dict] = field(default_factory=list)
+    insanity_state: str = ""      # "" / temporary / indefinite
+
     # === 装备 ===
     equipment: List[Equipment] = field(default_factory=list)
 
@@ -193,6 +199,35 @@ class Character:
             self.obsession_name = "镜痴"
             self.permanent_tags.append("镜痴:对抗镜子相关检定 Will-2")
 
+    # === 理智 SAN（v3.3 · CoC 7e） ===
+
+    def add_san_loss(self, amount: int, source: str = "") -> dict:
+        """SAN 损失：扣减理智值并判定疯狂发作。
+
+        返回 {loss, temp_insanity, indefinite_insanity}。
+        - 单次损失 ≥5 → 临时疯狂（temporary insanity）；
+        - 单次损失 ≥ 当日上限 san_max//5 → 不定期疯狂（indefinite insanity）。
+        san_max ≤ 0（未启用 SAN）时只记录不扣减。"""
+        if self.san_max <= 0:
+            return {"loss": 0, "temp_insanity": False, "indefinite_insanity": False}
+        loss = min(amount, max(0, self.san))
+        self.san -= loss
+        entry = {"amount": loss, "source": source, "remaining": self.san}
+        self.san_loss_log.append(entry)
+        temp = loss >= 5 and self.insanity_state != "indefinite"
+        indefinite = loss >= max(5, self.san_max // 5)
+        if indefinite:
+            self.insanity_state = "indefinite"
+        elif temp:
+            self.insanity_state = "temporary"
+        return {"loss": loss, "temp_insanity": temp,
+                "indefinite_insanity": indefinite}
+
+    def recover_san(self, amount: int = 1):
+        """SAN 恢复（上限 san_max）。"""
+        if self.san_max > 0:
+            self.san = min(self.san_max, self.san + amount)
+
     def create_snapshot(self) -> dict:
         """创建角色快照（用于存档）"""
         return {
@@ -205,6 +240,8 @@ class Character:
             "focus_points": self.focus_points, "focus_max": self.focus_max,
             "luck_points": self.luck_points, "luck_max": self.luck_max,
             "psychic_marks": self.psychic_marks,
+            "san": self.san, "san_max": self.san_max,
+            "insanity_state": self.insanity_state,
             "temporary_tags": copy.deepcopy(self.temporary_tags),
             "has_obsession": self.has_obsession,
             "obsession_name": self.obsession_name,
@@ -224,6 +261,9 @@ class Character:
         self.luck_points = snapshot.get("luck_points", self.luck_points)
         self.luck_max = snapshot.get("luck_max", self.luck_max)
         self.psychic_marks = snapshot.get("psychic_marks", self.psychic_marks)
+        self.san = snapshot.get("san", self.san)
+        self.san_max = snapshot.get("san_max", self.san_max)
+        self.insanity_state = snapshot.get("insanity_state", self.insanity_state)
         self.temporary_tags = copy.deepcopy(snapshot.get("temporary_tags", []))
         self.has_obsession = snapshot.get("has_obsession", False)
         self.obsession_name = snapshot.get("obsession_name", "")
@@ -253,6 +293,8 @@ class Character:
                             "description": e.description} for e in self.equipment],
             "focus_max": self.focus_max,
             "luck_max": self.luck_max,
+            "sanity": {"san": self.san, "san_max": self.san_max,
+                        "insanity_state": self.insanity_state},
             "xp_log": self.xp_log,
             "total_xp": self.total_xp,
         }
@@ -267,6 +309,7 @@ class Character:
         """从字典创建角色"""
         attrs = data.get("attributes", {})
         sec = data.get("secondary", {})
+        san = data.get("sanity", {})
         c = cls(
             character_id=data.get("character_id", ""),
             name=data.get("name", "未命名"),
@@ -284,6 +327,8 @@ class Character:
             focus_points=data.get("focus_max", 3),
             luck_max=data.get("luck_max", 2),
             luck_points=data.get("luck_max", 2),
+            san=san.get("san", 0), san_max=san.get("san_max", 0),
+            insanity_state=san.get("insanity_state", ""),
             xp_log=data.get("xp_log", []),
             total_xp=data.get("total_xp", 0),
         )

@@ -147,9 +147,9 @@ class CombatEngine:
 
         raw, dtype = self.profile.roll_damage(damage_str)
 
-        # 暴击双倍
+        # 暴击伤害处理（v3.3 委托画像：GURPS 双倍 / CoC 不变）
         if is_crit:
-            raw *= 2
+            raw = self.profile.crit_damage(raw)
 
         result["raw_damage"] = raw
         result["type"] = dtype
@@ -188,14 +188,14 @@ class CombatEngine:
     # === 休克检定 ===
 
     def shock_check(self, entity, damage_taken: int) -> Dict:
-        """HT 休克检定（v3.2 委托系统画像）"""
+        """受创震荡检定（v3.2 委托系统画像；阈值由画像按系统自算）"""
         if isinstance(entity, Character):
-            ht, threshold = entity.ht, entity.shock_threshold
+            ht, hp_max = entity.ht, entity.hp_max
         elif isinstance(entity, Enemy):
-            ht, threshold = entity.ht, entity.shock_threshold
+            ht, hp_max = entity.ht, entity.hp_max
         else:
             return {"status": "ok"}
-        return self.profile.shock_check(ht, threshold, damage_taken)
+        return self.profile.shock_check(ht, hp_max, damage_taken)
 
     # === 应用伤害 ===
 

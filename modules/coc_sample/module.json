@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "module_id": "coc_sample",
+    "system_name": "Mirror of the Lost",
+    "module_title": "旧宅的低语",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "CoC 7e",
+    "systems": ["coc7"],
+    "playstyle": "现代都市 / 调查恐怖",
+    "estimated_duration": "1-2 小时",
+    "player_count": "2-4 人",
+    "synopsis": "受雇调查一栋挂牌出售的老宅，委托人失踪前的录音里藏着不属于人类的声音。多系统引擎 CoC 7e 示例模组——d100 检定、SAN 理智、疯狂发作。",
+    "base_xp": 3
+  },
+  "global_context_tags": [
+    { "id": "musty_air", "name": "霉味浓重", "effect": "嗅觉感知惩罚骰" },
+    { "id": "dark_hallway", "name": "昏暗走廊", "effect": "侦查 -10" }
+  ],
+  "act_1": {
+    "scene_id": "act1_the_house",
+    "title": "挂牌老宅",
+    "description": "大门吱呀打开，霉味扑面而来。委托人说失踪前最后的活动地点就是这里。",
+    "environment": {
+      "mood": "傍晚的光线从积灰的窗户斜切进来，家具都蒙着白布。",
+      "tags": [
+        { "id": "musty_air", "name": "霉味浓重", "effect": "嗅觉感知惩罚骰" }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_enter_hall",
+        "scene_type": "perception",
+        "trigger": "调查员踏入玄关，扫视昏暗的走廊。",
+        "prerequisite_nodes": [],
+        "next_nodes": ["1.2_study"],
+        "layer_physics": {
+          "skill_check": "侦查",
+          "modifier": -10
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "地板上的灰尘有一道拖拽痕迹，直通书房。",
+            "crit_success": "你连拖拽者鞋底的纹路都看得一清二楚——有人被拖进了书房，挣扎的指痕还留在墙角。",
+            "failure": "光线太暗，你什么也没看清。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_study",
+        "scene_type": "investigation",
+        "trigger": "书房桌上摊着一本日记，最后几页的字迹抖得厉害。",
+        "prerequisite_nodes": ["1.1_enter_hall"],
+        "next_nodes": ["2.1_attic_stairs"],
+        "layer_physics": {
+          "checks": [
+            {
+              "id": "read_diary",
+              "type": "automatic",
+              "skill": "图书馆使用",
+              "dc": 40,
+              "on_success": { "flag_set": ["diary_read"] }
+            }
+          ],
+          "san_loss": { "amount": "1d3", "source": "阅读日记" }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "日记里反复画着同一扇窗，窗外没有星星。最后一页写着：它知道我读了。",
+            "failure": "字迹在你眼前扭成蚯蚓，你一个字也读不进去。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_the_attic",
+    "title": "阁楼的低语",
+    "description": "阁楼的门没有锁。黑暗里有什么在呼吸。",
+    "environment": {
+      "mood": "楼梯每响一声，那呼吸就停一下。",
+      "tags": [
+        { "id": "dark_hallway", "name": "昏暗走廊", "effect": "侦查 -10" }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_attic_stairs",
+        "scene_type": "perception",
+        "trigger": "调查员摸上阁楼楼梯，那低语声越来越近。",
+        "prerequisite_nodes": ["1.2_study"],
+        "next_nodes": ["2.2_face_creature"],
+        "layer_physics": {
+          "skill_check": "聆听",
+          "modifier": 0,
+          "san_loss": { "amount": 1, "source": "听到低语" }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "那不是风。低语里混杂着你的名字，从楼梯顶端的黑暗中传来。",
+            "failure": "你只听见自己的心跳。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_face_creature",
+        "scene_type": "combat",
+        "trigger": "楼梯顶端，一只不属于这栋房子的东西回过头来。",
+        "prerequisite_nodes": ["2.1_attic_stairs"],
+        "next_nodes": ["2.3_escape"],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "unit_stats": {
+            "name": "食尸鬼",
+            "hp": 13,
+            "attack_skill": 30,
+            "damage": "1d6+1",
+            "dodge": 25,
+            "dr": 0
+          },
+          "san_loss": { "amount": "1d6", "source": "目击食尸鬼" }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "它咧开嘴，像人一样笑了。",
+            "failure": "你连抬起手电的力气都没有。"
+          }
+        }
+      },
+      {
+        "node_id": "2.3_escape",
+        "scene_type": "feat",
+        "trigger": "冲出老宅，把黑暗关在身后。",
+        "prerequisite_nodes": ["2.2_face_creature"],
+        "next_nodes": [],
+        "layer_physics": {
+          "skill_check": "敏捷",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "大门在你身后轰然关上。夜色里，那栋老宅的每一扇窗都亮着。",
+            "failure": "你摔倒在门廊上。背后，楼梯声正在下来。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_aftermath",
+    "title": "余波",
+    "description": "如果你们还活着，故事会留下痕迹。",
+    "nodes": [
+      {
+        "node_id": "3.1_debrief",
+        "scene_type": "explore",
+        "trigger": "在安全处回想这一夜。",
+        "prerequisite_nodes": ["2.3_escape"],
+        "next_nodes": [],
+        "layer_physics": {
+          "skill_check": "意志",
+          "san_loss": { "amount": 0, "source": "回响" }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你决定把这栋房子的地址从记事本上划掉。可墨水干了之后，字又浮了出来。"
+          }
+        }
+      }
+    ]
+  }
+}

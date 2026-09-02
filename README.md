@@ -309,8 +309,9 @@ python tests/test_excel_roundtrip.py
 
 ## 规则书资源库（2026-09-02）
 
-本项目收集的 TRPG 规则书库位于本地 **`F:\novel\规则书\trpg_rulebooks\`**（约 17 万文档
-/ 2.1 GB，明细见库内 `README.md` 与 `manifest.json`），是本引擎的**参考资源库**：
+本项目收集的 TRPG 规则书库位于**项目内 `规则书/trpg_rulebooks/`**（约 17.6 万文件
+/ 2.8 GB，已整体迁入本仓目录但**不入 git**——见 .gitignore，版权归各出版方；
+明细见库内 `README.md` 与 `manifest.json`），是本引擎的**参考资源库**：
 
 - **GURPS 直接相关**：`TRPGrepo/其他规则/` 泛统基本集整合 PDF、泛统第四版基本集_角色
   PDF；`trow_books/GURPS4_Basic`（第四版基本规则中译 13 章）、`GURPS4_Characters`
@@ -334,9 +335,10 @@ python tests/test_excel_roundtrip.py
   携带 `system` 字段；ViewModel（锚点叙事）与 View（终端渲染）保持系统无关；
 - 模组声明可用系统：`meta.systems: ["gurps"]`（`compatible_core` 向后兼容）。
 
-**路线图**（详见 `docs/拓展规划-2026-09-02.md`）：v3.3 CoC 7e（d100+理智）
+**路线图**（详见 `docs/拓展规划-2026-09-02.md`）：v3.2 内核抽象 ✅ → v3.3 CoC 7e ✅
+（d100+奖励/惩罚骰+SAN 理智+疯狂发作+生物目录 35 条+示例模组 `modules/coc_sample/`）
 → v3.4 D&D 5e（d20）→ v3.5 WoD（d10 骰池）→ v3.6 内容目录工程化。
-规则取材与校对来源：资源库 `F:\novel\规则书\trpg_rulebooks`（见「规则书资源库」节）。
+规则取材与校对来源：项目内资源库 `规则书/trpg_rulebooks`（见「规则书资源库」节）。
 
 ## 开发指南
 
@@ -380,6 +382,7 @@ python tests/test_excel_roundtrip.py
 | v2.0 | 2026-06-06 | MVVM 三层重构，数据驱动，15 模块，535 测试 |
 | v3.1 | 2026-06-06 | 完整角色系统、战斗引擎、VM 管线、XP 成长 |
 | v3.2 | 2026-09-02 | 多系统裁决内核抽象（SystemProfile + 注册表 + GURPS 参考实现，行为零变化） |
+| v3.3 | 2026-09-02 | CoC 7e 系统画像（d100/奖励惩罚骰/SAN 理智+疯狂发作）+ 生物目录 35 条 + 示例模组 |
 
 ---
 

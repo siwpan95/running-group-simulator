@@ -52,6 +52,26 @@ class GurpsProfile(SystemProfile):
             "system": self.system_id,
         }
 
+    @staticmethod
+    def skill_target(character, skill_name: str):
+        """GURPS 技能目标：技能名 → 角色技能等级；属性名 → 属性值；未知 → 10。
+        （v3.1 场景引擎内联映射的原样迁移。）"""
+        name = skill_name or ""
+        if "感知" in name or "Per" in name:
+            return character.per
+        if "力量" in name or "ST" in name:
+            return character.st
+        if "意志" in name or "Will" in name:
+            return character.will
+        if "体质" in name or "HT" in name:
+            return character.ht
+        if "敏捷" in name or "DX" in name:
+            return character.dx
+        if "智力" in name or "IQ" in name:
+            return character.iq
+        sl = character.get_skill_level(name)
+        return sl if sl is not None else 10
+
     def roll_damage(self, damage_str) -> tuple:
         m = _DAMAGE_RE.match(damage_str or "")
         if not m:
@@ -86,6 +106,10 @@ class GurpsProfile(SystemProfile):
         return penetrated
 
     @staticmethod
+    def crit_damage(raw) -> int:
+        return raw * 2        # GURPS：大成功暴击伤害翻倍（v3.1 行为）
+
+    @staticmethod
     def location_effects(penetrated, location) -> dict:
         """部位效应（≥阈值伤害附加修正）。"""
         effects = {}
@@ -107,7 +131,8 @@ class GurpsProfile(SystemProfile):
                 "narrative": "闪避失败——攻击命中！",
                 "roll": roll, "dodge": dodge}
 
-    def shock_check(self, ht, threshold, damage_taken) -> dict:
+    def shock_check(self, ht, hp_max, damage_taken) -> dict:
+        threshold = max(1, hp_max // 3)   # GURPS 休克阈值 = HP/3
         if damage_taken < threshold:
             return {"status": "ok"}
         roll = roll_3d6()

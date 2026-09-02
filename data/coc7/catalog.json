@@ -1,0 +1,775 @@
+{
+  "schema": "coc7-catalog-v1",
+  "generated_by": "tools/make_coc7_catalog.py（半自动提取，人工抽核）",
+  "sources": [
+    "T.R.O.W. 最深的地下城 版块69 tid11676《[CoC TRPG] 神话生物》（玖羽/Frend 译，2009）"
+  ],
+  "creatures": [
+    {
+      "name": "拜亚基",
+      "name_en": "Byakhee",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 17,
+        "con": 10,
+        "siz": 17,
+        "int": 10,
+        "pow": 10,
+        "dex": 13
+      },
+      "move": "5／飞行20",
+      "hp": 14,
+      "damage_bonus": "+1d6",
+      "armor": "2(覆毛的硬皮)",
+      "san_loss": "1/1d6",
+      "weapons": [
+        "钩爪35% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "钻地魔虫",
+      "name_en": "Chthonian",
+      "class": "上级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 52,
+        "con": 40,
+        "siz": 52,
+        "int": 17,
+        "pow": 17,
+        "dex": 7
+      },
+      "move": "6／掘进1",
+      "hp": 46,
+      "damage_bonus": "+5d6或6d6",
+      "armor": "5(皮肤和肌肉)，钻地魔虫受伤后每轮能恢复5点耐久，但耐久一旦降到0便会立即死亡",
+      "san_loss": "见到完全成年的个体1d3/1d20；见到成长中的个体1/1d10；见到幼虫不会丧失理智值",
+      "weapons": [
+        "触肢75% (2d6或3d6+吸血"
+      ]
+    },
+    {
+      "name": "星之彩",
+      "name_en": "Colors Out of Space",
+      "class": "上级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 6,
+        "int": 14,
+        "pow": 6,
+        "dex": 19
+      },
+      "move": "流动12／飞行20",
+      "hp": 55,
+      "damage_bonus": "+0",
+      "armor": "无。物理攻击无法对星之彩造成伤害，但强磁场可以禁锢它。它也会受到魔法的影响",
+      "san_loss": "见到星之彩0/1d4。见到被星之彩猎食的受害者1/1d8",
+      "weapons": [
+        "吸取85% (1d6+属性丧失"
+      ]
+    },
+    {
+      "name": "黑山羊幼仔",
+      "name_en": "Dark Young",
+      "class": "上级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 44,
+        "con": 16,
+        "siz": 44,
+        "int": 14,
+        "pow": 17,
+        "dex": 16
+      },
+      "move": "8",
+      "hp": 30,
+      "damage_bonus": "+4d6",
+      "armor": "黑山羊幼仔的身体并非由地球上的物质构成，如果用火器命中，只能造成1点伤害，但若用火器贯穿，则可造成2点伤害。霰弹枪是例外：它造成的伤害取最小值。近战武器可以正常造成伤害。此外，所有与热、爆炸、腐蚀、电、毒有关的伤害或攻击全部无效",
+      "san_loss": "1d3/1d10",
+      "weapons": [
+        "触肢80% (伤害加权，力量值吸取",
+        "(每轮1d3"
+      ]
+    },
+    {
+      "name": "深潜者",
+      "name_en": "Deep One",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 14,
+        "con": 10,
+        "siz": 16,
+        "int": 13,
+        "pow": 10,
+        "dex": 10
+      },
+      "move": "8／游泳10",
+      "hp": 13,
+      "damage_bonus": "+1d4",
+      "armor": "1(皮肤和鳞)",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "钩爪25% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "空鬼",
+      "name_en": "Dimensional Shambler",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 19,
+        "con": 16,
+        "siz": 19,
+        "int": 7,
+        "pow": 10,
+        "dex": 10
+      },
+      "move": "7",
+      "hp": 18,
+      "damage_bonus": "+1d6",
+      "armor": "3(厚皮)",
+      "san_loss": "0/1d10",
+      "weapons": [
+        "钩爪30% (1d8+伤害加权",
+        "(*"
+      ]
+    },
+    {
+      "name": "巨噬蠕虫",
+      "name_en": "Dhole",
+      "class": "上级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 505,
+        "con": 151,
+        "int": 7,
+        "pow": 35,
+        "dex": 2
+      },
+      "move": "蠕行18／挖洞10",
+      "hp": 353,
+      "damage_bonus": "轻易就能把战舰打沉",
+      "armor": "与意志值相同",
+      "san_loss": "1d4/1d20",
+      "weapons": [
+        "唾液50% (特殊"
+      ]
+    },
+    {
+      "name": "远古种族",
+      "name_en": "Elder Thing",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 38,
+        "con": 22,
+        "siz": 28,
+        "int": 15,
+        "pow": 10,
+        "dex": 16
+      },
+      "move": "8／飞行10",
+      "hp": 25,
+      "damage_bonus": "+3d6",
+      "armor": "7(皮肤)",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "触肢40% (紧勒，1/2伤害加权"
+      ]
+    },
+    {
+      "name": "炎之精",
+      "name_en": "Fire Vampire",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "con": 7,
+        "siz": 1,
+        "int": 10,
+        "pow": 13,
+        "dex": 16
+      },
+      "move": "飞行11",
+      "hp": 4,
+      "damage_bonus": "无",
+      "armor": "包括子弹在内，几乎一切物质武器均属无效。浇水的话，2公升水可造成1点伤害，用普通的手提式灭火器可造成1d6点伤害，一桶沙子可造成1d3点伤害",
+      "san_loss": "无",
+      "weapons": [
+        "触碰85% (2d6火焰伤害+魔力值吸收"
+      ]
+    },
+    {
+      "name": "飞天水螅",
+      "name_en": "Flying Polyp",
+      "class": "上级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 50,
+        "con": 25,
+        "siz": 50,
+        "int": 14,
+        "pow": 16,
+        "dex": 13
+      },
+      "move": "8／飞行12",
+      "hp": 38,
+      "damage_bonus": "+5d6，仅适用于气浪冲击。",
+      "armor": "4(皮肤)，外加隐身。飞天水螅的躯体并非由地球上的物质构成，所以物质武器造成的伤害均取最小值。例如，一把能造成2d6+3伤害的枪只能对它造成5点伤害，而其中4点还会被它的装甲(皮肤)吸收。若飞天水螅被子弹贯穿，则最小伤害会加倍后再减4，亦即造成6点伤害。附魔武器可以正常造成伤害。电或火焰也可以正常造成伤害",
+      "san_loss": "1d3/1d20",
+      "weapons": [
+        "触肢85% (1d10"
+      ]
+    },
+    {
+      "name": "无形之子",
+      "name_en": "Formless Spawn",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 6,
+        "con": 10,
+        "siz": 2,
+        "int": 13,
+        "pow": 10,
+        "dex": 19
+      },
+      "move": "12",
+      "hp": 13,
+      "damage_bonus": "+1d6",
+      "armor": "无形之子免疫所有物理武器，包括附魔武器。它能轻易地愈合这些武器造成的伤口。咒文能够正常发挥作用，火焰、化学药品及其它类似的物品也能正常发挥作用",
+      "san_loss": "1/1d10",
+      "weapons": [
+        "鞭打90% (1d6",
+        "(*"
+      ]
+    },
+    {
+      "name": "妖鬼",
+      "name_en": "Ghast",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 22,
+        "con": 14,
+        "siz": 26,
+        "int": 3,
+        "pow": 10,
+        "dex": 13
+      },
+      "move": "10",
+      "hp": 20,
+      "damage_bonus": "+2d6",
+      "armor": "3(皮肤)",
+      "san_loss": "0/1d8",
+      "weapons": [
+        "噬咬40% (1d10"
+      ]
+    },
+    {
+      "name": "食尸鬼",
+      "name_en": "Ghoul",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 16,
+        "con": 13,
+        "siz": 13,
+        "int": 13,
+        "pow": 13,
+        "dex": 13
+      },
+      "move": "9",
+      "hp": 13,
+      "damage_bonus": "+1d4",
+      "armor": "火器或投射武器只造成一半伤害（小数点后无条件进位）",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "钩爪30% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "诺弗·刻",
+      "name_en": "Gnoph-Keh",
+      "class": "上级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 31,
+        "con": 22,
+        "siz": 31,
+        "int": 15,
+        "pow": 21,
+        "dex": 14
+      },
+      "move": "9",
+      "hp": 27,
+      "damage_bonus": "+3d6",
+      "armor": "9(长毛、兽皮、软骨)",
+      "san_loss": "0/1d10",
+      "weapons": [
+        "角65% (1d10+伤害加权"
+      ]
+    },
+    {
+      "name": "伊斯之伟大种族",
+      "name_en": "Great Race of Yith",
+      "class": "上级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 42,
+        "con": 26,
+        "siz": 64,
+        "int": 20,
+        "pow": 13,
+        "dex": 10
+      },
+      "move": "7",
+      "hp": 45,
+      "damage_bonus": "+6d6",
+      "armor": "8(皮肤)",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "螯40% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "新伟大种族",
+      "name_en": "Great Race New",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 1,
+        "con": 3,
+        "siz": 1,
+        "int": 13,
+        "pow": 23,
+        "dex": 13
+      },
+      "move": "爬行4／飞行10",
+      "hp": 1,
+      "damage_bonus": "无",
+      "san_loss": "见到虫群0/1d4",
+      "weapons": [
+        "噬咬35% (1d2"
+      ]
+    },
+    {
+      "name": "古革巨人",
+      "name_en": "Gug",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 45,
+        "con": 28,
+        "siz": 57,
+        "int": 13,
+        "pow": 10,
+        "dex": 10
+      },
+      "move": "10",
+      "hp": 43,
+      "damage_bonus": "+5d6",
+      "armor": "8(皮肤、毛皮、软骨)",
+      "san_loss": "0/1d8",
+      "weapons": [
+        "噬咬60% (1d10"
+      ]
+    },
+    {
+      "name": "廷达洛斯猎犬",
+      "name_en": "Hound of Tindalos",
+      "class": "上级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 16,
+        "con": 30,
+        "siz": 16,
+        "int": 17,
+        "pow": 24,
+        "dex": 10
+      },
+      "move": "6／飞行40",
+      "hp": 23,
+      "damage_bonus": "+1d6",
+      "armor": "2(皮肤)，只要不死，每轮会恢复4点耐久。普通的武器对廷达洛斯猎犬一概无效，但附魔武器或咒文能正常发挥作用",
+      "san_loss": "1d3/1d20",
+      "weapons": [
+        "前爪90% (1d6+伤害加权+脓液",
+        "(2d6毒性值"
+      ]
+    },
+    {
+      "name": "恐怖猎手",
+      "name_en": "Hunting Horror",
+      "class": "上级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 29,
+        "con": 10,
+        "siz": 41,
+        "int": 15,
+        "pow": 21,
+        "dex": 13
+      },
+      "move": "7／飞行11",
+      "hp": 26,
+      "damage_bonus": "——",
+      "armor": "9，而且火器无法贯穿。",
+      "san_loss": "0/1d10",
+      "weapons": [
+        "噬咬65% (1d6"
+      ]
+    },
+    {
+      "name": "冷蛛",
+      "name_en": "Leng Spider",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 28,
+        "con": 17,
+        "siz": 35,
+        "int": 10,
+        "pow": 14,
+        "dex": 16
+      },
+      "move": "6",
+      "hp": 26,
+      "damage_bonus": "+3d6",
+      "armor": "6(几丁质外壳)",
+      "san_loss": "0/1d10，遇特大蜘蛛为1/1d20",
+      "weapons": [
+        "噬咬40% (1d3+毒",
+        "(*"
+      ]
+    },
+    {
+      "name": "罗伊格尔",
+      "name_en": "Lloigor",
+      "class": "上级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "int": 20,
+        "pow": 14,
+        "dex": 10
+      },
+      "move": "7／无形状态穿越岩石3",
+      "san_loss": "见到爬虫状态0/1d8；见到无形状态不会丧失理智值；与罗伊格尔的精神连接，1/1d4"
+    },
+    {
+      "name": "米·戈",
+      "name_en": "Mi-Go",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 10,
+        "con": 10,
+        "siz": 10,
+        "int": 13,
+        "pow": 13,
+        "dex": 14
+      },
+      "move": "7／飞行9",
+      "hp": 10,
+      "damage_bonus": "+0",
+      "armor": "无，但它们的躯体并非由地球上的物质构成，所以穿刺武器造成的伤害取最小值",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "螯30% (1D6+抓住"
+      ]
+    },
+    {
+      "name": "月兽",
+      "name_en": "Moon-Beast",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 16,
+        "con": 13,
+        "siz": 20,
+        "int": 16,
+        "pow": 10,
+        "dex": 10
+      },
+      "move": "7",
+      "hp": 17,
+      "damage_bonus": "+1d6",
+      "armor": "无。但它们的身体由特殊物质构成，所以火器造成的伤害取最小值",
+      "san_loss": "0/1d8",
+      "weapons": [
+        "矛25% (1d10+1+伤害加权"
+      ]
+    },
+    {
+      "name": "夜魇",
+      "name_en": "Nightgaunt",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 10,
+        "con": 10,
+        "siz": 14,
+        "int": 3,
+        "pow": 10,
+        "dex": 13
+      },
+      "move": "6／飞行12",
+      "hp": 12,
+      "damage_bonus": "无",
+      "armor": "2(皮肤)",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "擒抱30% (将对方抓紧以便搔痒"
+      ]
+    },
+    {
+      "name": "人面鼠",
+      "name_en": "Rat-Thing",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 2,
+        "con": 7,
+        "siz": 1,
+        "int": 10,
+        "pow": 7,
+        "dex": 20
+      },
+      "move": "9",
+      "hp": 4,
+      "damage_bonus": "-1d6",
+      "armor": "无。但在人面鼠跑动的时候攻击它，命中率减40%。攻击已经被人抓住的人面鼠，命中率减20%。",
+      "san_loss": "见到人面鼠0/1d6；认出人面鼠曾经是自己所认识的人，1/1d8",
+      "weapons": [
+        "啮咬35% (1d3"
+      ]
+    },
+    {
+      "name": "潜砂怪",
+      "name_en": "Sand-Dweller",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 10,
+        "con": 13,
+        "siz": 16,
+        "int": 10,
+        "pow": 10,
+        "dex": 13
+      },
+      "move": "8",
+      "hp": 15,
+      "damage_bonus": "+1d4",
+      "armor": "3(硬皮)",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "钩爪30% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "蛇人",
+      "name_en": "Serpent People",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 10,
+        "con": 10,
+        "siz": 10,
+        "int": 16,
+        "pow": 13,
+        "dex": 13
+      },
+      "move": "8",
+      "hp": 10,
+      "damage_bonus": "+0",
+      "armor": "1(鳞片)",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "噬咬35% (1d8+毒",
+        "(*"
+      ]
+    },
+    {
+      "name": "格拉基之仆从",
+      "name_en": "Servant of Glaaki",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 10,
+        "con": 20,
+        "siz": 13,
+        "int": 13,
+        "pow": 10,
+        "dex": 3
+      },
+      "move": "5",
+      "hp": 17,
+      "damage_bonus": "+0",
+      "armor": "无",
+      "san_loss": "见到保有人类样子的个体，不会丧失理智值；见到活尸一样的个体，1/1d8；见到它们因“绿之崩坏”而死，1/1d10",
+      "weapons": [
+        "爪撕20% (特殊"
+      ]
+    },
+    {
+      "name": "外神之仆役",
+      "name_en": "Servitor of the Outer Gods",
+      "class": "上级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 14,
+        "con": 16,
+        "siz": 20,
+        "int": 17,
+        "pow": 19,
+        "dex": 16
+      },
+      "move": "7",
+      "hp": 18,
+      "damage_bonus": "+1d6",
+      "armor": "无。但物理攻击的武器不会对它们造成任何伤害，只有咒文或附魔武器才能正常造成伤害。而且只要不死，每轮会恢复3点耐久",
+      "san_loss": "每只1/1d10",
+      "weapons": [
+        "触肢(*",
+        "45% (伤害加权×2",
+        "(**"
+      ]
+    },
+    {
+      "name": "夏盖虫族",
+      "name_en": "Insect from Shaggai",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 2,
+        "con": 2,
+        "siz": 1,
+        "int": 16,
+        "pow": 17,
+        "dex": 10
+      },
+      "move": "4／飞行40",
+      "hp": 2,
+      "damage_bonus": "无",
+      "armor": "无",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "融合60% (进入受害者的脑中，并逐渐支配受害者"
+      ]
+    },
+    {
+      "name": "夏塔克鸟",
+      "name_en": "Shantak",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 34,
+        "con": 13,
+        "siz": 50,
+        "int": 3,
+        "pow": 10,
+        "dex": 10
+      },
+      "move": "6／飞行30",
+      "hp": 32,
+      "damage_bonus": "+4d6",
+      "armor": "9(皮肤)",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "噬咬55% (2d6+2"
+      ]
+    },
+    {
+      "name": "修格斯",
+      "name_en": "Shoggoth",
+      "class": "下级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 63,
+        "con": 42,
+        "siz": 84,
+        "int": 7,
+        "pow": 10,
+        "dex": 3
+      },
+      "move": "蠕行10",
+      "hp": 63,
+      "damage_bonus": "+8d6",
+      "armor": "无。但是①火焰与电击只造成一半伤害；②物理伤害的武器，比如火器，若未贯穿则只能造成1点伤害；③修格斯每轮恢复2点耐久",
+      "san_loss": "1d6/1d20",
+      "weapons": [
+        "压碎70% (伤害加权"
+      ]
+    },
+    {
+      "name": "克苏鲁的星之眷族",
+      "name_en": "Star-Spawn of Cthulhu",
+      "class": "上级仆从种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 70,
+        "con": 52,
+        "siz": 105,
+        "int": 21,
+        "pow": 21,
+        "dex": 10
+      },
+      "move": "20／游泳20",
+      "hp": 79,
+      "damage_bonus": "+11d6",
+      "armor": "10(皮肤和脂肪)，每轮恢复3点耐久",
+      "san_loss": "1d6/1d20",
+      "weapons": [
+        "触肢80% (1/2伤害加权"
+      ]
+    },
+    {
+      "name": "星之精",
+      "name_en": "Star Vampire",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 26,
+        "con": 13,
+        "siz": 26,
+        "int": 10,
+        "pow": 15,
+        "dex": 9
+      },
+      "move": "6／飞行9",
+      "hp": 20,
+      "damage_bonus": "+2d6",
+      "armor": "4(皮肤)。而且它们的身体由特殊物质构成，所以火器只能造成一半伤害",
+      "san_loss": "目睹星之精，或遭其攻击1/1d10",
+      "weapons": [
+        "钩爪40% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "塞克洛托尔星怪",
+      "name_en": "Being from Xiclotl",
+      "class": "下级独立种族",
+      "source": "trow-11676",
+      "stats": {
+        "str": 51,
+        "con": 34,
+        "siz": 44,
+        "int": 7,
+        "pow": 10,
+        "dex": 14
+      },
+      "move": "8",
+      "hp": 39,
+      "damage_bonus": "+5d6",
+      "armor": "8(皮)",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "触肢50% (抓住+1/2伤害加权"
+      ]
+    }
+  ],
+  "tomes": [],
+  "spells": []
+}

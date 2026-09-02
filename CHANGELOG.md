@@ -8,6 +8,16 @@
 
 ### Changed
 
+- **v3.3 CoC 7e 系统画像**（2026-09-02）：
+  - 新增 `core/rules/coc7.py`：d100 roll-low（01/五分之一大成功；100 大失败；技能<50 时 96-99 大失败）、奖励/惩罚骰（`roll_d100(bonus_dice)`）、技能目标=技能值或属性×5（`skill_target`）、护甲平减、重伤检定（单次 ≥ HP/2 → CON×5 失败失去意识）、大成功不翻倍。
+  - `SystemProfile` 增 `skill_target`/`crit_damage` 扩展点；`shock_check` 阈值下沉画像（GURPS HP/3、CoC HP/2）。
+  - **SAN 理智系统**：`Character` 增 `san/san_max/san_loss_log/insanity_state`（san_max=0 不启用，GURPS 角色零影响）；单次损失 ≥5 临时疯狂、≥ HP 上限 1/5 不定期疯狂；节点 `layer_physics.san_loss` 配置失败扣 SAN，疯狂发作注入叙事与标签。
+  - `mirror_mvp._resolve_system_id()`：按 `meta.systems` 首个 → `compatible_core` 映射 → 默认 gurps 路由场景+战斗画像。
+  - **内容目录**：`data/coc7/catalog.json` 首批 35 条神话生物（均值能力/耐久/伤害加权/武器/装甲/理智丧失/来源 trow-11676），由 `tools/make_coc7_catalog.py` 半自动提取+人工抽核（巨噬蠕虫 1d100×10=505 等与原文核对）。
+  - **示例模组**：`modules/coc_sample/`《旧宅的低语》（d100 调查 + SAN 损失 + 疯狂发作三幕）。
+  - 测试：`test_rules_profiles.py` 扩至 63 项（coc7 画像/d100 统计倾向/SAN/场景路由）；三套件全绿。
+- **规则书资源库整体迁入**（2026-09-02，用户拍板）：`F:\novel\规则书\trpg_rulebooks` → 项目内 `规则书/trpg_rulebooks`（robocopy 175,620 文件 / 2.786 GB，0 失败；`.gitignore` 排除 `/规则书/`，不入 git，版权归各出版方）；库内 README/交接报告/汇编脚本路径引用同步更新。
+
 - **v3.2 多系统裁决内核抽象**（2026-09-02，拓展规划见 `docs/拓展规划-2026-09-02.md`）：
   - 新增 `core/rules/`：`SystemProfile` 画像基类 + 注册表（`get_profile/register_profile/available_systems`）+ **GURPS 4e 参考实现**（`core/rules/gurps.py`，检定/伤害/部位/穿透/主动防御/休克原语自 `combat_engine`/`scene_engine` 原样迁移，行为零变化）。
   - `CombatEngine`/`SceneEngine` 增加 `system_id` 参数，规则细节委托画像（引擎只做编排与实体状态应用）；静态接口（`roll_damage`/`get_damage_type`/`roll_hit_location`/`HIT_LOCATIONS`）保留导出兼容。
