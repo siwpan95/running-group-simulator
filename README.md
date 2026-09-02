@@ -342,6 +342,16 @@ python tests/test_excel_roundtrip.py
 加载/检索 + `tools/validate_catalogs.py` schema 校验）——**多系统裁决中间件化全线完成**。
 规则取材与校对来源：项目内资源库 `规则书/trpg_rulebooks`（见「规则书资源库」节）。
 
+## 发行版（Windows）
+
+- **v3.6.0**（2026-09-02）：PyInstaller onedir 打包 zip（50.4 MB），config/modules/
+  characters/data/templates 与 alloy 内核随包，解压双击 `running-group-simulator.exe`
+  即玩（含 CoC/D&D/WoD/GURPS 四系统示例模组）。本地留存
+  `installer/running-group-simulator-v3.6.0-win64.zip`（git 忽略）。
+- 旧版 v1.0.0（2026-08-27，GURPS 单系统）release 页面保留在 gitee，不删除。
+- 冒烟协议：调试构建 + 真实冒烟（cmd 重定向 stdin 走完 模组选择→角色选择→主循环→退出，
+  stderr 无 Traceback）。
+
 ## 开发指南
 
 ### 架构红线（不可违反）

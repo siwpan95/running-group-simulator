@@ -4,6 +4,16 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [3.6.0] - 2026-09-02
+
+### Added
+
+- 发行版重做：v3.6.0 Windows onedir zip（50.4 MB），四系统（GURPS 4e / CoC 7e /
+  D&D 5e / WoD）示例模组随包；PyInstaller spec 补齐 datas（config/modules/
+  characters/data/templates）与 alloy 内核 hiddenimports；真实冒烟通过
+  （模组选择→角色选择→主循环→退出，stderr 无 Traceback）。
+- 旧版 v1.0.0 release 保留（资产保全）；里程碑 tags v3.2~v3.6。
+
 ## [Unreleased]
 
 ### Changed
