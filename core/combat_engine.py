@@ -2,6 +2,9 @@
 """
 迷失之镜 — 战斗引擎 (Model 层 · 阶段 4)
 倡议抽牌 + 附庸 + Wildcard + FP 休克 + 主动防御 + 部位伤害
+
+v3.2（2026-09-02）：纯规则（掷骰/伤害/部位/穿透/防御/休克）已收拢到
+core/rules/gurps.py 系统画像，本引擎只做战斗编排与实体状态应用。
 """
 import random
 from typing import List, Dict, Tuple, Optional
@@ -9,17 +12,11 @@ from dataclasses import dataclass, field
 from core.character import Character
 from core.dice import roll_3d6 as kernel_roll_3d6
 from core.enemy import Enemy
+from core.rules import get_profile
+from core.rules.gurps import HIT_LOCATIONS  # noqa: F401  （兼容旧导出）
 
-
-# === 命中部位表 ===
-HIT_LOCATIONS = {
-    3: "头", 4: "头", 5: "头",
-    6: "右臂", 7: "左臂",
-    8: "躯干", 9: "躯干", 10: "躯干", 11: "躯干",
-    12: "右腿", 13: "左腿",
-    14: "躯干", 15: "躯干", 16: "躯干",
-    17: "头", 18: "头",
-}
+# 默认画像实例（静态方法委托用；引擎实例用 self.profile，可切系统）
+_GURPS = get_profile("gurps")
 
 
 @dataclass
@@ -33,9 +30,10 @@ class CombatState:
 
 
 class CombatEngine:
-    """战斗引擎"""
+    """战斗引擎（v3.2 起规则细节委托系统画像，可经 system_id 切换）"""
 
-    def __init__(self):
+    def __init__(self, system_id: str = "gurps"):
+        self.profile = get_profile(system_id)
         self.state: Optional[CombatState] = None
 
     @staticmethod
@@ -45,34 +43,19 @@ class CombatEngine:
 
     @staticmethod
     def roll_damage(damage_str: str) -> int:
-        """掷伤害骰。格式: '1d6 cut' / '2d6+1 imp'"""
-        import re
-        match = re.match(r"(\d+)d(\d+)([+-]\d+)?", damage_str)
-        if not match:
-            return 1
-        count, sides = int(match.group(1)), int(match.group(2))
-        modifier = int(match.group(3) or 0)
-        total = sum(random.randint(1, sides) for _ in range(count))
-        return max(1, total + modifier)
+        """掷伤害骰。格式: '1d6 cut' / '2d6+1 imp'（委托 GURPS 画像）"""
+        raw, _ = _GURPS.roll_damage(damage_str)
+        return raw
 
     @staticmethod
     def get_damage_type(damage_str: str) -> str:
-        """从伤害字符串提取类型"""
-        if "cut" in damage_str.lower() or "切割" in damage_str:
-            return "切割"
-        if "imp" in damage_str.lower() or "穿刺" in damage_str or "pi" in damage_str.lower():
-            return "穿刺"
-        if "cr" in damage_str.lower() or "钝击" in damage_str:
-            return "钝击"
-        if "burn" in damage_str.lower() or "燃烧" in damage_str:
-            return "燃烧"
-        return "钝击"
+        """从伤害字符串提取类型（委托 GURPS 画像）"""
+        return _GURPS.damage_type(damage_str)
 
     @staticmethod
     def roll_hit_location() -> str:
-        """掷部位表"""
-        roll = CombatEngine.roll_3d6()
-        return HIT_LOCATIONS.get(roll, "躯干")
+        """掷部位表（委托 GURPS 画像）"""
+        return _GURPS.hit_location()
 
     # === 倡议 ===
 
@@ -122,20 +105,18 @@ class CombatEngine:
     def attack_resolve(self, attacker, defender, attacker_skill: int,
                        is_reverse: bool = False) -> Dict:
         """
-        攻击裁决
+        攻击裁决（v3.2：掷骰/部位/穿透委托系统画像）
         返回裁决数据包: {success, roll, target, margin, damage, location, type, dr, penetrated}
         """
-        roll = self.roll_3d6()
-        target = attacker_skill
-        success = roll <= target
-        is_crit = roll <= 4
-        is_fumble = roll >= 17
+        chk = self.profile.roll_check(attacker_skill, 0)
+        is_crit = chk["is_crit_success"]
+        is_fumble = chk["is_fumble"]
 
         result = {
-            "success": success,
-            "roll": roll,
-            "target": target,
-            "margin": target - roll,
+            "success": chk["success"],
+            "roll": chk["roll"],
+            "target": chk["target"],
+            "margin": chk["margin"],
             "is_crit": is_crit,
             "is_fumble": is_fumble,
             "damage": 0,
@@ -145,13 +126,14 @@ class CombatEngine:
             "dr": 0,
             "penetrated": 0,
             "defender_name": getattr(defender, "name", "目标"),
+            "system": self.profile.system_id,
         }
 
-        if not success or is_fumble:
+        if not result["success"] or is_fumble:
             return result
 
         # 命中部位
-        location = self.roll_hit_location()
+        location = self.profile.hit_location()
         result["location"] = location
 
         # 伤害
@@ -163,8 +145,7 @@ class CombatEngine:
         else:
             damage_str = "1d6 cut"
 
-        raw = self.roll_damage(damage_str)
-        dtype = self.get_damage_type(damage_str)
+        raw, dtype = self.profile.roll_damage(damage_str)
 
         # 暴击双倍
         if is_crit:
@@ -182,33 +163,18 @@ class CombatEngine:
             dr = 0
 
         result["dr"] = dr
-        penetrated = max(0, raw - dr)
-
-        # 伤害类型倍率
-        if dtype == "切割":
-            penetrated = int(penetrated * 1.5)
-        elif dtype == "穿刺" and raw > dr:
-            penetrated = penetrated * 2
-
+        penetrated = self.profile.penetration(raw, dr, dtype)
         result["damage"] = penetrated
         result["penetrated"] = penetrated
 
         # 部位效应
-        location_effects = {}
-        if "头" in location and penetrated >= 2:
-            location_effects["shock"] = -4
-        if "臂" in location and penetrated >= 3:
-            location_effects["weapon_grip"] = -2
-        if "腿" in location and penetrated >= 3:
-            location_effects["movement"] = -2
-
-        result["location_effects"] = location_effects
+        result["location_effects"] = self.profile.location_effects(penetrated, location)
 
         return result
 
     def active_defense(self, defender, attack_packet: Dict) -> Dict:
         """
-        主动防御判定（闪避）
+        主动防御判定（闪避，v3.2 委托系统画像）
         返回: {"result": "dodged"|"hit", "narrative": "..."}
         """
         if isinstance(defender, Character):
@@ -217,39 +183,19 @@ class CombatEngine:
             dodge = defender.dodge
         else:
             dodge = 8
-
-        roll = self.roll_3d6()
-
-        if roll <= dodge:
-            return {"result": "dodged",
-                    "narrative": "侧身闪过——攻击擦过衣角。",
-                    "roll": roll, "dodge": dodge}
-
-        return {"result": "hit",
-                "narrative": "闪避失败——攻击命中！",
-                "roll": roll, "dodge": dodge}
+        return self.profile.active_defense(dodge)
 
     # === 休克检定 ===
 
     def shock_check(self, entity, damage_taken: int) -> Dict:
-        """HT 休克检定"""
+        """HT 休克检定（v3.2 委托系统画像）"""
         if isinstance(entity, Character):
-            ht = entity.ht
-            threshold = entity.shock_threshold
+            ht, threshold = entity.ht, entity.shock_threshold
         elif isinstance(entity, Enemy):
-            ht = entity.ht
-            threshold = entity.shock_threshold
+            ht, threshold = entity.ht, entity.shock_threshold
         else:
             return {"status": "ok"}
-
-        if damage_taken < threshold:
-            return {"status": "ok"}
-
-        roll = self.roll_3d6()
-        if roll > ht:
-            return {"status": "stunned", "penalty": -4, "duration": "1 round"}
-
-        return {"status": "ok"}
+        return self.profile.shock_check(ht, threshold, damage_taken)
 
     # === 应用伤害 ===
 

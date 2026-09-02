@@ -43,11 +43,13 @@ pt/
 ├── mirror_mvp.py                ← 核心引擎（MVVM 集成中心）
 │
 ├── config/                      ← 项目配置
-│   └── system.json              │  系统配置（规则引擎、内容库、架构描述）
+│   ├── system.json              │  系统配置（规则引擎、内容库、架构描述）
+│   └── systems.json             │  多系统画像注册声明（v3.2，default_system）
 │
 ├── core/                        ← Model + ViewModel 层
 │   ├── character.py             │  GURPS 角色数据模型（四属性/衍生/技能/特征/装备）
 │   ├── dice.py                  │  规则原语接入层（3d6 掷骰 + GURPS 成功率表 → alloy 内核，R2）
+│   ├── rules/                   │  多系统裁决画像（v3.2）：base 接口 + 注册表 + gurps 参考实现
 │   ├── enemy.py                 │  敌人模型（mook/elite/wildcard/boss）
 │   ├── scene_engine.py          │  数据驱动场景引擎（module.json → 节点执行）
 │   ├── combat_engine.py         │  战斗引擎（先攻/攻击/防御/休克/部位）
@@ -111,8 +113,9 @@ pt/
 │   └── char_importer.py         │  角色卡 Excel → JSON 导入器
 │
 ├── tests/                       ← 测试套件
-│   ├── test_comprehensive.py     │  535 项全覆盖测试
-│   └── test_excel_roundtrip.py  │  Excel 生态回验证
+│   ├── test_comprehensive.py     │  546 项全覆盖测试
+│   ├── test_excel_roundtrip.py  │  Excel 生态回验证
+│   └── test_rules_profiles.py   │  多系统裁决画像测试（v3.2，35 项）
 ```
 
 ---
@@ -152,9 +155,12 @@ python mirror_launcher.py
 ```bash
 cd pt
 python tests/test_comprehensive.py
+python tests/test_excel_roundtrip.py
+python tests/test_rules_profiles.py      # v3.2 多系统画像
 ```
 
-546 项测试覆盖 16 个模块，验证核心路径与边缘情况。
+546 项测试覆盖 16 个模块，验证核心路径与边缘情况；Windows GBK 控制台
+下建议 `set PYTHONUTF8=1`（否则套件末尾的 ✔/emoji 输出会报 UnicodeEncodeError）。
 
 ### Excel 生态验证
 
@@ -318,6 +324,20 @@ python tests/test_excel_roundtrip.py
 > 归属：该资源库为**本项目配套资源**（用户 2026-09-02 明确），不是独立项目；
 > 库本身尚未建立版本控制，如需入仓另行规划。
 
+## 多系统裁决中间件（v3.2 · 2026-09-02）
+
+裁决规则从「GURPS 硬编码」重构为**可插拔系统画像**（`core/rules/`）：
+
+- `SystemProfile` 接口 = 检定 / 伤害 / 部位 / 穿透 / 主动防御 / 休克；
+  GURPS 4e 是首个参考实现（`core/rules/gurps.py`，行为与 v3.1 完全一致）；
+- `CombatEngine` / `SceneEngine` 以 `system_id` 路由画像，`ResolutionPacket`
+  携带 `system` 字段；ViewModel（锚点叙事）与 View（终端渲染）保持系统无关；
+- 模组声明可用系统：`meta.systems: ["gurps"]`（`compatible_core` 向后兼容）。
+
+**路线图**（详见 `docs/拓展规划-2026-09-02.md`）：v3.3 CoC 7e（d100+理智）
+→ v3.4 D&D 5e（d20）→ v3.5 WoD（d10 骰池）→ v3.6 内容目录工程化。
+规则取材与校对来源：资源库 `F:\novel\规则书\trpg_rulebooks`（见「规则书资源库」节）。
+
 ## 开发指南
 
 ### 架构红线（不可违反）
@@ -359,6 +379,7 @@ python tests/test_excel_roundtrip.py
 | v1.0 | — | 基础架构，脚本驱动 |
 | v2.0 | 2026-06-06 | MVVM 三层重构，数据驱动，15 模块，535 测试 |
 | v3.1 | 2026-06-06 | 完整角色系统、战斗引擎、VM 管线、XP 成长 |
+| v3.2 | 2026-09-02 | 多系统裁决内核抽象（SystemProfile + 注册表 + GURPS 参考实现，行为零变化） |
 
 ---
 

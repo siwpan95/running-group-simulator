@@ -105,19 +105,9 @@ class MirrorOfLost:
         return kernel_roll_3d6()
 
     def physical_resolve(self, skill_level: int, modifier: int = 0) -> dict:
-        """执行物理裁决，返回 ResolutionPacket"""
-        roll = self.roll_3d6()
-        target = skill_level + modifier
-        success = roll <= target
-        return {
-            "roll": roll,
-            "target": target,
-            "success": success,
-            "margin": target - roll,
-            "is_crit_success": roll <= 4,
-            "is_fumble": roll >= 17,
-            "success_chance": gurps_success_chance(target),
-        }
+        """执行物理裁决，返回 ResolutionPacket（v3.2 委托 GURPS 系统画像）"""
+        from core.rules import get_profile
+        return get_profile("gurps").roll_check(skill_level, modifier)
 
     # === 战斗 ===
 

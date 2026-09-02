@@ -13,6 +13,7 @@ from core.environment_system import EnvironmentSystem
 from core.viewmodel import ViewModel, ViewModelResult
 from core.combat_engine import CombatEngine
 from core.enemy import Enemy
+from core.rules import get_profile
 from services.scene_resolver import SceneResolver
 
 
@@ -34,12 +35,13 @@ class SceneEngine:
     """
 
     def __init__(self, module_data: Dict, pc: Character, view_model: ViewModel,
-                 env_system: EnvironmentSystem):
+                 env_system: EnvironmentSystem, system_id: str = "gurps"):
         self.module = module_data
         self.pc = pc
         self.vm = view_model
         self.env = env_system
-        self.combat = CombatEngine()
+        self.profile = get_profile(system_id)   # v3.2：检定规则委托系统画像
+        self.combat = CombatEngine(system_id)
         self.resolver = SceneResolver()
 
         # 追踪上一次掷骰（给 View 层读取）
@@ -178,21 +180,11 @@ class SceneEngine:
         tag_mod = self.pc.calc_tag_modifier()
         modifier += tag_mod
 
-        target = skill_level + modifier + tool_bonus
-        roll = roll_3d6()
-
-        packet = {
-            "roll": roll,
-            "target": target,
-            "success": roll <= target,
-            "margin": target - roll,
-            "is_crit_success": roll <= 4,
-            "is_fumble": roll >= 17,
-            "success_chance": gurps_success_chance(target),
-            "action_type": node.get("scene_type", "check"),
-            "skill_used": skill_check,
-            "modifiers": {"base": modifier, "env": env_mod, "tag": tag_mod, "tool": tool_bonus},
-        }
+        # v3.2：掷骰/判成功委托系统画像（行为与 v3.1 完全一致）
+        packet = self.profile.roll_check(skill_level, modifier + tool_bonus)
+        packet["action_type"] = node.get("scene_type", "check")
+        packet["skill_used"] = skill_check
+        packet["modifiers"] = {"base": modifier, "env": env_mod, "tag": tag_mod, "tool": tool_bonus}
 
         # 记录最后一次掷骰（给 View 层读取）
         self._last_packet = packet
