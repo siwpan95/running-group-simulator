@@ -24,6 +24,14 @@
       "dice": "d20 + 加成 vs DC（自然 20 大成功 / 自然 1 大失败；优劣势双骰）",
       "based_on": "D&D 5e SRD 5.1（Wizards of the Coast）",
       "source": "资源库 5thsrd（SRD 5.1，CC BY 4.0）+ 5echm 中文六书（取材校对）"
+    },
+    "wod": {
+      "display_name": "黑暗世界（Storytelling System）",
+      "module": "core.rules.wod",
+      "class": "WoDProfile",
+      "dice": "d10 骰池（≥8 成功，10-again；≥5 大成功；0 成功且出 1 戏剧性失败；V5 饥饿骰）",
+      "based_on": "新黑暗世界 Storytelling System（Onyx Path / Paradox）",
+      "source": "资源库 trow_books WoD 成书 40+ 部（社区翻译，取材校对）"
     }
   },
   "notes": "module.json 的 meta.compatible_core 为向后兼容字段；新增模组建议用 meta.systems: [\"gurps\", ...] 声明可用系统。"

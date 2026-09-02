@@ -352,8 +352,83 @@ def test_dnd5e_combat_ac():
     check("dnd5e 战斗 target=哥布林 AC", pkt2.get("target") == 15)
 
 
+def test_wod_profile():
+    from core.rules import available_systems, get_profile
+    from core.rules.wod import roll_pool
+    check("注册表含 wod", "wod" in available_systems(), str(available_systems()))
+    p = get_profile("wod")
+    check("wod system_id", p.system_id == "wod")
+    check("wod roll_low 风格", p.check_style == "roll_low")
+    # 骰池原语
+    s, faces, h = roll_pool(10)
+    check("wod 骰池成功数非负", s >= 0)
+    check("wod 骰面长度 ≥ 骰池", len(faces) >= 10)
+    # 检定
+    r = p.roll_check(10, 0)
+    check("wod pool 字段", r.get("pool") == 10, str(r))
+    check("wod system 标记", r["system"] == "wod")
+    check("wod 成功数即 roll", r["roll"] == r.get("pool_roll", r["roll"]))
+    # 大成功 / 戏剧性失败统计
+    import random
+    random.seed(3)
+    crits = any(p.roll_check(15, 0)["is_crit_success"] for _ in range(300))
+    check("wod 15骰 300 次出现大成功", crits)
+    random.seed(5)
+    fumbles = any(p.roll_check(1, 0)["is_fumble"] for _ in range(400))
+    check("wod 1骰 400 次出现戏剧性失败", fumbles)
+    # 成功率
+    chk = p.roll_check(10, 0)
+    check("wod 10骰成功率≈97%", chk["success_chance"] == 97, str(chk["success_chance"]))
+    # 饥饿骰 messy（大骰池+高饥饿，统计出现）
+    random.seed(13)
+    messy = any(p.roll_check(20, 0, hunger=5).get("messy_critical") for _ in range(1500))
+    check("wod 饥饿骰 messy critical 出现", messy)
+    # 技能目标
+    from core.character import Character, Skill
+    pc = Character(name="吸血鬼", st=11, dx=12, ht=10, iq=12, per=12, will=13,
+                   skills=[Skill("格斗", 4, "Avg", "DX", 0)])
+    check("wod 技能骰池直取", p.skill_target(pc, "格斗") == 4)
+    check("wod 力量属性池", p.skill_target(pc, "力量") == 11)
+    check("wod 意志属性池", p.skill_target(pc, "意志") == 13)
+    # 伤害/防御/重伤
+    raw, t = p.roll_damage("2d6+1 致命")
+    check("wod 伤害类型致命", t == "致命", t)
+    check("wod agg→恶性", p.damage_type("1d10 agg") == "恶性")
+    check("wod 伤害平减", p.penetration(6, 2, "致命") == 4)
+    check("wod 无暴击翻倍", p.crit_damage(7) == 7)
+    d = p.active_defense(20)
+    check("wod 防御结果合法", d["result"] in ("dodged", "hit"), str(d))
+    check("wod 轻伤无惩罚", p.shock_check(10, 10, 3)["status"] == "ok")
+    check("wod 重伤震慑", p.shock_check(10, 10, 6)["status"] == "stunned")
+
+
+def test_wod_scene_routing():
+    from core.character import Character, Skill
+    from core.scene_engine import SceneEngine
+    from core.viewmodel import ViewModel
+    from core.environment_system import EnvironmentSystem
+    module = {
+        "meta": {"systems": ["wod"]},
+        "act_1": {"nodes": [{
+            "node_id": "n1", "scene_type": "perception",
+            "layer_physics": {"skill_check": "侦查", "modifier": 2},
+        }]},
+    }
+    pc = Character(name="吸血鬼", iq=12, per=12,
+                   skills=[Skill("侦查", 3, "Avg", "WIT", 0)])
+    env = EnvironmentSystem()
+    vm = ViewModel()
+    eng = SceneEngine(module, pc, vm, env, system_id="wod")
+    res = eng.run_node("n1")
+    r = res.roll_info
+    check("wod 场景 packet system", r is not None and r.get("system") == "wod",
+          str(r)[:100])
+    check("wod 场景 pool=3+2", r is not None and r.get("pool") == 5,
+          str(r)[:120])
+
+
 def main():
-    print("test_rules_profiles（v3.2 多系统画像 + v3.3 CoC 7e + v3.4 D&D 5e）")
+    print("test_rules_profiles（v3.2 多系统画像 + CoC/D&D/WoD）")
     test_registry()
     test_gurps_check()
     test_gurps_damage()
@@ -368,6 +443,8 @@ def main():
     test_dnd5e_profile()
     test_dnd5e_scene_routing()
     test_dnd5e_combat_ac()
+    test_wod_profile()
+    test_wod_scene_routing()
     print("================ 结果 ================")
     print("通过: %d    失败: %d" % (_PASS, _FAIL))
     if _FAIL:

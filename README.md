@@ -336,8 +336,8 @@ python tests/test_excel_roundtrip.py
 - 模组声明可用系统：`meta.systems: ["gurps"]`（`compatible_core` 向后兼容）。
 
 **路线图**（详见 `docs/拓展规划-2026-09-02.md`）：v3.2 内核抽象 ✅ → v3.3 CoC 7e ✅
-→ v3.4 D&D 5e ✅（d20 vs DC/优劣势/AC 战斗 + SRD 目录怪物 15·法术 10·装备 16
-+ 示例模组 `modules/dnd_sample/`）→ v3.5 WoD（d10 骰池）→ v3.6 内容目录工程化。
+→ v3.4 D&D 5e ✅ → v3.5 WoD ✅（d10 骰池/10-again/戏剧性失败/饥饿骰 + 示例模组
+`modules/wod_sample/`）→ v3.6 内容目录工程化（收尾）。
 规则取材与校对来源：项目内资源库 `规则书/trpg_rulebooks`（见「规则书资源库」节）。
 
 ## 开发指南
@@ -384,6 +384,7 @@ python tests/test_excel_roundtrip.py
 | v3.2 | 2026-09-02 | 多系统裁决内核抽象（SystemProfile + 注册表 + GURPS 参考实现，行为零变化） |
 | v3.3 | 2026-09-02 | CoC 7e 系统画像（d100/奖励惩罚骰/SAN 理智+疯狂发作）+ 生物目录 35 条 + 示例模组 |
 | v3.4 | 2026-09-02 | D&D 5e 系统画像（d20 vs DC/优劣势/AC 战斗）+ SRD 目录 41 条 + 示例模组 |
+| v3.5 | 2026-09-02 | WoD 系统画像（d10 骰池/10-again/戏剧性失败/饥饿骰）+ 示例模组 |
 
 ---
 

@@ -8,6 +8,11 @@
 
 ### Changed
 
+- **v3.5 WoD 系统画像**（2026-09-02）：
+  - 新增 `core/rules/wod.py`：d10 骰池（≥8 成功、10-again 再掷）、成功数 ≥5 大成功、0 成功且出 1 戏剧性失败、V5 饥饿骰（hunger 参数，大成功且饥饿骰出 10 → messy critical）、伤害平减护甲（冲击/致命/恶性）、无暴击翻倍、重伤半血震慑（受伤惩罚抽象）、防御骰池。
+  - **示例模组**：`modules/wod_sample/`《夜之血约》（血族政治三幕：侦查/追踪/战斗/意志抉择）。
+  - 测试：`test_rules_profiles.py` 扩至 115 项（骰池原语/大成功与戏剧性失败统计/饥饿骰 messy/成功率/场景 pool 路由）；三套件全绿。
+
 - **v3.4 D&D 5e 系统画像**（2026-09-02）：
   - 新增 `core/rules/dnd5e.py`：d20 roll-high vs DC（自然 20 大成功/自然 1 大失败）、优势/劣势（双骰取高/低）、属性修正 `(attr-10)//2` 与技能加成（`skill_target`）、全套伤害类型（挥砍/穿刺/钝击/火焰/寒冷/闪电/强酸/雷鸣/力场/心灵/毒素/光耀/暗蚀）、大成功伤害翻倍、无主动防御掷骰（AC 已含）与无 GURPS 式休克。
   - `SystemProfile` 增 `check_style`（roll_low/roll_high）；场景引擎 roll_high 分支（节点 `dc` 字段=难度等级，修正链并入加成）；战斗引擎 roll_high 分支（d20+命中加成 vs 防御方 AC）；`Character`/`Enemy` 增 `ac` 字段（0=未启用，GURPS 零影响）。

@@ -40,3 +40,4 @@ def available_systems():
 from core.rules import gurps  # noqa: E402,F401  （导入即注册）
 from core.rules import coc7   # noqa: E402,F401
 from core.rules import dnd5e  # noqa: E402,F401
+from core.rules import wod    # noqa: E402,F401

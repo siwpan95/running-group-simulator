@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "module_id": "wod_sample",
+    "system_name": "Mirror of the Lost",
+    "module_title": "夜之血约",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "Storytelling System (nWoD)",
+    "systems": ["wod"],
+    "playstyle": "都市暗夜 / 吸血鬼政治",
+    "estimated_duration": "1-2 小时",
+    "player_count": "2-4 人",
+    "synopsis": "血族城市会议前夕，一位信使死在你的辖区。多系统引擎 WoD 示例模组——d10 骰池、10-again、戏剧性失败、饥饿骰。",
+    "base_xp": 3
+  },
+  "global_context_tags": [
+    { "id": "city_night", "name": "都市夜幕", "effect": "潜行骰池 +1" },
+    { "id": "blood_scent", "name": "血腥气", "effect": "追踪相关骰池 +1" }
+  ],
+  "act_1": {
+    "scene_id": "act1_the_alley",
+    "title": "后巷的尸体",
+    "description": "信使的尸体靠在巷尾，喉咙上的伤口不是人类牙齿的形状。",
+    "environment": {
+      "mood": "路灯在巷口投下昏黄的光，垃圾袋在风里沙沙作响。",
+      "tags": [
+        { "id": "blood_scent", "name": "血腥气", "effect": "追踪相关骰池 +1" }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_inspect",
+        "scene_type": "investigation",
+        "trigger": "检查尸体与现场痕迹。",
+        "prerequisite_nodes": [],
+        "next_nodes": ["1.2_trail"],
+        "layer_physics": {
+          "skill_check": "侦查",
+          "modifier": 3
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "伤口边缘有霜——凶手是比你年长的血族。地上有第三双脚印，消失在通风井。",
+            "crit_success": "你甚至认出那齿距：第三世代会议里，只有一个人这样进食。",
+            "failure": "血腥气太重，你什么线索也抓不住。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_trail",
+        "scene_type": "feat",
+        "trigger": "沿着通风井的痕迹追踪凶手。",
+        "prerequisite_nodes": ["1.1_inspect"],
+        "next_nodes": ["2.1_confront"],
+        "layer_physics": {
+          "skill_check": "潜行",
+          "modifier": 4
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你无声地穿过通风系统，像一道影子。",
+            "failure": "铁皮在你脚下呻吟——黑暗深处，有什么东西停住了。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_confront",
+    "title": "地下巢穴",
+    "description": "通风井通向一处废弃地铁站，那里住着一位被放逐的长者。",
+    "environment": {
+      "mood": "水滴从穹顶滴落，回声像倒计时。",
+      "tags": []
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_confront",
+        "scene_type": "combat",
+        "trigger": "长者从阴影里走出，獠牙在黑暗中发亮。",
+        "prerequisite_nodes": ["1.2_trail"],
+        "next_nodes": ["2.2_choice"],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "unit_stats": {
+            "name": "被放逐的长者",
+            "hp": 12,
+            "attack_skill": 7,
+            "damage": "1d10+2 致命",
+            "ac": 0,
+            "dodge": 6,
+            "dr": 1
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你的第一击占了先机——长者的动作比传闻中迟缓。",
+            "failure": "长者比你快。黑暗中，他的爪子已经贴上了你的咽喉。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_choice",
+        "scene_type": "investigation",
+        "trigger": "长者倒下了。现在，决定他的命运。",
+        "prerequisite_nodes": ["2.1_confront"],
+        "next_nodes": [],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 3
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你压下了饥饿。血债，应当由城市会议来裁决。",
+            "failure": "饥饿赢了。等你回过神来，巷子里只剩一具更空的躯壳。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_dawn",
+    "title": "黎明之前",
+    "description": "会议厅的钟声还有一小时敲响。",
+    "nodes": [
+      {
+        "node_id": "3.1_report",
+        "scene_type": "explore",
+        "trigger": "整理证词，准备在城市会议上陈述。",
+        "prerequisite_nodes": ["2.2_choice"],
+        "next_nodes": [],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 2
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "今夜之后，你的名字会出现在城市会议的记录里——以控诉者的身份。"
+          }
+        }
+      }
+    ]
+  }
+}
