@@ -301,6 +301,23 @@ python tests/test_excel_roundtrip.py
 借鉴必记账：3d6 掷骰 + GURPS 成功率表 ← alloy.trpg.dice（自 D20 并入，R2）；
 接入测试见 `tests/test_comprehensive.py` §16（内核同种子同值/成功率表/引擎接入面）。
 
+## 规则书资源库（2026-09-02）
+
+本项目收集的 TRPG 规则书库位于本地 **`F:\novel\规则书\trpg_rulebooks\`**（约 17 万文档
+/ 2.1 GB，明细见库内 `README.md` 与 `manifest.json`），是本引擎的**参考资源库**：
+
+- **GURPS 直接相关**：`TRPGrepo/其他规则/` 泛统基本集整合 PDF、泛统第四版基本集_角色
+  PDF；`trow_books/GURPS4_Basic`（第四版基本规则中译 13 章）、`GURPS4_Characters`
+  （基本集角色篇）、`GURPS_Extensions`（第三版扩展：龙/克苏鲁朋克/技术法师/超人太空/
+  半人马座阿尔法/基础设定，145.8 万字符）；`trow_rulebooks/forum_62` 泛统散帖。
+- **取材与校对用途**：引擎数值（成功率表、部位表、伤害类型、附庸阈值）的规则依据
+  在此库核对；后续扩展（魔法/超自然/科幻世设）可从 GURPS 扩展册取材。
+- 库内 T.R.O.W. 论坛内容为社区翻译（GPL-2.0 vendored 口径，见库内说明），
+  规则本体版权归 Steve Jackson Games，仅作个人研究参考，不随本仓分发。
+
+> 归属：该资源库为**本项目配套资源**（用户 2026-09-02 明确），不是独立项目；
+> 库本身尚未建立版本控制，如需入仓另行规划。
+
 ## 开发指南
 
 ### 架构红线（不可违反）
