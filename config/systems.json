@@ -16,6 +16,14 @@
       "dice": "d100 roll-low（01/五分之一大成功；100 大失败；奖励/惩罚骰）",
       "based_on": "Call of Cthulhu 7th Edition（Chaosium）",
       "source": "资源库 coc_pdf 三宝书 + trow CoC 扩展帖（取材校对）"
+    },
+    "dnd5e": {
+      "display_name": "龙与地下城 5 版",
+      "module": "core.rules.dnd5e",
+      "class": "Dnd5eProfile",
+      "dice": "d20 + 加成 vs DC（自然 20 大成功 / 自然 1 大失败；优劣势双骰）",
+      "based_on": "D&D 5e SRD 5.1（Wizards of the Coast）",
+      "source": "资源库 5thsrd（SRD 5.1，CC BY 4.0）+ 5echm 中文六书（取材校对）"
     }
   },
   "notes": "module.json 的 meta.compatible_core 为向后兼容字段；新增模组建议用 meta.systems: [\"gurps\", ...] 声明可用系统。"

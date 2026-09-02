@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "module_id": "dnd_sample",
+    "system_name": "Mirror of the Lost",
+    "module_title": "哥布林洞窟",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "D&D 5e",
+    "systems": ["dnd5e"],
+    "playstyle": "地城探险 / 战斗",
+    "estimated_duration": "1-2 小时",
+    "player_count": "3-5 人",
+    "synopsis": "商队被劫，线索指向山脚下的哥布林洞窟。多系统引擎 D&D 5e 示例模组——d20 检定 vs DC、优劣势、AC 战斗。",
+    "base_xp": 3
+  },
+  "global_context_tags": [
+    { "id": "cave_dark", "name": "洞窟昏暗", "effect": "无光源时侦查劣势" },
+    { "id": "slippery_floor", "name": "湿滑地面", "effect": "敏捷豁免 -2" }
+  ],
+  "act_1": {
+    "scene_id": "act1_the_cave_mouth",
+    "title": "洞窟入口",
+    "description": "洞口半掩在藤蔓后，地上有拖拽重物的痕迹。",
+    "environment": {
+      "mood": "山风穿过洞口，带来潮湿的霉味和一丝血腥。",
+      "tags": [
+        { "id": "cave_dark", "name": "洞窟昏暗", "effect": "无光源时侦查劣势" }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_tracks",
+        "scene_type": "perception",
+        "trigger": "调查地上的拖拽痕迹。",
+        "prerequisite_nodes": [],
+        "next_nodes": ["1.2_trap"],
+        "layer_physics": {
+          "skill_check": "侦查",
+          "dc": 12,
+          "advantage": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "至少三只小型类人生物拖着一个麻袋进了洞，血迹一路滴进黑暗。",
+            "crit_success": "你甚至分辨出它们光脚上的鳞屑——是哥布林，五只，其中一只跛脚。",
+            "failure": "碎石和苔藓掩盖了一切。你什么也没发现。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_trap",
+        "scene_type": "feat",
+        "trigger": "小心通过洞口内的一截下坡。",
+        "prerequisite_nodes": ["1.1_tracks"],
+        "next_nodes": ["2.1_goblin_camp"],
+        "layer_physics": {
+          "skill_check": "敏捷",
+          "dc": 13,
+          "modifier": -2
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你踏过湿滑的石坡，没惊动任何东西。",
+            "failure": "脚下一滑，碎石滚进黑暗深处——回声里，有东西被惊醒了。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_goblin_camp",
+    "title": "哥布林营地",
+    "description": "火光从拐角后透出。哥布林们围着被劫的货物分赃。",
+    "environment": {
+      "mood": "火把噼啪作响，映着几张贪婪的小脸。",
+      "tags": [
+        { "id": "slippery_floor", "name": "湿滑地面", "effect": "敏捷豁免 -2" }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_goblin_camp",
+        "scene_type": "combat",
+        "trigger": "一只哨兵哥布林发现了你，尖啸起来。",
+        "prerequisite_nodes": ["1.2_trap"],
+        "next_nodes": ["2.2_loot"],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "unit_stats": {
+            "name": "哥布林哨兵",
+            "hp": 7,
+            "attack_skill": 4,
+            "damage": "1d6+2 挥砍",
+            "ac": 15,
+            "dodge": 0,
+            "dr": 0
+          },
+          "advantage": 1
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你抢在哥布林扑来之前抽出了武器。",
+            "failure": "你慢了半拍——尖啸声已经惊动了整个营地。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_loot",
+        "scene_type": "investigation",
+        "trigger": "搜索哥布林的赃物堆。",
+        "prerequisite_nodes": ["2.1_goblin_camp"],
+        "next_nodes": [],
+        "layer_physics": {
+          "skill_check": "调查",
+          "dc": 14
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "在赃物底部，你找到了商队的货物清单——以及一枚不该出现在这里的贵族纹章。",
+            "failure": "赃物堆臭得让人分心，你只想离开这里。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_aftermath",
+    "title": "归途",
+    "description": "带着战利品与疑问离开洞窟。",
+    "nodes": [
+      {
+        "node_id": "3.1_return",
+        "scene_type": "explore",
+        "trigger": "走出洞窟，天色已暗。",
+        "prerequisite_nodes": ["2.2_loot"],
+        "next_nodes": [],
+        "layer_physics": {
+          "skill_check": "感知",
+          "dc": 10
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "山风里，你似乎听到远处又有尖啸声响起。洞窟，不止这一个。"
+          }
+        }
+      }
+    ]
+  }
+}

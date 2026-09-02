@@ -39,7 +39,10 @@ class Coc7Profile(SystemProfile):
     display_name = "克苏鲁的呼唤 7 版"
     dice_desc = "d100 roll-low（目标值 ≤ 技能；01/五分之一为大成功，100 为大失败；支持奖励/惩罚骰）"
 
-    def roll_check(self, skill_level, modifier=0, bonus_dice=0) -> dict:
+    def roll_check(self, skill_level, modifier=0, bonus_dice=0, advantage=0) -> dict:
+        # 兼容基类 advantage 参数（CoC 用 bonus_dice 表达奖励/惩罚骰）
+        if advantage and not bonus_dice:
+            bonus_dice = advantage
         target = max(1, min(100, skill_level + modifier))
         roll = roll_d100(bonus_dice)
         success = roll <= target

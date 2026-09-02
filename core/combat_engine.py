@@ -105,10 +105,15 @@ class CombatEngine:
     def attack_resolve(self, attacker, defender, attacker_skill: int,
                        is_reverse: bool = False) -> Dict:
         """
-        攻击裁决（v3.2：掷骰/部位/穿透委托系统画像）
+        攻击裁决（v3.2 委托系统画像；v3.4 roll_high 系按 AC 判定——
+        attacker_skill 视为命中加成，防御方 ac 视为 DC）
         返回裁决数据包: {success, roll, target, margin, damage, location, type, dr, penetrated}
         """
-        chk = self.profile.roll_check(attacker_skill, 0)
+        if getattr(self.profile, "check_style", "roll_low") == "roll_high":
+            dc = getattr(defender, "ac", 0) or 10
+            chk = self.profile.roll_check(dc, attacker_skill)
+        else:
+            chk = self.profile.roll_check(attacker_skill, 0)
         is_crit = chk["is_crit_success"]
         is_fumble = chk["is_fumble"]
 

@@ -37,7 +37,7 @@ class GurpsProfile(SystemProfile):
     display_name = "GURPS 4e"
     dice_desc = "3d6 roll-low（目标值 ≤ 技能+修正）；3-4 大成功，17-18 大失败"
 
-    def roll_check(self, skill_level, modifier=0) -> dict:
+    def roll_check(self, skill_level, modifier=0, advantage=0) -> dict:
         roll = roll_3d6()
         target = skill_level + modifier
         success = roll <= target

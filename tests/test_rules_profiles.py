@@ -260,8 +260,100 @@ def test_coc7_scene_routing():
         check("coc7 失败触发 SAN 损失（未失败则跳过）", True)
 
 
+def test_dnd5e_profile():
+    import random
+    from core.rules import available_systems, get_profile
+    check("注册表含 dnd5e", "dnd5e" in available_systems(), str(available_systems()))
+    p = get_profile("dnd5e")
+    check("dnd5e system_id", p.system_id == "dnd5e")
+    check("dnd5e roll_high", p.check_style == "roll_high")
+    r = p.roll_check(15, 5)
+    check("dnd5e d20 范围", 1 <= r["roll"] <= 20, str(r))
+    check("dnd5e target=DC", r["target"] == 15)
+    check("dnd5e system 标记", r["system"] == "dnd5e")
+    # 成功率统计：dc15 加成+5 → 55%
+    random.seed(7)
+    n = 3000
+    ok = sum(1 for _ in range(n) if p.roll_check(15, 5)["success"])
+    rate = ok / n
+    check("dnd5e dc15+5 成功率约 55%", 0.48 <= rate <= 0.62, "%.3f" % rate)
+    # 优劣势统计
+    random.seed(7)
+    avg_adv = sum(p.roll_check(15, 0, advantage=1)["roll"] for _ in range(3000)) / 3000
+    avg_dis = sum(p.roll_check(15, 0, advantage=-1)["roll"] for _ in range(3000)) / 3000
+    avg_pln = sum(p.roll_check(15, 0)["roll"] for _ in range(3000)) / 3000
+    check("优势均值 > 普通 > 劣势", avg_adv > avg_pln > avg_dis,
+          "%.2f > %.2f > %.2f" % (avg_adv, avg_pln, avg_dis))
+    # 自然 20 / 自然 1（构造 roll=20 的断言：统计上 3000 次必出现）
+    random.seed(11)
+    crits = any(p.roll_check(15, -10)["is_crit_success"] for _ in range(400))
+    fumbles = any(p.roll_check(2, 10)["is_fumble"] for _ in range(400))
+    check("dnd5e 自然20 大成功出现", crits)
+    check("dnd5e 自然1 大失败出现", fumbles)
+    # 技能目标
+    from core.character import Character, Skill
+    pc = Character(name="游荡者", st=12, dx=16, ht=10, iq=12, per=12,
+                   skills=[Skill("侦查", 4, "Avg", "WIS", 0)])
+    check("dnd5e 属性修正 (16-10)//2=3", p.skill_target(pc, "敏捷") == 3)
+    check("dnd5e 技能加成直取", p.skill_target(pc, "侦查") == 4)
+    check("dnd5e 未列属性 0", p.skill_target(pc, "魅力") == 0)
+    # 伤害/穿透/防御/重伤
+    raw, t = p.roll_damage("2d6+3 挥砍")
+    check("dnd5e 伤害 2d6+3 范围 5-15", 5 <= raw <= 15, str(raw))
+    check("dnd5e 伤害类型挥砍", t == "挥砍", t)
+    check("dnd5e 类型 fire", p.damage_type("1d6 fire") == "火焰")
+    check("dnd5e 类型 necrotic", p.damage_type("2d8 necrotic") == "暗蚀")
+    check("dnd5e 穿透平减", p.penetration(7, 2, "挥砍") == 5)
+    check("dnd5e 大成功双倍", p.crit_damage(6) == 12)
+    d = p.active_defense(15)
+    check("dnd5e 无主动防御掷骰（AC 已含）", d["result"] == "hit")
+    check("dnd5e 无休克", p.shock_check(10, 10, 8)["status"] == "ok")
+    check("dnd5e 部位=身体", p.hit_location() == "身体")
+
+
+def test_dnd5e_scene_routing():
+    from core.character import Character, Skill
+    from core.scene_engine import SceneEngine
+    from core.viewmodel import ViewModel
+    from core.environment_system import EnvironmentSystem
+    module = {
+        "meta": {"systems": ["dnd5e"]},
+        "act_1": {"nodes": [{
+            "node_id": "n1", "scene_type": "perception",
+            "layer_physics": {"skill_check": "侦查", "dc": 13},
+        }]},
+    }
+    pc = Character(name="游荡者", st=12, dx=16, ht=10, iq=12, per=12,
+                   skills=[Skill("侦查", 4, "Avg", "WIS", 0)])
+    env = EnvironmentSystem()
+    vm = ViewModel()
+    eng = SceneEngine(module, pc, vm, env, system_id="dnd5e")
+    res = eng.run_node("n1")
+    r = res.roll_info
+    check("dnd5e 场景 packet system", r is not None and r.get("system") == "dnd5e",
+          str(r)[:100])
+    check("dnd5e 场景 DC=13", r is not None and r.get("target") == 13)
+    check("dnd5e 场景 roll_total=roll+4", r is not None
+          and r.get("roll_total") == r.get("roll", 0) + 4, str(r)[:120])
+
+
+def test_dnd5e_combat_ac():
+    from core.combat_engine import CombatEngine
+    from core.character import Character
+    from core.enemy import Enemy
+    ce = CombatEngine("dnd5e")
+    pc = Character(name="游荡者", ac=14)
+    goblin = Enemy(name="哥布林", hp=7, hp_max=7, attack_skill=4,
+                   damage="1d6+2 挥砍", ac=15)
+    pkt = ce.attack_resolve(goblin, pc, 4)   # d20+4 vs PC AC 14
+    check("dnd5e 战斗 packet system", pkt.get("system") == "dnd5e")
+    check("dnd5e 战斗 target=PC AC", pkt.get("target") == 14, str(pkt.get("target")))
+    pkt2 = ce.attack_resolve(pc, goblin, 5)  # d20+5 vs 哥布林 AC 15
+    check("dnd5e 战斗 target=哥布林 AC", pkt2.get("target") == 15)
+
+
 def main():
-    print("test_rules_profiles（v3.2 多系统画像 + v3.3 CoC 7e）")
+    print("test_rules_profiles（v3.2 多系统画像 + v3.3 CoC 7e + v3.4 D&D 5e）")
     test_registry()
     test_gurps_check()
     test_gurps_damage()
@@ -273,6 +365,9 @@ def main():
     test_coc7_profile()
     test_coc7_san()
     test_coc7_scene_routing()
+    test_dnd5e_profile()
+    test_dnd5e_scene_routing()
+    test_dnd5e_combat_ac()
     print("================ 结果 ================")
     print("通过: %d    失败: %d" % (_PASS, _FAIL))
     if _FAIL:

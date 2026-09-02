@@ -16,12 +16,15 @@ class SystemProfile:
     system_id = ""          # 注册表键名（如 "gurps" / "coc7" / "dnd5e"）
     display_name = ""       # 人类可读名
     dice_desc = ""          # 骰系描述（供 UI/文档）
+    check_style = "roll_low"   # roll_low（掷低成功，GURPS/CoC）| roll_high（掷高成功，D&D 5e）
 
     # ---- 通用检定（技能/属性检定） ----
-    def roll_check(self, skill_level, modifier=0) -> dict:
+    def roll_check(self, skill_level, modifier=0, advantage=0) -> dict:
         """执行一次检定。返回 ResolutionPacket 字段：
         {roll, target, success, margin, is_crit_success, is_fumble,
-         success_chance, system}"""
+         success_chance, system}
+        advantage: 1=优势（双骰取优）/ -1=劣势（取劣），roll_low 系忽略。
+        roll_high 系（D&D 5e）语义：skill_level=DC，modifier=总加成。"""
         raise NotImplementedError
 
     def skill_target(self, character, skill_name: str):

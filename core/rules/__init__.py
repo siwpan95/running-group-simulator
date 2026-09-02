@@ -39,3 +39,4 @@ def available_systems():
 # 注册内置画像
 from core.rules import gurps  # noqa: E402,F401  （导入即注册）
 from core.rules import coc7   # noqa: E402,F401
+from core.rules import dnd5e  # noqa: E402,F401

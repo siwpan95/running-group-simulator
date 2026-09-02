@@ -183,8 +183,15 @@ class SceneEngine:
         tag_mod = self.pc.calc_tag_modifier()
         modifier += tag_mod
 
-        # v3.2：掷骰/判成功委托系统画像（行为与 v3.1 完全一致）
-        packet = self.profile.roll_check(skill_level, modifier + tool_bonus)
+        # v3.2：掷骰/判成功委托系统画像；v3.4 roll_high 系（D&D 5e）分支——
+        # 节点 dc 字段=难度等级，修正链（环境/标签/工具）全部并入加成
+        if getattr(self.profile, "check_style", "roll_low") == "roll_high":
+            dc = _parse_int(physics.get("dc", 15))
+            bonus = (skill_level if skill_level is not None else 0) + modifier + tool_bonus
+            packet = self.profile.roll_check(dc, bonus,
+                                             advantage=_parse_int(physics.get("advantage", 0)))
+        else:
+            packet = self.profile.roll_check(skill_level, modifier + tool_bonus)
         packet["action_type"] = node.get("scene_type", "check")
         packet["skill_used"] = skill_check
         packet["modifiers"] = {"base": modifier, "env": env_mod, "tag": tag_mod, "tool": tool_bonus}

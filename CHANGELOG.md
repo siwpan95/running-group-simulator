@@ -8,6 +8,13 @@
 
 ### Changed
 
+- **v3.4 D&D 5e 系统画像**（2026-09-02）：
+  - 新增 `core/rules/dnd5e.py`：d20 roll-high vs DC（自然 20 大成功/自然 1 大失败）、优势/劣势（双骰取高/低）、属性修正 `(attr-10)//2` 与技能加成（`skill_target`）、全套伤害类型（挥砍/穿刺/钝击/火焰/寒冷/闪电/强酸/雷鸣/力场/心灵/毒素/光耀/暗蚀）、大成功伤害翻倍、无主动防御掷骰（AC 已含）与无 GURPS 式休克。
+  - `SystemProfile` 增 `check_style`（roll_low/roll_high）；场景引擎 roll_high 分支（节点 `dc` 字段=难度等级，修正链并入加成）；战斗引擎 roll_high 分支（d20+命中加成 vs 防御方 AC）；`Character`/`Enemy` 增 `ac` 字段（0=未启用，GURPS 零影响）。
+  - **内容目录**：`data/dnd5e/catalog.json` 怪物 15 / 法术 10 / 装备 16（SRD 5.1，CC BY 4.0，attribution 入条），`tools/make_dnd5e_catalog.py` 策展提取。
+  - **示例模组**：`modules/dnd_sample/`《哥布林洞窟》（dc/advantage/AC 战斗三幕）。
+  - 测试：`test_rules_profiles.py` 扩至 91 项（dnd5e 成功率统计/优劣势均值/场景 DC 路由/AC 战斗）；三套件全绿。
+
 - **v3.3 CoC 7e 系统画像**（2026-09-02）：
   - 新增 `core/rules/coc7.py`：d100 roll-low（01/五分之一大成功；100 大失败；技能<50 时 96-99 大失败）、奖励/惩罚骰（`roll_d100(bonus_dice)`）、技能目标=技能值或属性×5（`skill_target`）、护甲平减、重伤检定（单次 ≥ HP/2 → CON×5 失败失去意识）、大成功不翻倍。
   - `SystemProfile` 增 `skill_target`/`crit_damage` 扩展点；`shock_check` 阈值下沉画像（GURPS HP/3、CoC HP/2）。

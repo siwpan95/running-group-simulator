@@ -69,6 +69,7 @@ class Character:
     fp_max: int = 10
     will: int = 10
     per: int = 10
+    ac: int = 0  # 护甲等级（D&D 5e roll_high 系；0=未启用，GURPS 不用）
 
     # === 技能 ===
     skills: List[Skill] = field(default_factory=list)

@@ -28,6 +28,7 @@ class Enemy:
     dodge: int = 8
     dr: int = 0
     parry: int = 0
+    ac: int = 0  # 护甲等级（D&D 5e roll_high 系；0=未启用，GURPS 不用）
 
     # 附庸阈值
     minion_threshold: Dict = field(default_factory=lambda: {
@@ -74,7 +75,7 @@ class Enemy:
             st=self.st, dx=self.dx, iq=self.iq, ht=self.ht,
             hp=self.hp, hp_max=self.hp_max, fp=self.fp,
             attack_skill=self.attack_skill, damage=self.damage,
-            dodge=self.dodge, dr=self.dr, parry=self.parry,
+            dodge=self.dodge, dr=self.dr, parry=self.parry, ac=self.ac,
             minion_threshold=dict(self.minion_threshold),
             special_abilities=list(self.special_abilities),
             description=self.description, flavor_text=self.flavor_text,
@@ -88,7 +89,7 @@ class Enemy:
             "st": self.st, "dx": self.dx, "iq": self.iq, "ht": self.ht,
             "hp": self.hp, "hp_max": self.hp_max, "fp": self.fp,
             "attack_skill": self.attack_skill, "damage": self.damage,
-            "dodge": self.dodge, "dr": self.dr, "parry": self.parry,
+            "dodge": self.dodge, "dr": self.dr, "parry": self.parry, "ac": self.ac,
             "minion_threshold": self.minion_threshold,
             "special_abilities": self.special_abilities,
             "description": self.description, "flavor_text": self.flavor_text,
@@ -107,7 +108,7 @@ class Enemy:
             attack_skill=data.get("attack_skill", 12),
             damage=data.get("damage", "1d6 cut"),
             dodge=data.get("dodge", 8), dr=data.get("dr", 0),
-            parry=data.get("parry", 0),
+            parry=data.get("parry", 0), ac=data.get("ac", 0),
             minion_threshold=data.get("minion_threshold", {">=6": "removed", "2-5": "disabled", "<2": "minor"}),
             special_abilities=data.get("special_abilities", []),
             description=data.get("description", ""),
