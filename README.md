@@ -157,6 +157,8 @@ cd pt
 python tests/test_comprehensive.py
 python tests/test_excel_roundtrip.py
 python tests/test_rules_profiles.py      # v3.2 多系统画像
+python tests/test_catalog_service.py     # v3.6 内容目录服务
+python tools/validate_catalogs.py        # 内容目录 schema 校验
 ```
 
 546 项测试覆盖 16 个模块，验证核心路径与边缘情况；Windows GBK 控制台
@@ -336,8 +338,8 @@ python tests/test_excel_roundtrip.py
 - 模组声明可用系统：`meta.systems: ["gurps"]`（`compatible_core` 向后兼容）。
 
 **路线图**（详见 `docs/拓展规划-2026-09-02.md`）：v3.2 内核抽象 ✅ → v3.3 CoC 7e ✅
-→ v3.4 D&D 5e ✅ → v3.5 WoD ✅（d10 骰池/10-again/戏剧性失败/饥饿骰 + 示例模组
-`modules/wod_sample/`）→ v3.6 内容目录工程化（收尾）。
+→ v3.4 D&D 5e ✅ → v3.5 WoD ✅ → v3.6 内容目录工程化 ✅（`CatalogService` 统一
+加载/检索 + `tools/validate_catalogs.py` schema 校验）——**多系统裁决中间件化全线完成**。
 规则取材与校对来源：项目内资源库 `规则书/trpg_rulebooks`（见「规则书资源库」节）。
 
 ## 开发指南
@@ -385,6 +387,7 @@ python tests/test_excel_roundtrip.py
 | v3.3 | 2026-09-02 | CoC 7e 系统画像（d100/奖励惩罚骰/SAN 理智+疯狂发作）+ 生物目录 35 条 + 示例模组 |
 | v3.4 | 2026-09-02 | D&D 5e 系统画像（d20 vs DC/优劣势/AC 战斗）+ SRD 目录 41 条 + 示例模组 |
 | v3.5 | 2026-09-02 | WoD 系统画像（d10 骰池/10-again/戏剧性失败/饥饿骰）+ 示例模组 |
+| v3.6 | 2026-09-02 | 内容目录工程化（CatalogService + schema 校验器 + 目录测试 12 项） |
 
 ---
 

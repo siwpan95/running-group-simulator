@@ -136,7 +136,7 @@ def parse_items_tables():
                 "kind": kind,
                 "source": "5thsrd.org/%s (CC BY 4.0)" % fn.replace(".md", ""),
             })
-    return items[:16]
+    return items
 
 
 def main():

@@ -8,6 +8,12 @@
 
 ### Changed
 
+- **v3.6 内容目录工程化**（2026-09-02，多系统裁决中间件化收官）：
+  - 新增 `services/catalog_service.py`：统一加载/检索各系统策展目录（`find_creature/find_spell/find_item`，支持全局或按系统查找）；
+  - 新增 `tools/validate_catalogs.py`：目录 schema 校验器（coc7-catalog-v1 / dnd5e-catalog-v1，字段缺项即报错，退出码 0/1）；
+  - `data/dnd5e/catalog.json` 装备目录补全为全表 50 条（weapons+armor）；
+  - 新增 `tests/test_catalog_service.py` 12 项（加载/检索/校验器），四套件全绿（主 546 + Excel 53 + 画像 115 + 目录 12）。
+
 - **v3.5 WoD 系统画像**（2026-09-02）：
   - 新增 `core/rules/wod.py`：d10 骰池（≥8 成功、10-again 再掷）、成功数 ≥5 大成功、0 成功且出 1 戏剧性失败、V5 饥饿骰（hunger 参数，大成功且饥饿骰出 10 → messy critical）、伤害平减护甲（冲击/致命/恶性）、无暴击翻倍、重伤半血震慑（受伤惩罚抽象）、防御骰池。
   - **示例模组**：`modules/wod_sample/`《夜之血约》（血族政治三幕：侦查/追踪/战斗/意志抉择）。

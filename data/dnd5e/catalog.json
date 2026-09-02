@@ -576,6 +576,278 @@
       "properties": "-",
       "kind": "weapon",
       "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Glaive",
+      "cost": "20 gp",
+      "spec": "1d10 slashing",
+      "properties": "Heavy, reach, two-handed",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Greataxe",
+      "cost": "30 gp",
+      "spec": "1d12 slashing",
+      "properties": "Heavy, two-handed",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Greatsword",
+      "cost": "50 gp",
+      "spec": "2d6 slashing",
+      "properties": "Heavy, two-handed",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Halberd",
+      "cost": "20 gp",
+      "spec": "1d10 slashing",
+      "properties": "Heavy, reach, two-handed",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Lance",
+      "cost": "10 gp",
+      "spec": "1d12 piercing",
+      "properties": "Reach, special",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Longsword",
+      "cost": "15 gp",
+      "spec": "1d8 slashing",
+      "properties": "Versatile (1d10)",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Maul",
+      "cost": "10 gp",
+      "spec": "2d6 bludgeoning",
+      "properties": "Heavy, two-handed",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Morningstar",
+      "cost": "15 gp",
+      "spec": "1d8 piercing",
+      "properties": "-",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Pike",
+      "cost": "5 gp",
+      "spec": "1d10 piercing",
+      "properties": "Heavy, reach, two-handed",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Rapier",
+      "cost": "25 gp",
+      "spec": "1d8 piercing",
+      "properties": "Finesse",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Scimitar",
+      "cost": "25 gp",
+      "spec": "1d6 slashing",
+      "properties": "Finesse, light",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Shortsword",
+      "cost": "10 gp",
+      "spec": "1d6 piercing",
+      "properties": "Finesse, light",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Trident",
+      "cost": "5 gp",
+      "spec": "1d6 piercing",
+      "properties": "Thrown (range 20/60), versatile (1d8)",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "War pick",
+      "cost": "5 gp",
+      "spec": "1d8 piercing",
+      "properties": "-",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Warhammer",
+      "cost": "15 gp",
+      "spec": "1d8 bludgeoning",
+      "properties": "Versatile (1d10)",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Whip",
+      "cost": "2 gp",
+      "spec": "1d4 slashing",
+      "properties": "Finesse, reach",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Blowgun",
+      "cost": "10 gp",
+      "spec": "1 piercing",
+      "properties": "Ammunition (range 25/100), loading",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Crossbow, hand",
+      "cost": "75 gp",
+      "spec": "1d6 piercing",
+      "properties": "Ammunition (range 30/120), light, loading",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Crossbow, heavy",
+      "cost": "50 gp",
+      "spec": "1d10 piercing",
+      "properties": "Ammunition (range 100/400), heavy, loading, two-handed",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Longbow",
+      "cost": "50 gp",
+      "spec": "1d8 piercing",
+      "properties": "Ammunition (range 150/600), heavy, two-handed",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Net",
+      "cost": "1 gp",
+      "spec": "-",
+      "properties": "Special, thrown (range 5/15)",
+      "kind": "weapon",
+      "source": "5thsrd.org/weapons (CC BY 4.0)"
+    },
+    {
+      "name": "Padded",
+      "cost": "5 gp",
+      "spec": "11 + Dex modifier",
+      "properties": "Disadvantage",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Leather",
+      "cost": "10 gp",
+      "spec": "11 + Dex modifier",
+      "properties": "-",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Studded leather",
+      "cost": "45 gp",
+      "spec": "12 + Dex modifier",
+      "properties": "-",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Hide",
+      "cost": "10 gp",
+      "spec": "12 + Dex modifier (max 2)",
+      "properties": "-",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Chain shirt",
+      "cost": "50 gp",
+      "spec": "13 + Dex modifier (max 2)",
+      "properties": "-",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Scale mail",
+      "cost": "50 gp",
+      "spec": "14 + Dex modifier (max 2)",
+      "properties": "Disadvantage",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Breastplate",
+      "cost": "400 gp",
+      "spec": "14 + Dex modifier (max 2)",
+      "properties": "-",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Half plate",
+      "cost": "750 gp",
+      "spec": "15 + Dex modifier (max 2)",
+      "properties": "Disadvantage",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Ring mail",
+      "cost": "30 gp",
+      "spec": "14",
+      "properties": "Disadvantage",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Chain mail",
+      "cost": "75 gp",
+      "spec": "16",
+      "properties": "Disadvantage",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Splint",
+      "cost": "200 gp",
+      "spec": "17",
+      "properties": "Disadvantage",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Plate",
+      "cost": "1,500 gp",
+      "spec": "18",
+      "properties": "Disadvantage",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
+    },
+    {
+      "name": "Shield",
+      "cost": "10 gp",
+      "spec": "+2",
+      "properties": "-",
+      "kind": "armor",
+      "source": "5thsrd.org/armor (CC BY 4.0)"
     }
   ]
 }
