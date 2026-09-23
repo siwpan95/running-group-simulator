@@ -1,5 +1,8 @@
 # Mirror of the Lost（镜中之失）
 
+> 仓库：<https://gitee.com/siwpan/running-group-simulator> ｜ 许可：MIT-0（MIT No Attribution）（见 [LICENSE](LICENSE)）
+> 注：文中 <PATH> 为路径占位符，请替换为你本机实际的目录 / 可执行文件路径。
+
 > 基于 GURPS 4e 的三层 MVVM 架构 TRPG 终端引擎 — 让 GM 专注于叙事，让引擎处理裁决。
 
 ---
@@ -128,7 +131,7 @@ pt/
 - 依赖 **alloy**（统一引擎规则内核；零第三方库）：
 
 ```bash
-pip install -e G:\repos\an-engine
+pip install -e <PATH>
 ```
 
 ### 运行游戏
