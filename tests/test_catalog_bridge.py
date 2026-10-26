@@ -70,6 +70,35 @@ def test_bridge_basics():
     # 英文名查找
     check("CoC 深潜者(英文名 Deep One)", build_enemy_from_catalog("Deep One") is not None)
 
+    # --- CoC 食尸鬼（coc_sample 2.2_face_creature 引用的条目）---
+    ghoul = build_enemy_from_catalog("食尸鬼", "coc7")
+    check("CoC 食尸鬼 命中目录", ghoul is not None, "返回 None")
+    if ghoul:
+        check("  食尸鬼 是 Enemy", isinstance(ghoul, Enemy))
+        check("  食尸鬼 round-trip 一致", Enemy.from_dict(ghoul.to_dict()).name == ghoul.name)
+
+    # --- D&D Goblin（dnd_sample 2.1_goblin_camp 引用的条目）---
+    gob = build_enemy_from_catalog("Goblin", "dnd5e")
+    check("D&D Goblin 命中目录", gob is not None, "返回 None")
+    if gob:
+        check("  Goblin ac=15 / attack_skill=4", gob.ac == 15 and gob.attack_skill == 4,
+              "ac=%s as=%s" % (gob.ac, gob.attack_skill))
+        check("  Goblin round-trip 一致", Enemy.from_dict(gob.to_dict()).name == gob.name)
+
+    # --- WoD 被放逐的长者（wod_sample 2.1_confront 引用的条目）---
+    # WoD 画像用 d10 骰池：attack_skill / dodge 均为骰池大小
+    elder = build_enemy_from_catalog("被放逐的长者", "wod")
+    check("WoD 被放逐的长者 命中目录", elder is not None, "返回 None")
+    if elder:
+        check("  WoD 是 Enemy", isinstance(elder, Enemy))
+        check("  WoD attack_skill=攻击骰池 7", elder.attack_skill == 7, "as=%s" % elder.attack_skill)
+        check("  WoD dodge=闪避骰池 6", elder.dodge == 6, "dodge=%s" % elder.dodge)
+        check("  WoD dr=1", elder.dr == 1, "dr=%s" % elder.dr)
+        check("  WoD damage 含 致命", "致命" in elder.damage, elder.damage)
+        check("  WoD round-trip 一致", Enemy.from_dict(elder.to_dict()).name == elder.name)
+    check("WoD 被放逐的长者(英文名 The Exiled Elder)",
+          build_enemy_from_catalog("The Exiled Elder", "wod") is not None)
+
     # --- 落空 ---
     check("未知名称返回 None", build_enemy_from_catalog("不存在的怪物XYZ") is None)
 

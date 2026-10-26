@@ -375,9 +375,14 @@ python tests/test_excel_roundtrip.py
 1. **`services/catalog_bridge.py`（新增，`build_enemy_from_catalog(name, system)`）**：把 `data/<system>/catalog.json` 的策展条目落地为 `core.enemy.Enemy`。D&D 输出原生数值（`attack_skill`=命中加值、`ac`=护甲等级），CoC 输出原生数值（`attack_skill`=武器百分比、`dodge`=DEX×2、`dr`=护甲值），由战斗引擎按模块 `meta.systems` 自动路由到对应系统画像解释。
 2. **场景引擎战斗节点**：`core/scene_engine.py._handle_combat_node` 支持 `layer_physics.catalog_ref`（字符串或 `{name, system}`）。命中目录时由 bridge 生成敌人，未命中则回退内联 `unit_stats`。
 3. **MVP 便捷入口**：`mirror_mvp.MirrorOfLost.spawn_enemy_from_catalog / start_combat_from_catalog`。
-4. **示例模组接线**：`modules/coc_saltmarsh` 的 `2.2_ambush` 战斗节点已用 `catalog_ref: {name: "深潜者", system: "coc7"}` 真正引用目录条目（而非仅文字提及）。
+4. **示例模组接线**：所有示例模组的战斗节点都已用 `catalog_ref` 真正引用目录条目（而非仅文字提及）：
+   - `coc_saltmarsh` `2.2_ambush` → `{name: "深潜者", system: "coc7"}`
+   - `coc_sample` `2.2_face_creature` → `{name: "食尸鬼", system: "coc7"}`
+   - `dnd_sample` `2.1_goblin_camp` → `{name: "Goblin", system: "dnd5e"}`
+   - `wod_sample` `2.1_confront` → `{name: "被放逐的长者", system: "wod"}`（新增 WoD 目录支撑）
+5. **WoD 目录**：新增 `data/wod/catalog.json`（`wod-catalog-v1`，自有设定生物，非 White Wolf 官方资料），并在 `services/catalog_service.py` 注册、`tools/validate_catalogs.py` 增加 `wod` schema 校验；`catalog_bridge` 新增 `_wod_enemy`（attack_skill/dodge = d10 骰池、dr = 伤害平减）。
 
-测试：`tests/test_catalog_bridge.py`（21 项，零第三方依赖）。
+测试：`tests/test_catalog_bridge.py`（35 项，零第三方依赖，覆盖 dnd5e / coc7 / wod 三套 schema）。
 
 ## 多系统裁决中间件（v3.2 · 2026-09-02）
 

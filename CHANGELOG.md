@@ -29,7 +29,9 @@
     - `core/scene_engine.py._handle_combat_node` 新增 `layer_physics.catalog_ref`（字符串或 `{name, system}`），命中目录即由 bridge 生成敌人，未命中回退内联 `unit_stats`。
     - `mirror_mvp.py` 新增 `spawn_enemy_from_catalog` / `start_combat_from_catalog` 便捷入口。
     - 示例模组 `modules/coc_saltmarsh` 的 `2.2_ambush` 战斗节点接入 `catalog_ref: {name: "深潜者", system: "coc7"}`，真正引用目录条目（而非仅文字提及）。
-    - 新增 `tests/test_catalog_bridge.py`（21 项，零第三方依赖：D&D Goblin / CoC 深潜者 字段映射 + round-trip + 落空 + 系统限定）。
+    - **全部示例模组战斗节点接上 `catalog_ref`**：`coc_sample` `2.2_face_creature` → 食尸鬼(coc7)、`dnd_sample` `2.1_goblin_camp` → Goblin(dnd5e)、`wod_sample` `2.1_confront` → 被放逐的长者(wod)。（GURPS 主模组 `mirror_house_alley` 无对应目录，仍走内联 `unit_stats` 回退。）
+    - **新增 WoD 目录支撑**：`data/wod/catalog.json`（`wod-catalog-v1`，自有设定生物，非 White Wolf 官方资料）+ `services/catalog_service.py` 注册 `wod` + `tools/validate_catalogs.py` 增加 `wod` schema 校验 + `catalog_bridge` 新增 `_wod_enemy`（attack_skill/dodge = d10 骰池、dr = 伤害平减）。
+    - 新增 `tests/test_catalog_bridge.py`（35 项，零第三方依赖：D&D Goblin / CoC 深潜者·食尸鬼 / WoD 被放逐的长者 字段映射 + round-trip + 落空 + 系统限定）。
   - 版权口径：D&D 条目取自 SRD 5.1（OGL + CC BY 4.0，5thsrd.org），带署名；CoC 神话为公有领域，数值按 7e 惯例综合（延续既有 trow-11676 署名）。全部通过 `tools/validate_catalogs.py` 与 `tests/test_catalog_service.py`（12/12）。
 
 ### Changed

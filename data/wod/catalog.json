@@ -1,0 +1,36 @@
+{
+  "schema": "wod-catalog-v1",
+  "_note": "WoD（Storytelling System / nWoD）自有设定生物目录。本目录条目均为 modules/wod_sample 及原创街头遭遇模板，非 White Wolf 官方资料转载。战斗引擎按 meta.systems=['wod'] 路由到 wod 画像：attack_skill=攻击骰池、dodge=闪避骰池、dr=伤害平减。",
+  "creatures": [
+    {
+      "name": "被放逐的长者",
+      "name_en": "The Exiled Elder",
+      "archetype": "吸血鬼长老（原创设定·被族群流放）",
+      "hp": 12,
+      "attack": { "pool": 7, "damage": "1d10+2 致命" },
+      "dodge": 6,
+      "dr": 1,
+      "source": "modules/wod_sample/2.1_confront 自有设定"
+    },
+    {
+      "name": "堕落猎人",
+      "name_en": "Fallen Hunter",
+      "archetype": "原猎人公会成员，被初拥后失控（原创模板）",
+      "hp": 10,
+      "attack": { "pool": 6, "damage": "2d6+1 致命" },
+      "dodge": 5,
+      "dr": 2,
+      "source": "原创 WoD 遭遇模板"
+    },
+    {
+      "name": "街头帮派打手",
+      "name_en": "Street Gang Enforcer",
+      "archetype": "凡人街头暴力（原创模板）",
+      "hp": 8,
+      "attack": { "pool": 5, "damage": "1d6 冲击" },
+      "dodge": 4,
+      "dr": 0,
+      "source": "原创 WoD 遭遇模板"
+    }
+  ]
+}

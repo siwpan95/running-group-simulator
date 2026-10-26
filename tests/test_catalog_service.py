@@ -29,7 +29,7 @@ def test_catalog_service():
     from services.catalog_service import CatalogService
     svc = CatalogService()
     avail = svc.available()
-    check("目录服务可用系统含 coc7/dnd5e", "coc7" in avail and "dnd5e" in avail,
+    check("目录服务可用系统含 coc7/dnd5e/wod", "coc7" in avail and "dnd5e" in avail and "wod" in avail,
           str(avail))
     coc = svc.load("coc7")
     check("coc7 目录 schema", coc.get("schema") == "coc7-catalog-v1")

@@ -9,9 +9,10 @@
 本服务负责「落地为可战斗实体」，并由场景引擎战斗节点 / MVP 调用。
 
 字段映射原则：输出“原生系统数值”——由战斗引擎按模块 meta 自动路由到对应
-系统画像（dnd5e→roll_high、coc7→d100）来解释，因此：
+系统画像（dnd5e→roll_high、coc7→d100、wod→d10 骰池）来解释，因此：
   · D&D 敌人：attack_skill = 命中加值(hit)、ac = 护甲等级、dodge 仅作 gurps 回退；
-  · CoC 敌人：attack_skill = 武器百分比、dodge = DEX×2（CoC 闪避）、dr = 护甲值。
+  · CoC 敌人：attack_skill = 武器百分比、dodge = DEX×2（CoC 闪避）、dr = 护甲值；
+  · WoD 敌人：attack_skill = 攻击骰池、dodge = 闪避骰池、dr = 伤害平减（均为 Storytelling 池数值）。
 
 依赖：services.catalog_service.CatalogService（统一检索）、core.enemy.Enemy。
 """
@@ -122,6 +123,8 @@ def build_enemy_from_catalog(name: str, system: Optional[str] = None) -> Optiona
         return _dnd_enemy(entry)
     if sys_id == "coc7":
         return _coc_enemy(entry)
+    if sys_id == "wod":
+        return _wod_enemy(entry)
     return None
 
 
@@ -174,4 +177,28 @@ def _coc_enemy(e: dict) -> Enemy:
         ac=0,
         special_abilities=[{"name": "武器", "effect": "; ".join(e.get("weapons", [])), "trigger": "attack"}],
         description=e.get("class", ""),
+    )
+
+
+def _wod_enemy(e: dict) -> Enemy:
+    """WoD（Storytelling System / nWoD）目录条目 → Enemy。
+
+    WoD 画像用 d10 骰池：attack_skill / dodge 均为“骰池大小”（成功数 ≥1 即命中），
+    dr 为伤害平减，damage 串含“致命/恶性/冲击”类型词（wod 画像以此区分伤害类别）。
+    """
+    atk = e.get("attack", {})
+    name = e.get("name", "未知存在")
+    hp = _parse_int(e.get("hp", 10))
+    return Enemy(
+        name=name,
+        enemy_type="wildcard",         # WoD 单体威胁多为完整追踪
+        st=10, dx=_parse_int(e.get("dodge", 6)), iq=10, ht=10,
+        hp=hp, hp_max=hp,
+        attack_skill=_parse_int(atk.get("pool", 7)),
+        damage=atk.get("damage", "1d10 致命"),
+        dodge=_parse_int(e.get("dodge", 6)),
+        dr=_parse_int(e.get("dr", 0)),
+        ac=0,                          # WoD 用闪避骰池，不用 AC
+        special_abilities=[],
+        description=e.get("archetype", ""),
     )

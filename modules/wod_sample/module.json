@@ -6,7 +6,9 @@
     "version": "1.0",
     "author": "TRPG Architect",
     "compatible_core": "Storytelling System (nWoD)",
-    "systems": ["wod"],
+    "systems": [
+      "wod"
+    ],
     "playstyle": "都市暗夜 / 吸血鬼政治",
     "estimated_duration": "1-2 小时",
     "player_count": "2-4 人",
@@ -14,8 +16,16 @@
     "base_xp": 3
   },
   "global_context_tags": [
-    { "id": "city_night", "name": "都市夜幕", "effect": "潜行骰池 +1" },
-    { "id": "blood_scent", "name": "血腥气", "effect": "追踪相关骰池 +1" }
+    {
+      "id": "city_night",
+      "name": "都市夜幕",
+      "effect": "潜行骰池 +1"
+    },
+    {
+      "id": "blood_scent",
+      "name": "血腥气",
+      "effect": "追踪相关骰池 +1"
+    }
   ],
   "act_1": {
     "scene_id": "act1_the_alley",
@@ -24,7 +34,11 @@
     "environment": {
       "mood": "路灯在巷口投下昏黄的光，垃圾袋在风里沙沙作响。",
       "tags": [
-        { "id": "blood_scent", "name": "血腥气", "effect": "追踪相关骰池 +1" }
+        {
+          "id": "blood_scent",
+          "name": "血腥气",
+          "effect": "追踪相关骰池 +1"
+        }
       ]
     },
     "nodes": [
@@ -33,7 +47,9 @@
         "scene_type": "investigation",
         "trigger": "检查尸体与现场痕迹。",
         "prerequisite_nodes": [],
-        "next_nodes": ["1.2_trail"],
+        "next_nodes": [
+          "1.2_trail"
+        ],
         "layer_physics": {
           "skill_check": "侦查",
           "modifier": 3
@@ -50,8 +66,12 @@
         "node_id": "1.2_trail",
         "scene_type": "feat",
         "trigger": "沿着通风井的痕迹追踪凶手。",
-        "prerequisite_nodes": ["1.1_inspect"],
-        "next_nodes": ["2.1_confront"],
+        "prerequisite_nodes": [
+          "1.1_inspect"
+        ],
+        "next_nodes": [
+          "2.1_confront"
+        ],
         "layer_physics": {
           "skill_check": "潜行",
           "modifier": 4
@@ -78,18 +98,17 @@
         "node_id": "2.1_confront",
         "scene_type": "combat",
         "trigger": "长者从阴影里走出，獠牙在黑暗中发亮。",
-        "prerequisite_nodes": ["1.2_trail"],
-        "next_nodes": ["2.2_choice"],
+        "prerequisite_nodes": [
+          "1.2_trail"
+        ],
+        "next_nodes": [
+          "2.2_choice"
+        ],
         "layer_physics": {
           "enemy_type": "wildcard",
-          "unit_stats": {
+          "catalog_ref": {
             "name": "被放逐的长者",
-            "hp": 12,
-            "attack_skill": 7,
-            "damage": "1d10+2 致命",
-            "ac": 0,
-            "dodge": 6,
-            "dr": 1
+            "system": "wod"
           }
         },
         "layer_narrative": {
@@ -103,7 +122,9 @@
         "node_id": "2.2_choice",
         "scene_type": "investigation",
         "trigger": "长者倒下了。现在，决定他的命运。",
-        "prerequisite_nodes": ["2.1_confront"],
+        "prerequisite_nodes": [
+          "2.1_confront"
+        ],
         "next_nodes": [],
         "layer_physics": {
           "skill_check": "意志",
@@ -127,7 +148,9 @@
         "node_id": "3.1_report",
         "scene_type": "explore",
         "trigger": "整理证词，准备在城市会议上陈述。",
-        "prerequisite_nodes": ["2.2_choice"],
+        "prerequisite_nodes": [
+          "2.2_choice"
+        ],
         "next_nodes": [],
         "layer_physics": {
           "skill_check": "意志",
