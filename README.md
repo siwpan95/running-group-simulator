@@ -74,15 +74,21 @@ pt/
 │   ├── enemies.json             │  敌人库
 │   └── items.json               │  物品库
 │
-├── characters/                  ← 玩家角色卡（JSON）
+├── characters/                  ← 玩家角色卡（JSON，7 张预置）
 │   ├── 预置-调查记者.json
 │   ├── 预置-退役军警.json
 │   ├── 预置-神秘学学者.json
-│   └── 预置-街头混混.json
+│   ├── 预置-街头混混.json
+│   ├── 预置-急诊医生.json          │  IQ 13，急救/诊断/药学
+│   ├── 预置-自由黑客.json          │  IQ 14，计算机/电子/情报分析
+│   └── 预置-古董商.json            │  IQ 13，鉴赏/神秘学/历史
 │
-├── modules/                     ← 模组（每个模组一个子目录）
-│   └── mirror_house_alley/
-│       └── module.json          │  镜屋巷模组（完整 3 幕）
+├── modules/                     ← 模组（每个模组一个子目录，5 个示例）
+│   ├── mirror_house_alley/      ← 镜屋巷（GURPS 4e，3 幕）
+│   ├── coc_sample/              ← 旧宅的低语（CoC 7e，3 幕）
+│   ├── dnd_sample/              ← 哥布林洞窟（D&D 5e，3 幕）
+│   ├── wod_sample/              ← 夜之血约（WoD，3 幕）
+│   └── coc_saltmarsh/          ← 盐沼低语（CoC 7e，3 幕，引用扩充目录神话生物）
 │
 ├── templates/                   ← 内容创作模板
 │   ├── characters/              │  角色卡 Excel 模板
@@ -161,6 +167,7 @@ python tests/test_comprehensive.py
 python tests/test_excel_roundtrip.py
 python tests/test_rules_profiles.py      # v3.2 多系统画像
 python tests/test_catalog_service.py     # v3.6 内容目录服务
+python tests/test_catalog_bridge.py       # v3.6 目录→实体桥接（内容目录消费方）
 python tools/validate_catalogs.py        # 内容目录 schema 校验
 ```
 
@@ -234,6 +241,22 @@ python tests/test_excel_roundtrip.py
 | `elite` | 精英——完整追踪 HP，有属性 |
 | `wildcard` | 特殊——有复杂特殊机制 |
 | `boss` | Boss——完整属性 + 多阶段 |
+
+### 从内容目录引用敌人（推荐）
+
+战斗节点里无需手写属性——直接引用已扩充的目录条目，由 `services/catalog_bridge` 落地为可战斗实体：
+
+```json
+{
+  "node_id": "2.2_ambush",
+  "scene_type": "combat",
+  "layer_physics": {
+    "catalog_ref": { "name": "深潜者", "system": "coc7" }
+  }
+}
+```
+
+`catalog_ref` 也接受纯字符串（如 `"Goblin"`）。引擎按模块 `meta.systems` 自动选用对应系统画像解释数值。详见 `tests/test_catalog_bridge.py`。
 
 ### 创建物品
 
@@ -329,6 +352,32 @@ python tests/test_excel_roundtrip.py
 
 > 归属：该资源库为**本项目配套资源**（用户 2026-09-02 明确），不是独立项目；
 > 库本身尚未建立版本控制，如需入仓另行规划。
+
+## 内容规模（2026-10-26 扩充）
+
+结合联网核对（SRD 5.1 以 OGL + CC BY 4.0 双重许可发布，可带署名转载；克苏鲁神话本体已进入公有领域）对内容目录做了大幅扩充，**全部通过 `tools/validate_catalogs.py` 校验**：
+
+| 内容 | 扩充前 | 扩充后 |
+|------|--------|--------|
+| `data/dnd5e/catalog.json` 怪物 | 15 | **83** |
+| `data/dnd5e/catalog.json` 法术 | 10 | **47** |
+| `data/dnd5e/catalog.json` 物品（SRD 武器+护甲全表） | 50 | 50（本就全表，未重复） |
+| `data/coc7/catalog.json` 神话生物 | 35 | **57** |
+| 玩家预置角色卡 | 4 | **7** |
+| 敌人库 / 物品库 / 示例模组 | — | 各新增若干（敌人 +4、物品 +4、模组 +1《盐沼低语》） |
+
+扩充脚本 `tools/expand_catalogs.py`（目录）与 `tools/expand_content.py`（角色/敌人/物品）均按 `name` 去重、不覆盖既有条目，可重复运行追加。
+
+### 内容目录消费方（v3.6 · 解决“只扩充不消费”）
+
+目录里的怪物 / 神话生物现在**真正接入引擎**，不再只是被 `CatalogService` 检索：
+
+1. **`services/catalog_bridge.py`（新增，`build_enemy_from_catalog(name, system)`）**：把 `data/<system>/catalog.json` 的策展条目落地为 `core.enemy.Enemy`。D&D 输出原生数值（`attack_skill`=命中加值、`ac`=护甲等级），CoC 输出原生数值（`attack_skill`=武器百分比、`dodge`=DEX×2、`dr`=护甲值），由战斗引擎按模块 `meta.systems` 自动路由到对应系统画像解释。
+2. **场景引擎战斗节点**：`core/scene_engine.py._handle_combat_node` 支持 `layer_physics.catalog_ref`（字符串或 `{name, system}`）。命中目录时由 bridge 生成敌人，未命中则回退内联 `unit_stats`。
+3. **MVP 便捷入口**：`mirror_mvp.MirrorOfLost.spawn_enemy_from_catalog / start_combat_from_catalog`。
+4. **示例模组接线**：`modules/coc_saltmarsh` 的 `2.2_ambush` 战斗节点已用 `catalog_ref: {name: "深潜者", system: "coc7"}` 真正引用目录条目（而非仅文字提及）。
+
+测试：`tests/test_catalog_bridge.py`（21 项，零第三方依赖）。
 
 ## 多系统裁决中间件（v3.2 · 2026-09-02）
 

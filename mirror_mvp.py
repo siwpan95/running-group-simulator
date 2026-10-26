@@ -8,6 +8,7 @@ v2.0: 数据驱动场景引擎 + 完整 MVVM 分离
 import json
 import os
 import sys
+from typing import Optional
 
 from core.character import Character, CharacterFeature, Skill, Equipment
 from core.dice import gurps_success_chance, roll_3d6 as kernel_roll_3d6
@@ -129,6 +130,25 @@ class MirrorOfLost:
     def start_combat(self, enemy_data: dict) -> CombatEngine:
         """开始战斗"""
         enemy = Enemy.from_dict(enemy_data)
+        self.combat.init_combat(self.pc, [enemy])
+        return self.combat
+
+    # === 内容目录消费方（v3.6）===
+
+    def spawn_enemy_from_catalog(self, name: str, system: str = None) -> Optional["Enemy"]:
+        """按名称（中文/英文）从内容目录生成可战斗敌人实体。
+
+        这是 catalog_bridge 的便捷入口：让 MVP 也能直接把 data/<system>/catalog.json
+        里策展的怪物 / 神话生物变成一场战斗中的敌人。找不到返回 None。
+        """
+        from services.catalog_bridge import build_enemy_from_catalog
+        return build_enemy_from_catalog(name, system)
+
+    def start_combat_from_catalog(self, name: str, system: str = None) -> Optional[CombatEngine]:
+        """从内容目录生成敌人并直接开战；找不到返回 None。"""
+        enemy = self.spawn_enemy_from_catalog(name, system)
+        if enemy is None:
+            return None
         self.combat.init_combat(self.pc, [enemy])
         return self.combat
 

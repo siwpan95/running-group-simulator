@@ -1,0 +1,201 @@
+{
+  "meta": {
+    "module_id": "coc_saltmarsh",
+    "system_name": "Mirror of the Lost",
+    "module_title": "盐沼低语",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "CoC 7e",
+    "systems": ["coc7"],
+    "playstyle": "沿海小镇 / 调查恐怖 / 深潜者巢穴",
+    "estimated_duration": "2-3 小时",
+    "player_count": "2-4 人",
+    "synopsis": "潮退后的盐沼海滩上接连出现不属于人类的蹼状脚印，镇上已有三人失踪。受镇长委托，调查员顺线索潜入潮间带洞穴，直面深潜者（Deep One）祭坛，并在最深处遭遇一头被供奉的修格斯（Shoggoth）。多系统引擎 CoC 7e 示例模组——d100 检定、SAN 理智、疯狂发作；目录引用 data/coc7/catalog.json 的神话生物条目。",
+    "base_xp": 4
+  },
+  "global_context_tags": [
+    { "id": "salt_fog", "name": "咸雾弥漫", "effect": "侦查 -10，听觉 +10" },
+    { "id": "tide_pull", "name": "涨落潮汐", "effect": "洞窟通道受潮汐控制，时机错误会被困" }
+  ],
+  "act_1": {
+    "scene_id": "act1_town",
+    "title": "盐沼镇",
+    "description": "海风裹着咸腥味拍在脸上。镇公所里，镇长把三张失踪者照片推到你面前。窗外，退潮的滩涂上有一串湿漉漉的、带蹼的脚印，通向海的方向。",
+    "environment": {
+      "mood": "午后惨白的阳光照不进咸雾，镇子安静得反常。",
+      "tags": [
+        { "id": "salt_fog", "name": "咸雾弥漫", "effect": "侦查 -10，听觉 +10" }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_talk_mayor",
+        "scene_type": "investigation",
+        "trigger": "调查员向镇长与镇民打听失踪案。",
+        "prerequisite_nodes": [],
+        "next_nodes": ["1.2_track_footprints", "1.3_library"],
+        "layer_physics": {
+          "checks": [
+            { "id": "interview", "type": "automatic", "skill": "话术", "dc": 50, "on_success": { "flag_set": ["mayor_trust"] } },
+            { "id": "rumor", "type": "optional", "skill": "图书馆使用", "dc": 30, "on_success": { "flag_set": ["old_cult_rumor"] } }
+          ]
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "镇长压低声音：『祖辈说，滩涂底下睡着一个‘鱼神’，献祭换平安。』",
+            "failure": "镇民们三缄其口，只反复劝你别去滩涂。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_track_footprints",
+        "scene_type": "perception",
+        "trigger": "调查员沿滩涂的蹼状脚印追踪。",
+        "prerequisite_nodes": [],
+        "next_nodes": ["2.1_cave_mouth"],
+        "layer_physics": {
+          "skill_check": "追踪",
+          "modifier": -10,
+          "critical_effects": {
+            "crit_success": "你数清了脚印数量——恰好对应三名失踪者，外加一个更大的、不属于任何人的轮廓。",
+            "crit_failure": "你踩裂一块礁石，咸雾里有什么东西迅速地缩回了水中。"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "脚印在退潮线尽头汇成一个洞口，海水正从里面往外渗。",
+            "failure": "潮水漫上来，脚印被抹平了，你只记得方向。"
+          }
+        }
+      },
+      {
+        "node_id": "1.3_library",
+        "scene_type": "investigation",
+        "trigger": "镇图书室里积灰的地方志与一本手抄小册。",
+        "prerequisite_nodes": ["1.1_talk_mayor"],
+        "next_nodes": ["2.1_cave_mouth"],
+        "layer_physics": {
+          "checks": [
+            { "id": "read_codex", "type": "automatic", "skill": "神秘学", "dc": 40, "on_success": { "flag_set": ["deep_one_lore"] } }
+          ],
+          "san_loss": { "amount": "1d3", "source": "阅读手抄祭文" }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "册子画着鱼头人身的‘仆从’，以及被供奉的、一团蠕动的‘仆从之长’。末页写着祭坛的方位。",
+            "failure": "文字扭曲成你读不懂的音节，太阳穴突突地跳。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_cave",
+    "title": "潮间带洞穴",
+    "description": "洞口渗出的海水冰凉刺骨。钟乳石间挂着渔网与锈蚀的祭器，深处传来含混的、不属于人类的吟唱。",
+    "environment": {
+      "mood": "咸雾在洞内凝成水珠，滴落的声响被吟唱盖过。",
+      "tags": [
+        { "id": "salt_fog", "name": "咸雾弥漫", "effect": "侦查 -10，听觉 +10" }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_cave_mouth",
+        "scene_type": "perception",
+        "trigger": "调查员屏息潜入洞口，观察祭坛前的守卫。",
+        "prerequisite_nodes": ["1.2_track_footprints", "1.3_library"],
+        "next_nodes": ["2.2_ambush"],
+        "layer_physics": {
+          "skill_check": "侦查",
+          "modifier": -10,
+          "san_loss": { "amount": 1, "source": "瞥见守卫的异状躯体" }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "两个鱼鳞覆体的守卫守在祭坛两侧，它们的眼睛是没有眼睑的横线。",
+            "failure": "黑暗里只有吟唱，你分不清守卫在哪里。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_ambush",
+        "scene_type": "combat",
+        "trigger": "守卫发现了调查员，蹼爪抓起骨刺渔叉扑来。",
+        "prerequisite_nodes": ["2.1_cave_mouth"],
+        "next_nodes": ["3.1_sanctum"],
+        "layer_physics": {
+          "enemy_type": "elite",
+          "catalog_ref": { "name": "深潜者", "system": "coc7" },
+          "san_loss": { "amount": "0/1d6", "source": "直面深潜者" }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "守卫瘫进咸水里，鳞片在火光下泛着病态的青。",
+            "failure": "骨刺擦过你的肩，冰冷的腥气灌进伤口。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_sanctum",
+    "title": "蠕动的祭坛",
+    "description": "洞穴最深处是一个被海水灌满的穹隆。祭坛中央，一团没有固定形状的、半透明的胶质物缓缓起伏——它在‘看’你。",
+    "environment": {
+      "mood": "无数眼睛在胶质表面此起彼伏地睁开又闭合。",
+      "tags": []
+    },
+    "nodes": [
+      {
+        "node_id": "3.1_sanctum",
+        "scene_type": "perception",
+        "trigger": "调查员面对祭坛中央的造物。",
+        "prerequisite_nodes": ["2.2_ambush"],
+        "next_nodes": ["3.2_resolve"],
+        "layer_physics": {
+          "skill_check": "理智",
+          "modifier": 0,
+          "san_loss": { "amount": "1d6/1d20", "source": "直面修格斯（引用 data/coc7/catalog.json：修格斯）" }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你硬生生挪开视线，记下祭坛的薄弱处——它怕强磁场与持续火焰。",
+            "crit_failure": "你的瞳孔里只剩那团蠕动的光，世界安静得可怕。"
+          }
+        }
+      },
+      {
+        "node_id": "3.2_resolve",
+        "scene_type": "feat",
+        "trigger": "调查员决定是封印祭坛、摧毁它，还是带着证据撤退。",
+        "prerequisite_nodes": ["3.1_sanctum"],
+        "next_nodes": [],
+        "resolution_paths": [
+          { "path": "封印", "method": "以磁场干扰 + 火焰持续灼烧核心", "success": "修格斯退入深海泥床，盐沼暂时安宁，但传说未灭。" },
+          { "path": "摧毁", "method": "引爆洞内沼气（需工程/爆破检定）", "success": "穹隆坍塌，吟唱永远停了——代价是再也无法取证。" },
+          { "path": "撤退", "method": "记录坐标后撤离并上报", "success": "你活下来，并把真相交给了能处理它的人。" }
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "咸雾外的天空第一次显得正常。你没回头。",
+            "crit_success": "你甚至记住了那首吟唱的调子——也许将来能用来反制它。",
+            "failure": "你回到了镇上，却总觉得潮水里还有眼睛在望你。"
+          }
+        }
+      }
+    ]
+  },
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      { "场景": "1.2_track_footprints", "检定": "追踪 -10", "失败": "丢失足迹，凭记忆找洞口" },
+      { "场景": "2.2_ambush", "检定": "战斗（深潜者 25%）", "失败": "受 1d6+1d4 穿刺，SAN 0/1d6" },
+      { "场景": "3.1_sanctum", "检定": "理智", "失败": "SAN 1d6/1d20，可能临时疯狂" },
+      { "场景": "3.2_resolve", "检定": "意志", "失败": "调查员被低语缠上，留下后患" }
+    ]
+  }
+}

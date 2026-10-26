@@ -16,6 +16,22 @@
 
 ## [Unreleased]
 
+### Added
+
+- **内容目录大规模扩充（2026-10-26，结合联网核对）**：
+  - `data/dnd5e/catalog.json`：怪物 15 → **83**（增 68，覆盖人形 NPC / 野兽 / 不死 / 五色+金属龙 / 巨怪 / 魔鬼 / 元素精类）；法术 10 → **47**（增 37，覆盖戏法到 5 环 SRD 法术）。物品段本已是 SRD 武器+护甲全表（50 条），未重复追加。
+  - `data/coc7/catalog.json`：神话生物 35 → **57**（增 22，含克苏鲁 / 奈亚拉托提普 / 哈斯塔 / 犹格·索托斯 / 阿撒托斯 / 修格斯 / 米·戈 / 廷达罗斯猎犬 / 古老者 / 伊斯之伟大种族等公有领域神话）。
+  - 玩家预置角色卡 4 → **7**（新增 急诊医生 / 自由黑客 / 古董商，均为原创 GURPS 设定）。
+  - `data/enemies.json` 增 4（镜螨 / 锈影 / 钟楼石像 / 低语者）；`data/items.json` 增 4（信号枪 / 夜视仪 / 防毒面具 / 撬锁工具组）。
+  - 新增 CoC 7e 示例模组 `modules/coc_saltmarsh/《盐沼低语》`（3 幕，引用扩充后的深潜者 / 修格斯目录条目）。
+  - 新增 `tools/expand_catalogs.py` 与 `tools/expand_content.py`：按 `name` 去重、不覆盖既有条目、可重复运行的扩充脚本。
+  - **新增强内容目录真正的消费方 `services/catalog_bridge.py`（`build_enemy_from_catalog(name, system)`）**：把 `data/<system>/catalog.json` 的怪物 / 神话生物落地为 `core.enemy.Enemy`（D&D 输出原生 `attack_skill`=命中加值 / `ac`=护甲等级；CoC 输出原生 `attack_skill`=武器百分比 / `dodge`=DEX×2 / `dr`=护甲值），由战斗引擎按模块 `meta.systems` 自动路由系统画像解释。此前目录数据唯一的活消费方只有 `CatalogService` 自身 + 测试，扩充内容实际未进入玩法——现已解决。
+    - `core/scene_engine.py._handle_combat_node` 新增 `layer_physics.catalog_ref`（字符串或 `{name, system}`），命中目录即由 bridge 生成敌人，未命中回退内联 `unit_stats`。
+    - `mirror_mvp.py` 新增 `spawn_enemy_from_catalog` / `start_combat_from_catalog` 便捷入口。
+    - 示例模组 `modules/coc_saltmarsh` 的 `2.2_ambush` 战斗节点接入 `catalog_ref: {name: "深潜者", system: "coc7"}`，真正引用目录条目（而非仅文字提及）。
+    - 新增 `tests/test_catalog_bridge.py`（21 项，零第三方依赖：D&D Goblin / CoC 深潜者 字段映射 + round-trip + 落空 + 系统限定）。
+  - 版权口径：D&D 条目取自 SRD 5.1（OGL + CC BY 4.0，5thsrd.org），带署名；CoC 神话为公有领域，数值按 7e 惯例综合（延续既有 trow-11676 署名）。全部通过 `tools/validate_catalogs.py` 与 `tests/test_catalog_service.py`（12/12）。
+
 ### Changed
 
 - **v3.6 内容目录工程化**（2026-09-02，多系统裁决中间件化收官）：

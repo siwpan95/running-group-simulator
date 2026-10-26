@@ -1,0 +1,32 @@
+{
+  "character_id": "hacker_lin",
+  "name": "林夜 · 自由黑客",
+  "version": 1,
+  "attributes": { "ST": 9, "DX": 12, "IQ": 14, "HT": 10 },
+  "secondary": { "HP": 9, "FP": 10, "Will": 12, "Per": 13 },
+  "skills": [
+    { "name": "计算机操作", "level": 16, "difficulty": "Very Hard", "base_attribute": "IQ", "points_spent": 8 },
+    { "name": "电子学", "level": 13, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 2 },
+    { "name": "情报分析", "level": 14, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 2 },
+    { "name": "摄影", "level": 12, "difficulty": "Easy", "base_attribute": "IQ", "points_spent": 1 },
+    { "name": "潜行", "level": 12, "difficulty": "Avg", "base_attribute": "DX", "points_spent": 2 },
+    { "name": "话术", "level": 12, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 1 },
+    { "name": "心理学", "level": 11, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 1 }
+  ],
+  "advantages": ["夜猫子", "信息嗅觉"],
+  "disadvantages": ["偏执", "社交回避"],
+  "features": [
+    { "name": "后门直觉", "trigger_condition": "面对电子设备/系统线索时", "cost": 1, "effect": "请求 GM 给出一条隐藏数据或漏洞提示", "per_scene_limit": 2 },
+    { "name": "远程接管", "trigger_condition": "已接入目标网络后", "cost": 2, "effect": "关闭一处电子锁/监控/机关（需计算机操作检定）", "per_scene_limit": 1 },
+    { "name": "数据备份", "trigger_condition": "同伴失误导致线索丢失前", "cost": 1, "effect": "保留一条已获取的关键信息不因失败而消失", "per_scene_limit": 1 }
+  ],
+  "anchors": ["改装笔记本", "匿名服务器账号"],
+  "equipment": [
+    { "name": "改装笔记本", "type": "tool", "slot": "backpack", "dr": 0, "effects": [{"tool_bonus": 2, "skill": "计算机操作"}], "uses": -1, "description": "外接天线与散热改装，跑分怪兽" },
+    { "name": "多功能工具钳", "type": "tool", "slot": "hand", "dr": 0, "effects": [{"tool_bonus": 1, "skill": "电子学"}], "uses": -1, "description": "拆机撬壳都好用" }
+  ],
+  "focus_max": 3,
+  "luck_max": 2,
+  "xp_log": [],
+  "total_xp": 0
+}

@@ -313,22 +313,21 @@ class SceneEngine:
         """处理战斗节点"""
         physics = node.get("layer_physics", {})
 
-        # 从 JSON 构建敌人
-        enemy_type = physics.get("enemy_type", "mook")
-        stats = physics.get("unit_stats", {})
+        # 优先从内容目录生成敌人（v3.6 内容目录消费方）
+        # catalog_ref: "深潜者" 或 {"name": "深潜者", "system": "coc7"}
+        catalog_ref = physics.get("catalog_ref")
+        enemy = None
+        if catalog_ref:
+            try:
+                from services.catalog_bridge import build_enemy_from_catalog
+                ref = catalog_ref if isinstance(catalog_ref, dict) else {"name": catalog_ref}
+                enemy = build_enemy_from_catalog(ref.get("name"), ref.get("system"))
+            except Exception:  # pragma: no cover - 目录缺失时回退内联
+                enemy = None
+        if enemy is None:
+            enemy = self._build_inline_enemy(node, physics)
 
-        enemy_name = node.get("title", node.get("trigger", "未知敌人"))
-        enemy = Enemy(
-            name=enemy_name,
-            enemy_type="wildcard" if "wildcard" in enemy_type.lower() else "mook",
-            hp=stats.get("hp", 10),
-            hp_max=stats.get("hp", 10),
-            attack_skill=stats.get("attack_skill", 12),
-            damage=stats.get("damage", "1d6 cut"),
-            dodge=stats.get("dodge", 8),
-        )
-
-        # 特殊机制
+        # 特殊机制（目录与内联两条路径都适用）
         special = physics.get("special_mechanic", {})
         if special:
             enemy.special_abilities.append(special)
@@ -344,6 +343,21 @@ class SceneEngine:
 
         self.completed_nodes.add(node["node_id"])
         return vm_result
+
+    def _build_inline_enemy(self, node: Dict, physics: Dict) -> "Enemy":
+        """从 layer_physics.unit_stats 内联构造敌人（catalog_ref 未命中时的回退）。"""
+        enemy_type = physics.get("enemy_type", "mook")
+        stats = physics.get("unit_stats", {})
+        enemy_name = node.get("title", node.get("trigger", "未知敌人"))
+        return Enemy(
+            name=enemy_name,
+            enemy_type="wildcard" if "wildcard" in enemy_type.lower() else "mook",
+            hp=stats.get("hp", 10),
+            hp_max=stats.get("hp", 10),
+            attack_skill=stats.get("attack_skill", 12),
+            damage=stats.get("damage", "1d6 cut"),
+            dodge=stats.get("dodge", 8),
+        )
 
     # === 状态管理 ===
 
