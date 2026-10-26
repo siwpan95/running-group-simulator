@@ -12,7 +12,8 @@
 系统画像（dnd5e→roll_high、coc7→d100、wod→d10 骰池）来解释，因此：
   · D&D 敌人：attack_skill = 命中加值(hit)、ac = 护甲等级、dodge 仅作 gurps 回退；
   · CoC 敌人：attack_skill = 武器百分比、dodge = DEX×2（CoC 闪避）、dr = 护甲值；
-  · WoD 敌人：attack_skill = 攻击骰池、dodge = 闪避骰池、dr = 伤害平减（均为 Storytelling 池数值）。
+  · WoD 敌人：attack_skill = 攻击骰池、dodge = 闪避骰池、dr = 伤害平减（均为 Storytelling 池数值）；
+  · GURPS 敌人：attack_skill = 3d6 技能目标、dodge = 闪避、dr = 伤害抗力、damage 含 cut/imp/cr 类型（原生 GURPS 数值，引擎默认 gurps 画像解释）。
 
 依赖：services.catalog_service.CatalogService（统一检索）、core.enemy.Enemy。
 """
@@ -125,6 +126,8 @@ def build_enemy_from_catalog(name: str, system: Optional[str] = None) -> Optiona
         return _coc_enemy(entry)
     if sys_id == "wod":
         return _wod_enemy(entry)
+    if sys_id == "gurps":
+        return _gurps_enemy(entry)
     return None
 
 
@@ -199,6 +202,30 @@ def _wod_enemy(e: dict) -> Enemy:
         dodge=_parse_int(e.get("dodge", 6)),
         dr=_parse_int(e.get("dr", 0)),
         ac=0,                          # WoD 用闪避骰池，不用 AC
+        special_abilities=[],
+        description=e.get("archetype", ""),
+    )
+
+
+def _gurps_enemy(e: dict) -> Enemy:
+    """GURPS 4e 目录条目 → Enemy（原生 GURPS 数值）。
+
+    attack_skill = 3d6 技能目标、dodge = 闪避、dr = 伤害抗力、
+    damage 串含 cut/imp/cr 等 GURPS 伤害类型词；引擎默认 gurps 画像解释。
+    enemy_type 取自条目（mook / elite / wildcard / boss），驱动附庸/精英行为。
+    """
+    name = e.get("name", "未知敌人")
+    hp = _parse_int(e.get("hp", 10))
+    return Enemy(
+        name=name,
+        enemy_type=e.get("enemy_type", "mook"),
+        st=10, dx=10, iq=10, ht=10,
+        hp=hp, hp_max=hp,
+        attack_skill=_parse_int(e.get("attack_skill", 12)),
+        damage=e.get("damage", "1d6 cut"),
+        dodge=_parse_int(e.get("dodge", 8)),
+        dr=_parse_int(e.get("dr", 0)),
+        ac=0,                          # GURPS 用 DR 而非 AC
         special_abilities=[],
         description=e.get("archetype", ""),
     )

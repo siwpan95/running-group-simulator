@@ -99,6 +99,23 @@ def test_bridge_basics():
     check("WoD 被放逐的长者(英文名 The Exiled Elder)",
           build_enemy_from_catalog("The Exiled Elder", "wod") is not None)
 
+    # --- GURPS 巨鼠群 / 镜中倒影（mirror_house_alley 收编进目录）---
+    rat = build_enemy_from_catalog("巨鼠群", "gurps")
+    check("GURPS 巨鼠群 命中目录", rat is not None, "返回 None")
+    if rat:
+        check("  巨鼠群 enemy_type=mook", rat.enemy_type == "mook", rat.enemy_type)
+        check("  巨鼠群 attack_skill=12", rat.attack_skill == 12, "as=%s" % rat.attack_skill)
+        check("  巨鼠群 dodge=9/dr=0", rat.dodge == 9 and rat.dr == 0, "dodge=%s dr=%s" % (rat.dodge, rat.dr))
+        check("  巨鼠群 damage 含 cut", "cut" in rat.damage, rat.damage)
+        check("  巨鼠群 round-trip 一致", Enemy.from_dict(rat.to_dict()).name == rat.name)
+    refl = build_enemy_from_catalog("镜中倒影", "gurps")
+    check("GURPS 镜中倒影 命中目录", refl is not None, "返回 None")
+    if refl:
+        check("  镜中倒影 enemy_type=wildcard", refl.enemy_type == "wildcard", refl.enemy_type)
+        check("  镜中倒影 attack_skill=14", refl.attack_skill == 14, "as=%s" % refl.attack_skill)
+        check("  镜中倒影 dodge=10/dr=2", refl.dodge == 10 and refl.dr == 2, "dodge=%s dr=%s" % (refl.dodge, refl.dr))
+        check("  镜中倒影 round-trip 一致", Enemy.from_dict(refl.to_dict()).name == refl.name)
+
     # --- 落空 ---
     check("未知名称返回 None", build_enemy_from_catalog("不存在的怪物XYZ") is None)
 

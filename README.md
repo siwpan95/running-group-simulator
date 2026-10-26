@@ -380,9 +380,11 @@ python tests/test_excel_roundtrip.py
    - `coc_sample` `2.2_face_creature` → `{name: "食尸鬼", system: "coc7"}`
    - `dnd_sample` `2.1_goblin_camp` → `{name: "Goblin", system: "dnd5e"}`
    - `wod_sample` `2.1_confront` → `{name: "被放逐的长者", system: "wod"}`（新增 WoD 目录支撑）
+   - `mirror_house_alley` `2.2_rat_swarm` → `{name: "巨鼠群", system: "gurps"}`、`3.1_the_reflection` → `{name: "镜中倒影", system: "gurps"}`（新增 GURPS 目录支撑，原内联自制敌人收编进目录）
 5. **WoD 目录**：新增 `data/wod/catalog.json`（`wod-catalog-v1`，自有设定生物，非 White Wolf 官方资料），并在 `services/catalog_service.py` 注册、`tools/validate_catalogs.py` 增加 `wod` schema 校验；`catalog_bridge` 新增 `_wod_enemy`（attack_skill/dodge = d10 骰池、dr = 伤害平减）。
+6. **GURPS 目录**：新增 `data/gurps/catalog.json`（`gurps-catalog-v1`，收编 `mirror_house_alley` 的自制敌人 巨鼠群 / 镜中倒影），同样在 `catalog_service` 注册、`validate_catalogs` 增加 `gurps` schema 校验；`catalog_bridge` 新增 `_gurps_enemy`（原生 GURPS 数值：attack_skill=3d6 技能目标、dodge=闪避、dr=伤害抗力、damage 含 cut/imp/cr 类型）。节点的 `special_mechanic` / `minion_threshold` 等机制元数据保留在模块节点层，仍由场景引擎套用。
 
-测试：`tests/test_catalog_bridge.py`（35 项，零第三方依赖，覆盖 dnd5e / coc7 / wod 三套 schema）。
+测试：`tests/test_catalog_bridge.py`（46 项，零第三方依赖，覆盖 dnd5e / coc7 / wod / gurps 四套 schema）。
 
 ## 多系统裁决中间件（v3.2 · 2026-09-02）
 

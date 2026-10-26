@@ -20,6 +20,7 @@ CATALOG_PATHS = {
     "coc7": os.path.join("coc7", "catalog.json"),
     "dnd5e": os.path.join("dnd5e", "catalog.json"),
     "wod": os.path.join("wod", "catalog.json"),
+    "gurps": os.path.join("gurps", "catalog.json"),
 }
 
 

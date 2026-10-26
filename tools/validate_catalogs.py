@@ -82,11 +82,30 @@ def validate_wod(path):
     return errors
 
 
+def validate_gurps(path):
+    errors = []
+    try:
+        c = json.load(open(path, encoding="utf-8"))
+    except Exception as ex:
+        return ["读取失败: %s" % ex]
+    if c.get("schema") != "gurps-catalog-v1":
+        errors.append("schema 版本不符: %s" % c.get("schema"))
+    creatures = c.get("creatures") or []
+    for i, e in enumerate(creatures):
+        miss = _req(e, ("name", "enemy_type", "hp", "attack_skill", "damage", "dodge", "dr"))
+        if miss:
+            errors.append("creatures[%d](%s) 缺字段 %s" % (i, e.get("name"), miss))
+    if not creatures:
+        errors.append("creatures 为空")
+    return errors
+
+
 def main():
     catalogs = {
         "coc7": ("data/coc7/catalog.json", validate_coc7),
         "dnd5e": ("data/dnd5e/catalog.json", validate_dnd5e),
         "wod": ("data/wod/catalog.json", validate_wod),
+        "gurps": ("data/gurps/catalog.json", validate_gurps),
     }
     result = {}
     fails = 0
