@@ -61,6 +61,18 @@
       "dodge": 12,
       "dr": 0,
       "source": "modules/gurps_paper_alley/2.4_walking_shadow 自制设定（纸扎民俗）"
+    },
+    {
+      "name": "祖纸",
+      "name_en": "The Progenitor Effigy",
+      "enemy_type": "boss",
+      "archetype": "民国年间被点睛的第一张纸（走影的源头）",
+      "hp": 16,
+      "attack_skill": 15,
+      "damage": "3d6 cut",
+      "dodge": 11,
+      "dr": 3,
+      "source": "modules/gurps_paper_alley/5.2_progenitor 自制设定（纸扎民俗）"
     }
   ]
 }

@@ -51,7 +51,8 @@ def module_files():
 
 def nodes_of(mod):
     """产出 (act_key, node) 列表。"""
-    for ak in ("act_1", "act_2", "act_3"):
+    for ak in sorted([k for k in mod if k.startswith("act")],
+                     key=lambda k: (len(k), k)):
         for n in mod.get(ak, {}).get("nodes", []) or []:
             yield ak, n
 
@@ -83,13 +84,22 @@ def test_modules():
               "%s / 可用=%s" % (systems, svc.available()))
 
         # 三幕 + 节点唯一性
-        acts_ok = all(mod.get(ak) for ak in ("act_1", "act_2", "act_3"))
-        check("%s 三幕结构完整" % mod_name, acts_ok)
+        acts = [k for k in mod if isinstance(mod.get(k), dict) and k.startswith("act")]
+        acts_ok = all(mod.get(ak) for ak in ("act_1", "act_2", "act_3")) and len(acts) >= 3
+        check("%s 三幕结构完整" % mod_name, acts_ok, "acts=%s" % acts)
         all_nodes = list(nodes_of(mod))
         ids = [n.get("node_id") for _, n in all_nodes]
         check("%s 节点 id 唯一" % mod_name, len(ids) == len(set(ids)),
               str([i for i in ids if ids.count(i) > 1]))
         check("%s 节点 id 非空" % mod_name, all(ids) and all(ids))
+
+        # 幕级系统声明合法（多系统模组）
+        bad_act_sys = []
+        for ak in acts:
+            for s in (mod.get(ak, {}).get("systems") or []):
+                if s not in svc.available():
+                    bad_act_sys.append("%s:%s" % (ak, s))
+        check("%s 幕级 systems 合法" % mod_name, not bad_act_sys, str(bad_act_sys))
 
         # 节点图自洽
         bad_refs = []
@@ -166,10 +176,76 @@ def test_scene_engine_loads_modules():
             check("%s 首个战斗节点可生成敌人" % mod_name, ok, str(enemy))
 
 
+def test_cross_system_module():
+    """多系统模组：按幕切换系统画像（v3.7 引擎能力）。"""
+    from core.character import Character
+    from core.environment_system import EnvironmentSystem
+    from core.scene_engine import SceneEngine
+    from core.viewmodel import ViewModel
+
+    path = os.path.join(MODULES_DIR, "mirror_crossroad", "module.json")
+    if not os.path.isfile(path):
+        check("跨系统模组存在", False, path)
+        return
+    mod = json.load(open(path, encoding="utf-8"))
+    check("跨系统模组存在", True)
+
+    # 幕级系统声明
+    expect = {"act_1": "gurps", "act_2": "coc7", "act_3": "dnd5e", "act_4": "wod"}
+    bad = []
+    for ak, want in expect.items():
+        got = (mod.get(ak, {}).get("systems") or [None])[0]
+        if got != want:
+            bad.append("%s=%s(want %s)" % (ak, got, want))
+    check("跨系统模组 幕级系统声明正确", not bad, str(bad))
+
+    # 角色卡：属性驱动 + SAN 启用
+    card_path = os.path.join(ROOT, "characters", "预置-镜中调查员.json")
+    check("跨系统角色卡存在", os.path.isfile(card_path))
+    if os.path.isfile(card_path):
+        card = json.load(open(card_path, encoding="utf-8"))
+        check("  角色卡 SAN 已启用", (card.get("sanity") or {}).get("san_max", 0) > 0,
+              str(card.get("sanity")))
+        check("  角色卡 不依赖具名技能（跨系统安全）",
+              len(card.get("skills") or []) == 0,
+              str([s.get("name") for s in (card.get("skills") or [])]))
+
+    pc = Character(character_id="t", name="PC", st=11, dx=12, iq=13, ht=12,
+                   hp=10, hp_max=10, fp=4, fp_max=4, will=12, per=13,
+                   san=70, san_max=99)
+    eng = SceneEngine(mod, pc, ViewModel(), EnvironmentSystem(), "gurps")
+    check("场景引擎加载跨系统模组", len(eng._node_index) > 0)
+
+    # 逐幕跑一个节点，验证系统画像确实切换
+    seen = {}
+    for ak, want in expect.items():
+        node = next((n for a, n in nodes_of(mod) if a == ak), None)
+        if node is None:
+            continue
+        eng.run_node(node["node_id"])
+        seen[ak] = eng.current_system_id
+    wrong = {k: v for k, v in seen.items() if v != expect[k]}
+    check("按幕切换系统画像生效", not wrong, "实际=%s 期望=%s" % (seen, expect))
+
+    # CoC 幕应能触发 SAN 损失（战斗节点）
+    coc_node = next((n for a, n in nodes_of(mod) if a == "act_2"
+                     and n.get("scene_type") == "combat"), None)
+    if coc_node:
+        pc2 = Character(character_id="t", name="PC", st=11, dx=12, iq=13, ht=12,
+                        hp=10, hp_max=10, fp=4, fp_max=4, will=12, per=13,
+                        san=70, san_max=99)
+        eng2 = SceneEngine(mod, pc2, ViewModel(), EnvironmentSystem(), "gurps")
+        before = pc2.san
+        eng2.run_node(coc_node["node_id"])
+        check("CoC 幕战斗节点触发 SAN 损失", pc2.san < before,
+              "SAN %s -> %s" % (before, pc2.san))
+
+
 def main():
     print("== 模组完整性测试 ==")
     test_modules()
     test_scene_engine_loads_modules()
+    test_cross_system_module()
     print("\n结果: %d passed, %d failed" % (_PASS, _FAIL))
     if _FAILURES:
         print("失败项: %s" % "; ".join(_FAILURES))

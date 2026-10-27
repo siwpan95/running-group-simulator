@@ -84,7 +84,7 @@ pt/
 │   ├── 预置-古董商.json            │  IQ 13，鉴赏/神秘学/历史
 │   └── 预置-CoC调查员.json         │  CoC 7e 调查员：百分比技能 + SAN 理智已启用
 │
-├── modules/                     ← 模组（每个模组一个子目录，9 个示例）
+├── modules/                     ← 模组（每个模组一个子目录，12 个示例）
 │   ├── mirror_house_alley/      ← 镜屋巷（GURPS 4e，3 幕）
 │   ├── coc_sample/              ← 旧宅的低语（CoC 7e，3 幕）
 │   ├── dnd_sample/              ← 哥布林洞窟（D&D 5e，3 幕）
@@ -92,8 +92,11 @@ pt/
 │   ├── coc_saltmarsh/           ← 盐沼低语（CoC 7e，3 幕，引用扩充目录神话生物）
 │   ├── coc_dunwich/             ← 敦威治之夜（CoC 7e，3 幕，Lovecraft 公有领域）
 │   ├── dnd_phandalin/           ← 凡达林：红标之夜（D&D 5e，3 幕，SRD 5.1 结构）
-│   ├── gurps_paper_alley/       ← 纸人巷（GURPS 4e，3 幕，纸扎民俗）
-│   └── wod_long_night/          ← 长夜巡猎（WoD，3 幕，民俗驱魔）
+│   ├── gurps_paper_alley/       ← 纸人巷（GURPS 4e，**5 幕主线**，纸扎民俗）
+│   ├── wod_long_night/          ← 长夜巡猎（WoD，3 幕，民俗驱魔）
+│   ├── coc_hastur/              ← 黄印与暗夜神庙（CoC 7e，3 幕，钱伯斯+洛夫克拉夫特）
+│   ├── dnd_snow_queen/          ← 冰雪女王（D&D 5e，3 幕，安徒生/格林）
+│   └── mirror_crossroad/        ← 镜中之失（**跨四系统主线**，4 幕各一套规则）
 │
 ├── templates/                   ← 内容创作模板
 │   ├── characters/              │  角色卡 Excel 模板
@@ -402,6 +405,11 @@ python tests/test_excel_roundtrip.py
 | `dnd_phandalin`《凡达林：红标之夜》 | D&D 5e | SRD 5.1《Lost Mine of Phandelver》结构：试炼之路哥布林伏击、克拉莫堡、红标帮、碎晶矿坑 | SRD 5.1（OGL + CC BY 4.0） |
 | `gurps_paper_alley`《纸人巷》 | GURPS 4e | 中国纸扎民俗：「纸人不点睛，纸马不扬鬃」（《太平广记》）、明《大明律》禁彩绘眼珠、扎糊绘剪四字诀、男骑马女骑牛、红男绿女 | 民俗/公开文献，文字原创 |
 | `wod_long_night`《长夜巡猎》 | WoD | 东欧/斯拉夫吸血鬼民俗：木桩穿心、银器、镜子、活水不可渡、未受邀不得入门、门槛撒米粒乱其计数、忌猫跳尸 | 民俗，设定原创 |
+| `coc_hastur`《黄印与暗夜神庙》 | CoC 7e | 钱伯斯《黄衣之王》(1895)：被禁的剧本、第一幕与第二幕、黄印、卡索沙、哈利湖；洛夫克拉夫特《暗夜呢喃》《暗夜窃魂者》：德维尔礁、黑暗神庙 | 公有领域 |
+| `dnd_snow_queen`《冰雪女王》 | D&D 5e | 安徒生《冰雪皇后》(1845)/格林《白雪女王》(1812)：恶魔之镜碎片、樱桃树篱巫婆、两只渡鸦、强盗女孩、驯鹿、永恒字谜 | 公有领域 |
+| `mirror_crossroad`《镜中之失》 | **跨四系统** | 本项目主线：同一角色、四幕四套规则（现实→神话→异界→都市），配套专属跨系统角色卡 | 原创 |
+
+《纸人巷》已从 3 幕单元剧扩为 **5 幕主线**：纸人巷 → 作坊 → 出殡 → **城隍庙后的纸行** → **焚化场**（新增两幕取材自「报庙/接三」「烧还魂钱/黄昏钱」「蒙面遮鲜」等丧葬旧俗）。
 
 配套新增：
 - `characters/预置-CoC调查员.json`：CoC 7e 调查员（百分比技能 + **SAN 理智已启用**）——此前所有角色卡 `san_max=0`，SAN 机制整条无法触发。
@@ -423,6 +431,25 @@ python tests/test_excel_roundtrip.py
 | WoD | 属性名（感知/意志/敏捷） | 骰池＝属性值；写技能名时须加负修正压回 6-10 颗骰 |
 
 > 嵌套 `checks` 数组一律按 3d6 对 DC 判定（不含技能加成），因此**仅在 GURPS 模组里语义正确**；CoC/D&D/WoD 模组请用单次 `skill_check`。
+
+### 跨系统模组：按幕切换规则（v3.8）
+
+一个模组可以**每幕用一套系统画像**。在幕里写 `systems` 字段即可，引擎进入该幕时自动切换（含战斗引擎）：
+
+```json
+"meta": { "systems": ["gurps"] },
+"act_1": { "systems": ["gurps"], "nodes": [ … ] },
+"act_2": { "systems": ["coc7"],  "nodes": [ … ] },
+"act_3": { "systems": ["dnd5e"], "nodes": [ … ] },
+"act_4": { "systems": ["wod"],   "nodes": [ … ] }
+```
+
+优先级：**节点 `system` > 幕 `systems[0]` > 模组 `meta.systems[0]`**。
+
+配套要点：
+- **角色卡必须跨系统安全**——只用属性（感知/意志/力量/敏捷/智力），不依赖具名技能。同一组属性在四套规则下都能正确折算（见上表），而技能名会失真（例如 5e 里「调查=14」会变成 +14 的荒谬加成）。
+- 幕数不再限于 3：引擎按 `act_N` 自动发现（`act_10` 排在 `act_9` 之后），`is_story_complete()` 判定全部幕完成。
+- 范例见 `modules/mirror_crossroad`（配 `characters/预置-镜中调查员.json`）。
 
 
 ## 多系统裁决中间件（v3.2 · 2026-09-02）

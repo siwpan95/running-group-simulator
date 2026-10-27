@@ -1,0 +1,376 @@
+{
+  "meta": {
+    "module_id": "dnd_snow_queen",
+    "system_name": "Mirror of the Lost",
+    "module_title": "冰雪女王",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "D&D 5e",
+    "systems": [
+      "dnd5e"
+    ],
+    "playstyle": "童话远征 / 寒境谜题 / 追与归",
+    "estimated_duration": "3-4 小时",
+    "player_count": "3-5 人",
+    "synopsis": "一面能照出丑的恶魔之镜碎成了亿片，碎片飞进人的眼睛和心里，把心冻成冰。凯被白雪皇后带走了，格尔达穿着红鞋一路追到世界尽头——河、樱桃树篱的巫婆、两只多嘴的渡鸦、黑暗森林里的强盗女孩、屋梁上的鸽子、套着铜环的驯鹿，最后是冰宫里那个用冰拼『永恒』的谜题。多系统引擎 D&D 5e 示例：d20 检定 vs DC、优劣势、AC 战斗；战斗敌人直接引用 data/dnd5e/catalog.json 的 SRD 怪物条目。",
+    "base_xp": 4
+  },
+  "global_context_tags": [
+    {
+      "id": "eternal_winter",
+      "name": "不散的冬",
+      "effect": "感知 -2"
+    },
+    {
+      "id": "shard_ache",
+      "name": "眼底的碎光",
+      "effect": "意志 -2"
+    }
+  ],
+  "act_1": {
+    "scene_id": "act1_the_shattered_glass",
+    "title": "碎镜之冬",
+    "description": "城里连下了三天的雪。两个孩子隔着共用的屋顶花园一起长大——直到那个下午，一片比沙粒还小的碎玻璃飞进凯的眼睛和心里。",
+    "environment": {
+      "mood": "花园里的玫瑰全被冻住了。风从北方来，卷着雪，像有人在很高的地方翻一本纸书。",
+      "tags": [
+        {
+          "id": "eternal_winter",
+          "name": "不散的冬",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_snowflake",
+        "scene_type": "perception",
+        "trigger": "窗边看雪，看见雪花里有一个女人的影子在招手。",
+        "prerequisite_nodes": [],
+        "next_nodes": [
+          "1.2_shard"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "dc": 12
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "雪片越积越大，轮廓渐渐清楚：一个披着白裘的女人，坐在飞驰的雪橇上朝你伸手。她美得让你想跟上去。",
+            "crit_success": "你看见她身后还有第二个人影——一个男孩，僵直地坐在雪橇上，眼睛是冰的。",
+            "failure": "你揉了揉眼。只是一场普通的雪。窗玻璃上有一道细小的划痕，你没在意。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_shard",
+        "scene_type": "investigation",
+        "trigger": "找那面碎了的老镜子，看清凯为什么变了。",
+        "prerequisite_nodes": [
+          "1.1_snowflake"
+        ],
+        "next_nodes": [
+          "1.3_sleigh"
+        ],
+        "layer_physics": {
+          "skill_check": "侦查",
+          "dc": 14
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "花园尽头那面旧镜只剩半块，边缘参差。凯看见你时皱了眉——『你今天真难看。』他指的是你，还是他自己？",
+            "crit_success": "你从镜框里抠出一小片带字的碎玻璃：「……一切美好的，在镜中都将显得丑陋……」",
+            "failure": "凯躲开了你的目光。他说没事，只是最近看什么都不顺眼。"
+          }
+        }
+      },
+      {
+        "node_id": "1.3_sleigh",
+        "scene_type": "feat",
+        "trigger": "追那架雪橇。",
+        "prerequisite_nodes": [
+          "1.2_shard"
+        ],
+        "next_nodes": [
+          "2.1_river"
+        ],
+        "layer_physics": {
+          "skill_check": "敏捷",
+          "dc": 14,
+          "modifier": -2
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你在广场上截住了雪橇的路线。凯探出半个身子，眼睛白得像结冰的湖面。",
+            "failure": "雪橇太快。你只抓下一只掉落的红手套——不是凯的手套，尺寸不对。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_the_journey",
+    "title": "北去的路",
+    "description": "格尔达穿上了最爱的红鞋。她相信河知道答案。",
+    "environment": {
+      "mood": "河面结着薄冰，春天来了也不化。樱桃树篱后面有人在唱歌，唱的是你听过但想不起来的一支。",
+      "tags": [
+        {
+          "id": "eternal_winter",
+          "name": "不散的冬",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_river",
+        "scene_type": "feat",
+        "trigger": "把红鞋扔进河里，问河要人。",
+        "prerequisite_nodes": [
+          "1.3_sleigh"
+        ],
+        "next_nodes": [
+          "2.2_ravens"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "dc": 13
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "红鞋沉下去，水面裂开一条缝，把你带向下游。河从不骗人——它只是把你送到该去的地方。",
+            "failure": "鞋漂在水面，怎么也沉不下去。河只是推着你走，一点也不温柔。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_ravens",
+        "scene_type": "perception",
+        "trigger": "两只渡鸦落在樱桃树篱上，对你说了些不该听的事。",
+        "prerequisite_nodes": [
+          "2.1_river"
+        ],
+        "next_nodes": [
+          "2.3_robbers"
+        ],
+        "environment": {
+          "mood": "树篱那边是个花园，美得让人坐下就不想走。屋檐上落着两只黑色的鸟。",
+          "tags": [
+            {
+              "id": "hedge_maze",
+              "name": "樱桃树篱",
+              "effect": "意志 -5"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "dc": 13
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "渡鸦说，城里刚来了一位王子，长得像凯——但王子有公主陪着。它们说这话时笑得像在讲笑话。",
+            "crit_success": "你问它们王子的名字。其中一只说出了一个名字，那名字让你心里一沉：不是凯的名字。",
+            "failure": "鸟飞走了。花园里只剩下花瓣，和一个你差点就想待下去的下午。"
+          }
+        }
+      },
+      {
+        "node_id": "2.3_robbers",
+        "scene_type": "combat",
+        "trigger": "黑暗森林里，拦住金马车的是一伙强盗。领头的是个拿刀的姑娘。",
+        "prerequisite_nodes": [
+          "2.2_ravens"
+        ],
+        "next_nodes": [
+          "2.4_reindeer"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "Bandit",
+            "system": "dnd5e"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你抢先一步站到车前，把强盗头领的注意力从马车里引开。",
+            "failure": "刀锋擦过你的斗篷。那姑娘的眼睛亮得吓人，她却忽然收了刀：「你在找的那个——我见过。」"
+          }
+        }
+      },
+      {
+        "node_id": "2.4_reindeer",
+        "scene_type": "investigation",
+        "trigger": "强盗窝的屋梁上塞满鸽子，墙角拴着一头套铜环的驯鹿。",
+        "prerequisite_nodes": [
+          "2.3_robbers"
+        ],
+        "next_nodes": [
+          "3.1_palace"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "dc": 14
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "驯鹿说：凯往北去了，走的是芬马克的方向，它认得路。它蹄子上的铜环在火光里响得清脆。",
+            "crit_success": "屋梁上的鸽子咕咕地给你补上最后一程：『雪橇从屋顶上过去了，往北，往北。』",
+            "failure": "它们不理你。驯鹿只是用蹄子刨着地，像所有想回家却回不去的牲口。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_the_ice_palace",
+    "title": "冰宫与永恒",
+    "description": "世界的尽头有一座冰做的宫殿。凯坐在冰湖中央的宝座上，正在用冰片拼一个字。",
+    "environment": {
+      "mood": "风停了。整个世界安静得像屏着气。寒气不是冷，是『被看穿』。",
+      "tags": [
+        {
+          "id": "shard_ache",
+          "name": "眼底的碎光",
+          "effect": "意志 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "3.1_palace",
+        "scene_type": "perception",
+        "trigger": "穿过冰宫的回廊。",
+        "prerequisite_nodes": [
+          "2.4_reindeer"
+        ],
+        "next_nodes": [
+          "3.2_wraiths"
+        ],
+        "environment": {
+          "mood": "回廊两侧站着一排没有脸的侍从。它们的姿态像在等一场永远不会开始的典礼。",
+          "tags": [
+            {
+              "id": "palace_frost",
+              "name": "极寒",
+              "effect": "敏捷 -5"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "dc": 15
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "没有生命在这里走动。冰把一切都保存得太好了——连烛火都停在燃起的那一瞬。",
+            "crit_success": "你在一面冰壁上看见自己的倒影——可倒影的动作比你慢半拍，而且它在朝你笑。",
+            "failure": "风从没有窗的走廊里灌进来。你数着自己的呼吸，数到第十九下时忘了自己在数什么。"
+          }
+        }
+      },
+      {
+        "node_id": "3.2_wraiths",
+        "scene_type": "combat",
+        "trigger": "冰湖岸边，那群没有脸的东西围了上来。",
+        "prerequisite_nodes": [
+          "3.1_palace"
+        ],
+        "next_nodes": [
+          "3.3_puzzle"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "Wraith",
+            "system": "dnd5e"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你的武器穿过它们时像砍进冷风。它们散开，又聚拢。",
+            "failure": "它们的手指比你更冷，抓住你就不放。你这才明白为什么它们没有脸——脸早就冻掉了。"
+          }
+        }
+      },
+      {
+        "node_id": "3.3_puzzle",
+        "scene_type": "feat",
+        "trigger": "凯在拼『永恒』。拼对了，女王就放他走。",
+        "prerequisite_nodes": [
+          "3.2_wraiths"
+        ],
+        "next_nodes": [
+          "3.4_ending"
+        ],
+        "layer_physics": {
+          "skill_check": "智力",
+          "dc": 16
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你认出了那些冰片的拼法。字母的形状和雪花的形状是同一回事——你替凯拼完了最后一个字。",
+            "crit_success": "你拼的不是词，是一个名字。冰面上出现一行水汽：ELDRIGE.那是伊格德里克的签名字母——你一直在找的人，名字就刻在这面镜子的背面。",
+            "failure": "冰片在你手里碎成粉。你不知道他要拼什么，只看见他拼了一整天，地上全是碎冰。"
+          }
+        }
+      },
+      {
+        "node_id": "3.4_ending",
+        "scene_type": "explore",
+        "trigger": "女王走了。凯的眼泪落下来。",
+        "prerequisite_nodes": [
+          "3.3_puzzle"
+        ],
+        "next_nodes": [],
+        "resolution_paths": [
+          {
+            "path": "泪与歌",
+            "method": "用自己的温度融化他心里的碎片",
+            "success": "热泪落下，冰从心口化开。凯哭了出来——一个孩子能有的、最普通的那种哭。"
+          },
+          {
+            "path": "带走碎片",
+            "method": "把眼里的那一片碎片取出来带回家",
+            "success": "你把碎片握在掌心，它烫得惊人。你带回去的也许是一个解药，也许是一把钥匙。"
+          },
+          {
+            "path": "留在北国",
+            "method": "留下来，和凯一起等春天",
+            "success": "春天没有来。但你写下的每一页纸上，冬天会少一分。"
+          }
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "dc": 13
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你们在冰面上跳了一支舞。雪片飞起来的时候，每一个都像一个小小的字母。回家那天，花园里的玫瑰重新开了。"
+          }
+        }
+      }
+    ]
+  },
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      { "场景": "1.1_snowflake", "检定": "感知 DC 12", "失败": "只是一场普通的雪" },
+      { "场景": "1.2_shard", "检定": "侦查 DC 14", "失败": "凯躲开目光" },
+      { "场景": "1.3_sleigh", "检定": "敏捷 DC 14 -2", "失败": "只抓到一只红手套" },
+      { "场景": "2.1_river", "检定": "意志 DC 13", "失败": "红鞋漂在水面" },
+      { "场景": "2.2_ravens", "检定": "感知 DC 13", "失败": "花园里只剩花瓣" },
+      { "场景": "2.3_robbers", "检定": "战斗（Bandit）", "失败": "被刀擦过斗篷" },
+      { "场景": "2.4_reindeer", "检定": "意志 DC 14", "失败": "驯鹿不理你" },
+      { "场景": "3.1_palace", "检定": "感知 DC 15", "失败": "数呼吸数到第十九下" },
+      { "场景": "3.2_wraiths", "检定": "战斗（Wraith）", "失败": "被冻住的手抓住" },
+      { "场景": "3.3_puzzle", "检定": "智力 DC 16", "失败": "冰片碎成粉" }
+    ],
+    "notes": [
+      "D&D 检定用『skill_check + dc + modifier』：引擎按 d20 + 总加成 对抗 DC；『侦查』为纯 d20 检定（无属性加成），『感知/敏捷/意志/智力』按 (属性-10)/2 折算（『意志』在 5e 画像无属性映射，会退化为 +0，建议改用『智力』）。",
+      "战斗节点敌人取自 data/dnd5e/catalog.json：Bandit / Wraith（均可换成 Frost Giant、Giant Eagle、Owlbear 等以加难度）。",
+      "本模组取材自安徒生《冰雪皇后》(1845) 与格林《白雪女王》(1812)——均为公有领域；『恶魔之镜碎片』『樱桃树篱巫婆』『两只渡鸦』『强盗女孩与鸽子』『铜环驯鹿』『永恒字谜』等元素一脉相承，文字为原创演绎。"
+    ]
+  }
+}

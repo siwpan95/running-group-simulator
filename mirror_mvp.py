@@ -130,8 +130,18 @@ class MirrorOfLost:
     def start_combat(self, enemy_data: dict) -> CombatEngine:
         """开始战斗"""
         enemy = Enemy.from_dict(enemy_data)
+        self._sync_combat_system()
         self.combat.init_combat(self.pc, [enemy])
         return self.combat
+
+    def _sync_combat_system(self):
+        """多系统模组：把战斗引擎切到当前节点所属幕的系统画像。"""
+        if not self.engine:
+            return
+        sys_id = getattr(self.engine, "current_system_id", None)
+        cur = getattr(getattr(self.combat, "profile", None), "system_id", None)
+        if sys_id and sys_id != cur:
+            self.combat = CombatEngine(sys_id)
 
     # === 内容目录消费方（v3.6）===
 
@@ -292,10 +302,10 @@ class MirrorOfLost:
         return self.pc.has_obsession
 
     def is_game_over(self) -> bool:
-        """检查游戏是否结束"""
+        """检查游戏是否结束（幕数不限，全部幕完成即主线结束）"""
         if self.check_death():
             return True
-        if self.engine and self.engine.is_act_complete("act_3"):
+        if self.engine and self.engine.is_story_complete():
             return True
         return False
 

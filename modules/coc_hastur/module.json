@@ -1,0 +1,413 @@
+{
+  "meta": {
+    "module_id": "coc_hastur",
+    "system_name": "Mirror of the Lost",
+    "module_title": "黄印与暗夜神庙",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "CoC 7e",
+    "systems": [
+      "coc7"
+    ],
+    "playstyle": "书页即陷阱 / 海岸邪教 / 深渊凝视",
+    "estimated_duration": "3-4 小时",
+    "player_count": "2-4 人",
+    "synopsis": "一本只在法国出版过的剧本，封面印着黄印。调查员在剧院后巷捡到它，读过第一幕尚觉优雅，读到第二幕的人便再没醒来。顺着书页上的指引，他们去了德维尔礁——海底那座为『黄衣之王』建起的黑暗神庙。多系统引擎 CoC 7e 示例：d100 检定、SAN 理智、疯狂发作；战斗敌人直接引用 data/coc7/catalog.json 的神话生物条目。",
+    "base_xp": 5
+  },
+  "global_context_tags": [
+    {
+      "id": "yellow_sign",
+      "name": "黄印的余温",
+      "effect": "意志 -5"
+    },
+    {
+      "id": "cold_sea",
+      "name": "寒海",
+      "effect": "力量 -5"
+    }
+  ],
+  "act_1": {
+    "scene_id": "act1_the_yellow_sign",
+    "title": "第一幕",
+    "description": "城东的旧剧院在一九〇〇年后就没开过门。海报还留在墙上，只剩一个黄颜色的人形轮廓。今晚里面有人演出。",
+    "environment": {
+      "mood": "包厢里点着硫磺味的灯。观众不多，但一个都没在看台上——他们全盯着手里同一本薄薄的小册子。",
+      "tags": [
+        {
+          "id": "yellow_sign",
+          "name": "黄印的余温",
+          "effect": "意志 -5"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_backstage",
+        "scene_type": "investigation",
+        "trigger": "从后台的杂物堆里，翻出一本印着黄印的小册子。",
+        "prerequisite_nodes": [],
+        "next_nodes": [
+          "1.2_read"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "小册子只有巴掌大，黑皮，封面是一个没有面孔的黄色人形。书脊上烫着五个字：《黄衣之王》。扉页写着『第一幕』，下面一行小字：仅献于继往开来之明日。",
+            "crit_success": "你翻到最后一页，那里夹着一张戏票，背面用铅笔写着：『第二幕于月缺之夜上演，座位自选。』",
+            "failure": "后台太乱，你只找到几件扔掉的戏服。有一件黄袍上带着干涸的东西。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_read",
+        "scene_type": "feat",
+        "trigger": "读第一幕。",
+        "prerequisite_nodes": [
+          "1.1_backstage"
+        ],
+        "next_nodes": [
+          "1.3_audience"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0,
+          "san_loss": {
+            "amount": "0/1d6",
+            "source": "见到黄印并读懂其含义"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "第一幕是好的。字句漂亮得让你想鼓掌——讲的是一位国王如何失去他的城市，黄袍在纸上像在呼吸。",
+            "crit_success": "你注意到第一幕的第三场，舞台指示写着『面具落下时，观众将看见他真实的形状』。",
+            "failure": "你读不下去。不是难懂，是字在动。你把册子合上，手心全是汗。"
+          }
+        }
+      },
+      {
+        "node_id": "1.3_audience",
+        "scene_type": "perception",
+        "trigger": "包厢里那些读者的表情不太对。",
+        "prerequisite_nodes": [
+          "1.2_read"
+        ],
+        "next_nodes": [
+          "2.1_devils_reef"
+        ],
+        "environment": {
+          "mood": "灯忽然灭了一盏。台下有人开始笑，笑声一个比一个不像人。",
+          "tags": [
+            {
+              "id": "yellow_sign",
+              "name": "黄印的余温",
+              "effect": "意志 -5"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "他们不是在看戏——他们在读。第二幕。每一个读到的人都在笑，眼睛却完全没有在笑。有人转过头来看你，脸上的表情像是刚从很深的水里浮上来。",
+            "crit_success": "角落里有一个没在读的人，正用一块黄布擦手。他说：『别念。第二幕念不得。』",
+            "failure": "你不敢再看。硫磺味越来越重，你的牙根开始发酸。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_devils_reef",
+    "title": "德维尔礁",
+    "description": "戏票背面那行铅笔字指向海边一个废弃的灯塔。退潮的时候，礁石上会露出一条人工凿出来的甬道。",
+    "environment": {
+      "mood": "海腥味压过了一切。潮水退到很远的地方，露出黑色的礁盘，湿漉漉地反着天光。",
+      "tags": [
+        {
+          "id": "cold_sea",
+          "name": "寒海",
+          "effect": "力量 -5"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_devils_reef",
+        "scene_type": "perception",
+        "trigger": "趁退潮，走上礁盘。",
+        "prerequisite_nodes": [
+          "1.3_audience"
+        ],
+        "next_nodes": [
+          "2.2_migo"
+        ],
+        "environment": {
+          "mood": "礁石缝里嵌着东西——不是贝壳，是黑石雕的、没有脸的柱子。",
+          "tags": [
+            {
+              "id": "reef_dark",
+              "name": "礁石无光",
+              "effect": "感知 -10"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "敏捷",
+          "modifier": -5
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你踩着湿滑的礁石跳过去，甬道入口就在前面——一个凿在海崖里的方口，边上刻着一个没有面孔的黄色人形。",
+            "crit_success": "你数了数：入口旁有七个黑石柱，柱顶各刻一颗星，排列方式和戏票背面的座位号一致。",
+            "failure": "海浪打湿了你的鞋。你退回礁盘边缘，看着那道方口，像看着一张咧开的嘴。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_migo",
+        "scene_type": "combat",
+        "trigger": "甬道里，有东西把探照灯的柱子举了起来。",
+        "prerequisite_nodes": [
+          "2.1_devils_reef"
+        ],
+        "next_nodes": [
+          "2.3_starspawn"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "米·戈",
+            "system": "coc7"
+          },
+          "san_loss": {
+            "amount": "0/1d6",
+            "source": "目睹米·戈"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你的第一击打在它的灰色躯壳上，那东西像被抽掉了骨头一样软下去。",
+            "failure": "它的钳子扣住你的小臂——不疼，只是冷，冷得像伸进了雪水。"
+          }
+        }
+      },
+      {
+        "node_id": "2.3_starspawn",
+        "scene_type": "combat",
+        "trigger": "甬道尽头，第二个身影从阴影里立起来，触须上挂着水。",
+        "prerequisite_nodes": [
+          "2.2_migo"
+        ],
+        "next_nodes": [
+          "2.4_temple"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "星之精",
+            "system": "coc7"
+          },
+          "san_loss": {
+            "amount": "1/1d10",
+            "source": "目睹星之精"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "钩爪划过你的衣袖，带下一片鳞——那鳞在火把下会自己卷起来。",
+            "failure": "它的钩爪撕开你的外套。你闻到了自己身上一股不属于人的味道。"
+          }
+        }
+      },
+      {
+        "node_id": "2.4_temple",
+        "scene_type": "investigation",
+        "trigger": "甬道尽头，是一扇半开的石门。",
+        "prerequisite_nodes": [
+          "2.3_starspawn"
+        ],
+        "next_nodes": [
+          "3.1_descent"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": -10
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "门上刻着一行字，是《黄衣之王》第二幕的开场白：『此刻，帷幕落下，而台上台下是一体的。』你抄下了它。",
+            "failure": "门缝里透出的风带着黄袍的味道。你退了半步，脚跟绊在门槛上。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_the_dark_temple",
+    "title": "暗夜神庙",
+    "description": "石门之后是一段向下的阶梯，走到底就是神庙。祭坛是黑色的，祭坛上放着一样你不敢细看的东西。",
+    "environment": {
+      "mood": "石壁上长满黑色的、像水一样的苔藓。越往下走，越听不见自己的脚步声。",
+      "tags": [
+        {
+          "id": "yellow_sign",
+          "name": "黄印的余温",
+          "effect": "意志 -5"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "3.1_descent",
+        "scene_type": "perception",
+        "trigger": "走下阶梯。",
+        "prerequisite_nodes": [
+          "2.4_temple"
+        ],
+        "next_nodes": [
+          "3.2_shrine"
+        ],
+        "environment": {
+          "mood": "阶梯两侧的壁灯全是灭的。可你并不觉得黑。",
+          "tags": [
+            {
+              "id": "temple_dark",
+              "name": "神庙无光",
+              "effect": "感知 -10"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "第三十九级台阶之后，阶梯变成了斜坡。你数着自己的脚步，到四十二级时数不下去了——脚下的地面在动。",
+            "crit_success": "斜坡上刻着七个星位，正好对应你手上那本小册子第二幕的七个场景。",
+            "failure": "黑暗里传来某种黏稠的呼吸声。你捂住口袋里的册子，它烫得像一块炭。"
+          }
+        }
+      },
+      {
+        "node_id": "3.2_shrine",
+        "scene_type": "combat",
+        "trigger": "祭坛上的东西醒了。",
+        "prerequisite_nodes": [
+          "3.1_descent"
+        ],
+        "next_nodes": [
+          "3.3_hastur"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "外神之仆役",
+            "system": "coc7"
+          },
+          "san_loss": {
+            "amount": "1/1d10",
+            "source": "遭遇外神之仆役"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "咒文的火在你手边炸开，那东西连轮廓都没留下。",
+            "failure": "你的武器穿过了它——什么也没打着。它在你身上摸了一下，像在确认你值不值得带走。"
+          }
+        }
+      },
+      {
+        "node_id": "3.3_hastur",
+        "scene_type": "combat",
+        "trigger": "祭坛中央的黑石裂开了。",
+        "prerequisite_nodes": [
+          "3.2_shrine"
+        ],
+        "next_nodes": [
+          "3.4_ending"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "修格斯",
+            "system": "coc7"
+          },
+          "san_loss": {
+            "amount": "1d6/1d20",
+            "source": "直面修格斯"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你把第二幕的开场白念完了。祭坛上的东西停住了——它认得这几行字。",
+            "crit_success": "你念到最后一个字时，黑石上浮出一只没有面孔的黄色面具，正对着你。",
+            "failure": "黑石上涌出一团巨大的、缓慢蠕动的东西。你连后退都忘了。"
+          }
+        }
+      },
+      {
+        "node_id": "3.4_ending",
+        "scene_type": "feat",
+        "trigger": "神庙在塌。决定你带什么出去。",
+        "prerequisite_nodes": [
+          "3.3_hastur"
+        ],
+        "next_nodes": [],
+        "resolution_paths": [
+          {
+            "path": "焚册",
+            "method": "把《黄衣之王》第二幕投入黑石的火里（需意志检定）",
+            "success": "纸在火里卷成灰。整座神庙向上陷落，石头一块块合拢，像一只闭上的手。"
+          },
+          {
+            "path": "带走面具",
+            "method": "取走那张没有面孔的黄色面具",
+            "success": "你把它裹进衣服里带出海。往后每一个夜里，你都能听见有人在很远的地方念第二幕的开场白。"
+          },
+          {
+            "path": "闭门",
+            "method": "从外面把石门砌死（需力量检定）",
+            "success": "你和潮水一起搬石头。门缝越来越窄，最后一线黄光消失时，你听见里面有人叹了口气。"
+          }
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "海水涨上来的时候，你已经站在礁石上了。口袋里的册子还在——第一幕是好的。第二幕你还没翻到。",
+            "failure": "你上了船，怀里却多了一样东西。你不敢摸它，也不肯丢掉它。"
+          }
+        }
+      }
+    ]
+  },
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      { "场景": "1.1_backstage", "检定": "感知", "失败": "只找到丢弃的戏服" },
+      { "场景": "1.2_read", "检定": "意志", "失败": "SAN 0/1d6（见黄印即掉理智）" },
+      { "场景": "1.3_audience", "检定": "感知", "失败": "硫磺味越来越重" },
+      { "场景": "2.1_devils_reef", "检定": "敏捷 -5", "失败": "退回礁盘" },
+      { "场景": "2.2_migo", "检定": "战斗（米·戈 30%）", "失败": "SAN 0/1d6" },
+      { "场景": "2.3_starspawn", "检定": "战斗（星之精 40%）", "失败": "SAN 1/1d10" },
+      { "场景": "2.4_temple", "检定": "意志 -10", "失败": "门槛绊住脚跟" },
+      { "场景": "3.1_descent", "检定": "感知", "失败": "听见黏稠的呼吸" },
+      { "场景": "3.2_shrine", "检定": "战斗（外神之仆役 45%）", "失败": "SAN 1/1d10" },
+      { "场景": "3.3_hastur", "检定": "战斗（修格斯 70%）", "失败": "SAN 1d6/1d20，可能临时疯狂" }
+    ],
+    "notes": [
+      "CoC 检定用『属性名』作为 skill_check（感知/意志/敏捷/智力），引擎按属性×5 折算成 d100 目标；modifier 为情境加减。",
+      "1.2_read 的 san_loss『0/1d6』即钱伯斯原著设定：见到黄印并理解其含义者丧失 0/1d6 点理智（引擎取较重一档解析）。",
+      "战斗节点敌人取自 data/coc7/catalog.json：米·戈 30% / 星之精 40% / 外神之仆役 45% / 修格斯 70%（压碎）。",
+      "取材自 R.W. 钱伯斯《黄衣之王》(1895) 与 H.P. Lovecraft《暗夜呢喃》(1931)《暗夜窃魂者》(1935)——均为公有领域；哈斯塔与哈利湖、昴宿增九的关联见钱伯斯—洛夫克拉夫特—德雷斯谱系，文字为原创演绎。"
+    ]
+  }
+}

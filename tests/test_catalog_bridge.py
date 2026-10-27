@@ -119,7 +119,8 @@ def test_bridge_basics():
     # --- GURPS 纸人巷三敌（gurps_paper_alley 引用）---
     for nm, etype, as_, dodge, dr in [("纸扎人", "mook", 10, 9, 0),
                                       ("童男纸", "elite", 12, 11, 1),
-                                      ("走影", "wildcard", 14, 12, 0)]:
+                                      ("走影", "wildcard", 14, 12, 0),
+                                      ("祖纸", "boss", 15, 11, 3)]:
         e = build_enemy_from_catalog(nm, "gurps")
         check("GURPS %s 命中目录" % nm, e is not None, "返回 None")
         if e:
