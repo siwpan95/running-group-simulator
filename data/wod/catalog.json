@@ -31,6 +31,46 @@
       "dodge": 4,
       "dr": 0,
       "source": "原创 WoD 遭遇模板"
+    },
+    {
+      "name": "血裔",
+      "name_en": "Fledgling",
+      "archetype": "刚被转化不久的新血族（原创设定）",
+      "hp": 8,
+      "attack": { "pool": 5, "damage": "1d6 致命" },
+      "dodge": 4,
+      "dr": 1,
+      "source": "modules/wod_long_night/1.3_fled 自有设定"
+    },
+    {
+      "name": "血奴",
+      "name_en": "Thrall",
+      "archetype": "被血族驱使、尚未完全失却人性的仆从（原创设定）",
+      "hp": 10,
+      "attack": { "pool": 6, "damage": "1d6 冲击" },
+      "dodge": 5,
+      "dr": 0,
+      "source": "modules/wod_long_night/2.3_thrall 自有设定"
+    },
+    {
+      "name": "游血族",
+      "name_en": "Rogue Bloodsucker",
+      "archetype": "无巢穴的野血族，循血而动（原创设定）",
+      "hp": 12,
+      "attack": { "pool": 8, "damage": "2d6 致命" },
+      "dodge": 6,
+      "dr": 2,
+      "source": "modules/wod_long_night/3.1_rooftop 自有设定"
+    },
+    {
+      "name": "尸仆",
+      "name_en": "Corpse Thrall",
+      "archetype": "被操控、尚未完全腐败的旧尸（原创设定）",
+      "hp": 14,
+      "attack": { "pool": 5, "damage": "1d6 冲击" },
+      "dodge": 2,
+      "dr": 3,
+      "source": "modules/wod_long_night/3.2_corpse 自有设定"
     }
   ]
 }

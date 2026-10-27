@@ -6,6 +6,9 @@
     "version": "2.0",
     "author": "TRPG Architect",
     "compatible_core": "GURPS 4e",
+    "systems": [
+      "gurps"
+    ],
     "playstyle": "都市恐怖 / 生存谜团",
     "estimated_duration": "3-4 小时",
     "player_count": "3-5 人",
@@ -135,6 +138,8 @@
           "2.2_rat_swarm"
         ],
         "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0,
           "skill_checks": [
             {
               "skill": "急救 / 诊断",

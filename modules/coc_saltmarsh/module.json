@@ -6,7 +6,9 @@
     "version": "1.0",
     "author": "TRPG Architect",
     "compatible_core": "CoC 7e",
-    "systems": ["coc7"],
+    "systems": [
+      "coc7"
+    ],
     "playstyle": "沿海小镇 / 调查恐怖 / 深潜者巢穴",
     "estimated_duration": "2-3 小时",
     "player_count": "2-4 人",
@@ -14,8 +16,16 @@
     "base_xp": 4
   },
   "global_context_tags": [
-    { "id": "salt_fog", "name": "咸雾弥漫", "effect": "侦查 -10，听觉 +10" },
-    { "id": "tide_pull", "name": "涨落潮汐", "effect": "洞窟通道受潮汐控制，时机错误会被困" }
+    {
+      "id": "salt_fog",
+      "name": "咸雾弥漫",
+      "effect": "侦查 -10，听觉 +10"
+    },
+    {
+      "id": "tide_pull",
+      "name": "涨落潮汐",
+      "effect": "洞窟通道受潮汐控制，时机错误会被困"
+    }
   ],
   "act_1": {
     "scene_id": "act1_town",
@@ -24,7 +34,11 @@
     "environment": {
       "mood": "午后惨白的阳光照不进咸雾，镇子安静得反常。",
       "tags": [
-        { "id": "salt_fog", "name": "咸雾弥漫", "effect": "侦查 -10，听觉 +10" }
+        {
+          "id": "salt_fog",
+          "name": "咸雾弥漫",
+          "effect": "侦查 -10，听觉 +10"
+        }
       ]
     },
     "nodes": [
@@ -33,11 +47,34 @@
         "scene_type": "investigation",
         "trigger": "调查员向镇长与镇民打听失踪案。",
         "prerequisite_nodes": [],
-        "next_nodes": ["1.2_track_footprints", "1.3_library"],
+        "next_nodes": [
+          "1.2_track_footprints",
+          "1.3_library"
+        ],
         "layer_physics": {
           "checks": [
-            { "id": "interview", "type": "automatic", "skill": "话术", "dc": 50, "on_success": { "flag_set": ["mayor_trust"] } },
-            { "id": "rumor", "type": "optional", "skill": "图书馆使用", "dc": 30, "on_success": { "flag_set": ["old_cult_rumor"] } }
+            {
+              "id": "interview",
+              "type": "automatic",
+              "skill": "话术",
+              "dc": 50,
+              "on_success": {
+                "flag_set": [
+                  "mayor_trust"
+                ]
+              }
+            },
+            {
+              "id": "rumor",
+              "type": "optional",
+              "skill": "图书馆使用",
+              "dc": 30,
+              "on_success": {
+                "flag_set": [
+                  "old_cult_rumor"
+                ]
+              }
+            }
           ]
         },
         "layer_narrative": {
@@ -52,7 +89,9 @@
         "scene_type": "perception",
         "trigger": "调查员沿滩涂的蹼状脚印追踪。",
         "prerequisite_nodes": [],
-        "next_nodes": ["2.1_cave_mouth"],
+        "next_nodes": [
+          "2.1_cave_mouth"
+        ],
         "layer_physics": {
           "skill_check": "追踪",
           "modifier": -10,
@@ -72,13 +111,30 @@
         "node_id": "1.3_library",
         "scene_type": "investigation",
         "trigger": "镇图书室里积灰的地方志与一本手抄小册。",
-        "prerequisite_nodes": ["1.1_talk_mayor"],
-        "next_nodes": ["2.1_cave_mouth"],
+        "prerequisite_nodes": [
+          "1.1_talk_mayor"
+        ],
+        "next_nodes": [
+          "2.1_cave_mouth"
+        ],
         "layer_physics": {
           "checks": [
-            { "id": "read_codex", "type": "automatic", "skill": "神秘学", "dc": 40, "on_success": { "flag_set": ["deep_one_lore"] } }
+            {
+              "id": "read_codex",
+              "type": "automatic",
+              "skill": "神秘学",
+              "dc": 40,
+              "on_success": {
+                "flag_set": [
+                  "deep_one_lore"
+                ]
+              }
+            }
           ],
-          "san_loss": { "amount": "1d3", "source": "阅读手抄祭文" }
+          "san_loss": {
+            "amount": "1d3",
+            "source": "阅读手抄祭文"
+          }
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -96,7 +152,11 @@
     "environment": {
       "mood": "咸雾在洞内凝成水珠，滴落的声响被吟唱盖过。",
       "tags": [
-        { "id": "salt_fog", "name": "咸雾弥漫", "effect": "侦查 -10，听觉 +10" }
+        {
+          "id": "salt_fog",
+          "name": "咸雾弥漫",
+          "effect": "侦查 -10，听觉 +10"
+        }
       ]
     },
     "nodes": [
@@ -104,12 +164,20 @@
         "node_id": "2.1_cave_mouth",
         "scene_type": "perception",
         "trigger": "调查员屏息潜入洞口，观察祭坛前的守卫。",
-        "prerequisite_nodes": ["1.2_track_footprints", "1.3_library"],
-        "next_nodes": ["2.2_ambush"],
+        "prerequisite_nodes": [
+          "1.2_track_footprints",
+          "1.3_library"
+        ],
+        "next_nodes": [
+          "2.2_ambush"
+        ],
         "layer_physics": {
           "skill_check": "侦查",
           "modifier": -10,
-          "san_loss": { "amount": 1, "source": "瞥见守卫的异状躯体" }
+          "san_loss": {
+            "amount": 1,
+            "source": "瞥见守卫的异状躯体"
+          }
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -122,12 +190,22 @@
         "node_id": "2.2_ambush",
         "scene_type": "combat",
         "trigger": "守卫发现了调查员，蹼爪抓起骨刺渔叉扑来。",
-        "prerequisite_nodes": ["2.1_cave_mouth"],
-        "next_nodes": ["3.1_sanctum"],
+        "prerequisite_nodes": [
+          "2.1_cave_mouth"
+        ],
+        "next_nodes": [
+          "3.1_sanctum"
+        ],
         "layer_physics": {
           "enemy_type": "elite",
-          "catalog_ref": { "name": "深潜者", "system": "coc7" },
-          "san_loss": { "amount": "0/1d6", "source": "直面深潜者" }
+          "catalog_ref": {
+            "name": "深潜者",
+            "system": "coc7"
+          },
+          "san_loss": {
+            "amount": "0/1d6",
+            "source": "直面深潜者"
+          }
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -151,12 +229,19 @@
         "node_id": "3.1_sanctum",
         "scene_type": "perception",
         "trigger": "调查员面对祭坛中央的造物。",
-        "prerequisite_nodes": ["2.2_ambush"],
-        "next_nodes": ["3.2_resolve"],
+        "prerequisite_nodes": [
+          "2.2_ambush"
+        ],
+        "next_nodes": [
+          "3.2_resolve"
+        ],
         "layer_physics": {
           "skill_check": "理智",
           "modifier": 0,
-          "san_loss": { "amount": "1d6/1d20", "source": "直面修格斯（引用 data/coc7/catalog.json：修格斯）" }
+          "san_loss": {
+            "amount": "1d6/1d20",
+            "source": "直面修格斯（引用 data/coc7/catalog.json：修格斯）"
+          }
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -169,12 +254,26 @@
         "node_id": "3.2_resolve",
         "scene_type": "feat",
         "trigger": "调查员决定是封印祭坛、摧毁它，还是带着证据撤退。",
-        "prerequisite_nodes": ["3.1_sanctum"],
+        "prerequisite_nodes": [
+          "3.1_sanctum"
+        ],
         "next_nodes": [],
         "resolution_paths": [
-          { "path": "封印", "method": "以磁场干扰 + 火焰持续灼烧核心", "success": "修格斯退入深海泥床，盐沼暂时安宁，但传说未灭。" },
-          { "path": "摧毁", "method": "引爆洞内沼气（需工程/爆破检定）", "success": "穹隆坍塌，吟唱永远停了——代价是再也无法取证。" },
-          { "path": "撤退", "method": "记录坐标后撤离并上报", "success": "你活下来，并把真相交给了能处理它的人。" }
+          {
+            "path": "封印",
+            "method": "以磁场干扰 + 火焰持续灼烧核心",
+            "success": "修格斯退入深海泥床，盐沼暂时安宁，但传说未灭。"
+          },
+          {
+            "path": "摧毁",
+            "method": "引爆洞内沼气（需工程/爆破检定）",
+            "success": "穹隆坍塌，吟唱永远停了——代价是再也无法取证。"
+          },
+          {
+            "path": "撤退",
+            "method": "记录坐标后撤离并上报",
+            "success": "你活下来，并把真相交给了能处理它的人。"
+          }
         ],
         "layer_physics": {
           "skill_check": "意志",
@@ -192,10 +291,26 @@
   },
   "gm_cheatsheet": {
     "quick_ref_table": [
-      { "场景": "1.2_track_footprints", "检定": "追踪 -10", "失败": "丢失足迹，凭记忆找洞口" },
-      { "场景": "2.2_ambush", "检定": "战斗（深潜者 25%）", "失败": "受 1d6+1d4 穿刺，SAN 0/1d6" },
-      { "场景": "3.1_sanctum", "检定": "理智", "失败": "SAN 1d6/1d20，可能临时疯狂" },
-      { "场景": "3.2_resolve", "检定": "意志", "失败": "调查员被低语缠上，留下后患" }
+      {
+        "场景": "1.2_track_footprints",
+        "检定": "追踪 -10",
+        "失败": "丢失足迹，凭记忆找洞口"
+      },
+      {
+        "场景": "2.2_ambush",
+        "检定": "战斗（深潜者 25%）",
+        "失败": "受 1d6+1d4 穿刺，SAN 1d6"
+      },
+      {
+        "场景": "3.1_sanctum",
+        "检定": "理智",
+        "失败": "SAN 1d20（≥19 触发不定期疯狂）"
+      },
+      {
+        "场景": "3.2_resolve",
+        "检定": "意志",
+        "失败": "调查员被低语缠上，留下后患"
+      }
     ]
   }
 }

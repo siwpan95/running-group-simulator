@@ -18,6 +18,14 @@
 
 ### Added
 
+- **新增 4 个示例模组（2026-10-27，结合联网调研取材）——每个系统各一**：
+  - `modules/coc_dunwich/`《敦威治之夜》（CoC 7e，3 幕）：取材 H.P. Lovecraft《敦威治之恐怖》(1928) 与《印斯茅斯之影》(1931)——深潜者混血「印斯茅斯面相」、哨兵山史前石阵、伊本-加齐之粉、夜鹰报丧；战斗节点引用 深潜者混血 / 拜亚基 / 无形孽胎。公有领域。
+  - `modules/dnd_phandalin/`《凡达林：红标之夜》（D&D 5e，3 幕）：取材 SRD 5.1《Lost Mine of Phandelver》结构——试炼之路哥布林伏击、红标帮庄园、地下巨蛛巢、碎晶矿坑与幻石；战斗节点引用 Goblin / Bandit Captain / Giant Spider / Ghoul / Mimic。
+  - `modules/gurps_paper_alley/`《纸人巷》（GURPS 4e，3 幕）：取材中国纸扎民俗——「纸人不点睛，纸马不扬鬃」（《太平广记》「面无睛目，以防魅魇」）、明《大明律》禁彩绘眼珠、扎糊绘剪四字诀、男骑马女骑牛、红男绿女、借壳还魂的「走影」。
+  - `modules/wod_long_night/`《长夜巡猎》（WoD，3 幕）：取材东欧/斯拉夫吸血鬼民俗——木桩穿心、银器、镜子、活水不可渡、未受邀不得进门、门槛撒米粒乱其计数、忌猫跳尸；设定完全原创（未用任何 White Wolf 官方资料）。
+- **新增 CoC 7e 调查员角色卡** `characters/预置-CoC调查员.json`：百分比技能 + **SAN 理智启用**（此前所有角色卡 `san_max=0`，CoC 的 SAN 机制整条无法触发）。
+- **新增模组工程化门禁** `tests/test_modules.py`（172 项，零第三方依赖）：meta 完整性、三幕结构、节点 id 唯一、**节点图引用自洽**、战斗节点 `catalog_ref` 必须命中目录、`layer_physics` 形态合法（单次检定/嵌套检定/战斗三者之一）、场景引擎可加载每个模组且能生成敌人。
+- 目录扩充：`data/gurps/catalog.json` 2 → **5**（增 纸扎人/童男纸/走影）；`data/wod/catalog.json` 3 → **7**（增 血裔/血奴/游血族/尸仆）。
 - **内容目录大规模扩充（2026-10-26，结合联网核对）**：
   - `data/dnd5e/catalog.json`：怪物 15 → **83**（增 68，覆盖人形 NPC / 野兽 / 不死 / 五色+金属龙 / 巨怪 / 魔鬼 / 元素精类）；法术 10 → **47**（增 37，覆盖戏法到 5 环 SRD 法术）。物品段本已是 SRD 武器+护甲全表（50 条），未重复追加。
   - `data/coc7/catalog.json`：神话生物 35 → **57**（增 22，含克苏鲁 / 奈亚拉托提普 / 哈斯塔 / 犹格·索托斯 / 阿撒托斯 / 修格斯 / 米·戈 / 廷达罗斯猎犬 / 古老者 / 伊斯之伟大种族等公有领域神话）。
@@ -34,6 +42,12 @@
     - **新增 GURPS 目录支撑**：`data/gurps/catalog.json`（`gurps-catalog-v1`，收编 `mirror_house_alley` 自制敌人 巨鼠群/镜中倒影）+ `catalog_service` 注册 `gurps` + `validate_catalogs` 增加 `gurps` schema 校验 + `catalog_bridge` 新增 `_gurps_enemy`（原生 GURPS 数值：attack_skill=3d6 技能目标、dodge=闪避、dr=伤害抗力、damage 含 cut/imp/cr）。节点层的 `special_mechanic`/`minion_threshold` 机制元数据保留并仍由场景引擎套用。
     - 新增 `tests/test_catalog_bridge.py`（46 项，零第三方依赖：D&D Goblin / CoC 深潜者·食尸鬼 / WoD 被放逐的长者 / GURPS 巨鼠群·镜中倒影 字段映射 + round-trip + 落空 + 系统限定）。
   - 版权口径：D&D 条目取自 SRD 5.1（OGL + CC BY 4.0，5thsrd.org），带署名；CoC 神话为公有领域，数值按 7e 惯例综合（延续既有 trow-11676 署名）。全部通过 `tools/validate_catalogs.py` 与 `tests/test_catalog_service.py`（12/12）。
+
+### Fixed
+
+- **战斗节点丢弃 `san_loss`**：CoC 7e 最该掉理智的场合（直面怪物）反而不掉——`core/scene_engine._handle_combat_node` 现无条件应用战斗节点的 SAN 损失，并按 insanity 状态挂「临时疯狂/不定期疯狂」标签。
+- **CoC 双值写法 `0/1d6` 被解析成 0**：`_parse_dice_amount` 现按「取较重的一档」解析 `a/b` 形式（`0/1d6`→1d6、`1d6/1d20`→1d20）。这同时让既有 `coc_saltmarsh` 模组里一直失效的 SAN 损失恢复生效。
+- `modules/mirror_house_alley` 的 `2.1_the_body_and_mirror` 节点原用引擎不读取的 `skill_checks`（复数），导致该节点只做无属性的通用判定；现补上真正的 `skill_check: 感知`，并为该模组显式声明 `meta.systems: ["gurps"]`。
 
 ### Changed
 

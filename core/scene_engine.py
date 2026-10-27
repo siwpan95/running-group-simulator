@@ -29,18 +29,28 @@ def _parse_int(value, default=0):
 
 
 def _parse_dice_amount(value, default=1):
-    """解析伤害/损失数额：int 或 'XdY' / 'XdY±Z' 骰子表达式。"""
+    """解析伤害/损失数额：int 或 'XdY' / 'XdY±Z' 骰子表达式。
+
+    另支持 CoC 常用的双值写法 'a/b'（如 '0/1d6'、'1/1d6'、'1d6/1d20'）：
+    取两种情形中较重的一个（worst case）。此前 '0/1d6' 会被正则在起始处
+    匹配成 0，导致这类 SAN 损失整条失效。
+    """
     if isinstance(value, (int, float)):
         return max(0, int(value))
     if isinstance(value, str):
-        m = re.match(r'(\d+)?d(\d+)([+-]\d+)?', value.strip())
+        text = value.strip()
+        if "/" in text:
+            parts = [p for p in text.split("/") if p.strip()]
+            vals = [_parse_dice_amount(p, 0) for p in parts]
+            return max(vals) if vals else default
+        m = re.match(r'(\d+)?d(\d+)([+-]\d+)?', text)
         if m:
             import random
             count = int(m.group(1) or 1)
             sides = int(m.group(2))
             mod = int(m.group(3) or 0)
             return max(0, sum(random.randint(1, sides) for _ in range(count)) + mod)
-        m2 = re.match(r'([+-]?\d+)', value.strip())
+        m2 = re.match(r'([+-]?\d+)', text)
         if m2:
             return max(0, int(m2.group(1)))
     return default
@@ -331,6 +341,17 @@ class SceneEngine:
         special = physics.get("special_mechanic", {})
         if special:
             enemy.special_abilities.append(special)
+
+        # 直面恐怖 → SAN 损失（v3.7：战斗节点此前会丢弃 san_loss，
+        # 导致 CoC 7e 模组最该掉理智的场合反而不掉）
+        san_cfg = physics.get("san_loss")
+        if san_cfg and self.pc.san_max > 0:
+            loss = _parse_dice_amount(san_cfg.get("amount", 1))
+            r = self.pc.add_san_loss(loss, san_cfg.get("source", enemy.name))
+            if r.get("indefinite_insanity"):
+                self.pc.add_tag("不定期疯狂", modifier=-20, duration="permanent")
+            elif r.get("temp_insanity"):
+                self.pc.add_tag("临时疯狂", modifier=-20, duration="scene")
 
         vm_result = ViewModelResult()
         vm_result.narrative = node.get("layer_narrative", {}).get("anchor_phrases", {}).get("success", "战斗开始！")

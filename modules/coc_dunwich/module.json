@@ -1,0 +1,345 @@
+{
+  "meta": {
+    "module_id": "coc_dunwich",
+    "system_name": "Mirror of the Lost",
+    "module_title": "敦威治之夜",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "CoC 7e",
+    "systems": [
+      "coc7"
+    ],
+    "playstyle": "乡村哥特 / 邪教调查 / 直面不可名状",
+    "estimated_duration": "2-3 小时",
+    "player_count": "2-4 人",
+    "synopsis": "麻萨诸塞荒山深处的敦威治镇，一夜之间牛群被吸干，只剩桶大的足印和撕破的牛皮。调查员顺着惠特利农庄的线索登上哨兵山，最终在谷仓里撞见那个谁也看不见的兄弟。取材自 H.P. Lovecraft 1928 年短篇《敦威治之恐怖》（公有领域）与《印斯茅斯之影》的深潜者混血设定——多系统引擎 CoC 7e 示例：d100 检定、SAN 理智、疯狂发作；战斗敌人直接引用 data/coc7/catalog.json 的神话生物条目。",
+    "base_xp": 4
+  },
+  "global_context_tags": [
+    {
+      "id": "dunwich_dusk",
+      "name": "敦威治的黄昏",
+      "effect": "感知 -5"
+    },
+    {
+      "id": "insmouth_blood",
+      "name": "鱼腥的血统",
+      "effect": "意志 -5"
+    }
+  ],
+  "act_1": {
+    "scene_id": "act1_the_farm",
+    "title": "被吸干的牛",
+    "description": "你搭了最后一班车到敦威治。天还没黑透，镇口铁匠铺的招牌歪着，门板全卸了。往南是一条被牛血浸硬的土路，通到惠特利家的谷仓。",
+    "environment": {
+      "mood": "荒原上起了雾，远处夜鹰一声接一声地叫，像有人在数着什么。",
+      "tags": [
+        {
+          "id": "dunwich_dusk",
+          "name": "敦威治的黄昏",
+          "effect": "感知 -5"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_barn",
+        "scene_type": "investigation",
+        "trigger": "推开谷仓门，检查里面那头被吸干的牛。",
+        "prerequisite_nodes": [],
+        "next_nodes": [
+          "1.2_whately"
+        ],
+        "environment": {
+          "mood": "谷仓里没有灯。草料的味道压不住另一种更腥、更冷的气味。",
+          "tags": [
+            {
+              "id": "barn_black",
+              "name": "谷仓漆黑",
+              "effect": "感知 -10"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "牛皮从内侧被撕开，边缘却整齐得像刀割——牛是被吸干的，不是被咬死的。地上有桶口大的足印，一个挨一个，进了墙缝。",
+            "crit_success": "你数了数：五头牛，三夜吃完。墙上钉着一张牛牛皮，上面用炭笔画满了看不懂的圈。",
+            "failure": "黑得什么也看不见。你只闻到了那股味道——像是把脸埋进生肉里。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_whately",
+        "scene_type": "investigation",
+        "trigger": "老惠特利坐在门廊上，怀里抱着一个布包，反复念叨着拉丁文。",
+        "prerequisite_nodes": [
+          "1.1_barn"
+        ],
+        "next_nodes": [
+          "1.3_hybrid"
+        ],
+        "layer_physics": {
+          "skill_check": "话术",
+          "modifier": -10
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "他终于抬起头。你看见他的眼睛——瞳孔已经缩成了两条缝。他告诉你：那东西在谷仓里，『等着它的父亲来接』；而这镇上的年轻人，眼神都跟他一样。",
+            "failure": "他不再说话，只是笑。那笑声不像人发出来的，倒像是什么东西在学人的样子。"
+          }
+        }
+      },
+      {
+        "node_id": "1.3_hybrid",
+        "scene_type": "combat",
+        "trigger": "谷仓深处传来木板断裂的响声。有什么东西从阴影里走出来。",
+        "prerequisite_nodes": [
+          "1.2_whately"
+        ],
+        "next_nodes": [
+          "2.1_sentinel_hill"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "深潜者混血",
+            "system": "coc7"
+          },
+          "san_loss": {
+            "amount": "0/1d6",
+            "source": "直面印斯茅斯血统"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你抢先出手，鳞片在刀刃下崩开。",
+            "failure": "它比传闻中更快——你的手被它的爪子扣住，皮肤上一阵冰凉。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_sentinel_hill",
+    "title": "哨兵山",
+    "description": "镇外的山脊上立着一圈石阵，比这个镇子古老得多。老惠特利说过，举行仪式的地方就在山顶。",
+    "environment": {
+      "mood": "石阵里的风是热的。地上有被拖拽过的痕迹，还有从地底传上来的闷响。",
+      "tags": [
+        {
+          "id": "dunwich_dusk",
+          "name": "敦威治的黄昏",
+          "effect": "感知 -5"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_sentinel_hill",
+        "scene_type": "perception",
+        "trigger": "沿着山坡往上走，辨认石阵。",
+        "prerequisite_nodes": [
+          "1.3_hybrid"
+        ],
+        "next_nodes": [
+          "2.2_shore"
+        ],
+        "environment": {
+          "mood": "雾散了一半，山脊的石块在余晖里像一排跪着的人。",
+          "tags": [
+            {
+              "id": "hill_wind",
+              "name": "山脊强风",
+              "effect": "感知 -5"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "石阵中央是一块空地，泥土被翻过无数次。往下听，有节奏的敲击声，像什么东西在用蹄子刨。",
+            "crit_success": "你辨出那些刻痕是文字——人类文字，但每一笔都画成了人鱼的形状。有些字你认得，是拉丁文。",
+            "failure": "石头在雾里越来越像人。你揉了揉眼，决定不去数它们。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_shore",
+        "scene_type": "investigation",
+        "trigger": "山另一侧的潮池，退潮后露出一排古怪的脚印。",
+        "prerequisite_nodes": [
+          "2.1_sentinel_hill"
+        ],
+        "next_nodes": [
+          "2.3_byakhee"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "脚印是三趾的、脚蹼外翻的，一直走进海里。你把带来的手记翻开——这形状，委托人给的那张照片上就有。",
+            "failure": "水太咸。你什么也没记住，只觉得海面下有什么在跟着你游。"
+          }
+        }
+      },
+      {
+        "node_id": "2.3_byakhee",
+        "scene_type": "combat",
+        "trigger": "尖锐的金属振翅声从雾里刺出来——那不是鸟。",
+        "prerequisite_nodes": [
+          "2.2_shore"
+        ],
+        "next_nodes": [
+          "2.4_circle"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "拜亚基",
+            "system": "coc7"
+          },
+          "san_loss": {
+            "amount": "1/1d6",
+            "source": "目睹空中掠过的拜亚基"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "第一击正中那对折叠的钩爪。它在空中翻了个身，落在滩涂上继续扑来。",
+            "failure": "它从你头顶掠过，爪子划过你的背——皮肉翻开的痛，像被钩子拖过。"
+          }
+        }
+      },
+      {
+        "node_id": "2.4_circle",
+        "scene_type": "feat",
+        "trigger": "在石阵里划出保护圈，把该念的词念完。",
+        "prerequisite_nodes": [
+          "2.3_byakhee"
+        ],
+        "next_nodes": [
+          "3.1_return"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": -15
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "盐线断开的地方，黑暗就进不来。你坐在圈里，第一次觉得脚下的地是实的。",
+            "failure": "你念错了一个词。圈外的草叶全部朝一个方向倒伏——有什么，正贴着地面朝你爬过来。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_the_barn",
+    "title": "谷仓里的兄弟",
+    "description": "你带着伊本-加齐之粉回到谷仓。天亮前，你必须弄清那个看不见的东西到底是什么，以及——老惠特利说的『父亲』，什么时候来接。",
+    "environment": {
+      "mood": "谷仓比上次更安静了。安静得像有什么东西屏着气在等。",
+      "tags": [
+        {
+          "id": "dunwich_dusk",
+          "name": "敦威治的黄昏",
+          "effect": "感知 -5"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "3.1_return",
+        "scene_type": "combat",
+        "trigger": "门被从里面顶开。空气里全是腥气——而你什么都看不见。",
+        "prerequisite_nodes": [
+          "2.4_circle"
+        ],
+        "next_nodes": [
+          "3.2_ending"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "无形孽胎",
+            "system": "coc7"
+          },
+          "san_loss": {
+            "amount": "1d6/1d20",
+            "source": "直面敦威治之恐怖"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你把粉撒向空气。粉屑在半空忽然聚成一个形状——比牛棚还大的一团，缠着绳索般的肢体，浑身是眼睛。",
+            "failure": "你听见自己的名字被一个不像人的嗓子念出来，就在耳朵旁边。"
+          }
+        }
+      },
+      {
+        "node_id": "3.2_ending",
+        "scene_type": "feat",
+        "trigger": "粉落之后，谷仓里安静了。决定你要带走什么、留下什么。",
+        "prerequisite_nodes": [
+          "3.1_return"
+        ],
+        "next_nodes": [],
+        "resolution_paths": [
+          {
+            "path": "焚毁",
+            "method": "把整座谷仓连同牛皮一起点着（需敏捷/力量检定）",
+            "success": "火从屋脊窜起。那声尖叫不像任何活物发出的。等火熄了，地上只剩一圈烧焦的印子。"
+          },
+          {
+            "path": "封印",
+            "method": "以盐线与《死灵书》残页压制（需神秘学检定）",
+            "success": "它沉回地底。惠特利家的地窖被填平，名字被从镇志上划掉——但没人保证它会一直睡着。"
+          },
+          {
+            "path": "记录",
+            "method": "带上速写与残页，赶在天亮前离开敦威治",
+            "success": "你上了最后一班车。车开动时，你回头看了一眼山——哨兵山上的雾散了一角。"
+          }
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你走出敦威治时天刚亮。镇口铁匠铺的招牌还是歪着，没人打算扶正它。",
+            "failure": "你在笔记本上写下第一个字，忽然忘了自己要写什么。"
+          }
+        }
+      }
+    ]
+  },
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      { "场景": "1.1_barn", "检定": "感知 -5（环境）", "失败": "SAN 0/1d6，牛尸细节只看见一半" },
+      { "场景": "1.2_whately", "检定": "话术 -10", "失败": "老惠特利只会笑" },
+      { "场景": "1.3_hybrid", "检定": "战斗（深潜者混血 25%）", "失败": "SAN 1d6" },
+      { "场景": "2.1_sentinel_hill", "检定": "感知 -5（环境）", "失败": "石头的数量对不上" },
+      { "场景": "2.2_shore", "检定": "意志", "失败": "被什么东西在水面下跟着" },
+      { "场景": "2.3_byakhee", "检定": "战斗（拜亚基 35%）", "失败": "SAN 1d6" },
+      { "场景": "2.4_circle", "检定": "意志 -15", "失败": "保护圈被突破" },
+      { "场景": "3.1_return", "检定": "战斗（无形孽胎 40%）", "失败": "SAN 1d20（≥19 触发不定期疯狂）" }
+    ],
+    "notes": [
+      "CoC 检定用『属性名』作为 skill_check（感知/意志/敏捷/智力），引擎按属性×5 折算成 d100 目标（CoC 惯例）；modifier 为情境加减。",
+      "单次检定节点：san_loss 仅在检定失败时触发；战斗节点：san_loss 无条件触发（直面即掉理智）。",
+      "san_loss 的双值写法（如 0/1d6、1d6/1d20）由引擎取较重的一档解析。",
+      "战斗节点敌人直接取自 data/coc7/catalog.json：深潜者混血（25% 爪）、拜亚基（35% 钩爪）、无形孽胎（40% 绞缠）。",
+      "本模组取材自 Lovecraft 1928 年《敦威治之恐怖》（公有领域）与《印斯茅斯之影》（公有领域），文字为原创演绎。"
+    ]
+  }
+}

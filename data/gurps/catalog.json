@@ -1,6 +1,6 @@
 {
   "schema": "gurps-catalog-v1",
-  "_note": "GURPS 4e 自有设定生物目录。条目均为 modules/mirror_house_alley 的自制敌人（巨鼠群、镜中倒影），数值为原生 GURPS 风格：attack_skill=3d6 技能目标、dodge=闪避、dr=伤害抗力、damage 串含 cut/imp/cr 等类型词。战斗引擎按 meta.systems 缺失时默认 gurps 画像解释。",
+  "_note": "GURPS 4e 自有设定生物目录。条目为 modules/mirror_house_alley 与 modules/gurps_paper_alley 的自制敌人，数值为原生 GURPS 风格：attack_skill=3d6 技能目标、dodge=闪避、dr=伤害抗力、damage 串含 cut/imp/cr 等类型词。战斗引擎按 meta.systems 缺失时默认 gurps 画像解释。",
   "creatures": [
     {
       "name": "巨鼠群",
@@ -25,6 +25,42 @@
       "dodge": 10,
       "dr": 2,
       "source": "modules/mirror_house_alley/3.1_the_reflection 自制设定"
+    },
+    {
+      "name": "纸扎人",
+      "name_en": "Paper Effigy",
+      "enemy_type": "mook",
+      "archetype": "未点睛的纸人（成群·附庸阈值）",
+      "hp": 4,
+      "attack_skill": 10,
+      "damage": "1d-3 cut",
+      "dodge": 9,
+      "dr": 0,
+      "source": "modules/gurps_paper_alley/3.1_funeral 自制设定（纸扎民俗）"
+    },
+    {
+      "name": "童男纸",
+      "name_en": "Dotted Boy Effigy",
+      "enemy_type": "elite",
+      "archetype": "已被点睛开眼的红袄童男纸像",
+      "hp": 8,
+      "attack_skill": 12,
+      "damage": "1d6 cut",
+      "dodge": 11,
+      "dr": 1,
+      "source": "modules/gurps_paper_alley/2.3_boy_effigy 自制设定（纸扎民俗）"
+    },
+    {
+      "name": "走影",
+      "name_en": "Walking Shadow",
+      "enemy_type": "wildcard",
+      "archetype": "借壳还魂的走影（带走活人影子替它当差）",
+      "hp": 12,
+      "attack_skill": 14,
+      "damage": "2d6 cut",
+      "dodge": 12,
+      "dr": 0,
+      "source": "modules/gurps_paper_alley/2.4_walking_shadow 自制设定（纸扎民俗）"
     }
   ]
 }

@@ -1,0 +1,41 @@
+{
+  "character_id": "coc_investigator_colin",
+  "name": "科尔·沃斯（CoC 7e 调查员）",
+  "version": 1,
+  "attributes": { "ST": 10, "DX": 11, "IQ": 14, "HT": 12 },
+  "secondary": { "HP": 9, "FP": 3, "Will": 13, "Per": 13 },
+  "sanity": { "san": 60, "san_max": 99, "insanity_state": "" },
+  "skills": [
+    { "name": "侦查", "level": 65, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "聆听", "level": 50, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "神秘学", "level": 45, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "图书馆使用", "level": 60, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "话术", "level": 50, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "心理学", "level": 40, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "历史", "level": 40, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "急救", "level": 40, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "潜行", "level": 40, "difficulty": "Avg", "base_attribute": "DX", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "闪避", "level": 40, "difficulty": "Avg", "base_attribute": "DX", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "格斗", "level": 45, "difficulty": "Avg", "base_attribute": "DX", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "投掷", "level": 35, "difficulty": "Avg", "base_attribute": "DX", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "驾驶", "level": 40, "difficulty": "Avg", "base_attribute": "DX", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "摄影", "level": 30, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" },
+    { "name": "母语", "level": 50, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 0, "notes": "CoC 百分比" }
+  ],
+  "advantages": ["走好运", "胆大"],
+  "disadvantages": ["神经质"],
+  "features": [
+    { "name": "调查员直觉", "trigger_condition": "场景中出现明显不对劲的细节时", "cost": 1, "effect": "免费获得一条与当前线索相关的提示（不消耗检定）", "per_scene_limit": 1 },
+    { "name": "被吓过的人", "trigger_condition": "遭遇超自然恐怖后", "cost": 0, "effect": "下一次意志检定 +2（恐惧已经过去）", "per_scene_limit": 1 }
+  ],
+  "anchors": ["父亲的怀表", "一张褪色的全家福"],
+  "equipment": [
+    { "name": "手电筒", "type": "tool", "slot": "hand", "dr": 0, "effects": [], "uses": -1, "description": "老式金属手电，电池不太行" },
+    { "name": "速写本", "type": "tool", "slot": "backpack", "dr": 0, "effects": [], "uses": -1, "description": "记录一切不敢记录的东西" },
+    { "name": "折叠刀", "type": "weapon", "slot": "hand", "damage": "1d4 cut", "dr": 0, "effects": [], "uses": -1, "description": "防身用，割绳子也好用" }
+  ],
+  "focus_max": 3,
+  "luck_max": 3,
+  "xp_log": [],
+  "total_xp": 0
+}

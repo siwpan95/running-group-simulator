@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "module_id": "wod_long_night",
+    "system_name": "Mirror of the Lost",
+    "module_title": "长夜巡猎",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "Storytelling System (nWoD)",
+    "systems": [
+      "wod"
+    ],
+    "playstyle": "都市夜巡 / 民俗驱魔 / 追猎",
+    "estimated_duration": "2-3 小时",
+    "player_count": "2-4 人",
+    "synopsis": "连续五个夜晚，同一栋公寓在凌晨三点被报警。监控里最后一帧只剩一个没有倒影的人影。委托人给的只有一句话：『别让它进屋。』巡夜人必须在第七夜之前，把银弹、木桩、圣水、镜子、活水——以及那些不能进门的规矩——一样一样凑齐。多系统引擎 WoD 示例：d10 骰池、10-again、戏剧性失败、饥饿骰；战斗敌人直接引用 data/wod/catalog.json 的自有设定条目。",
+    "base_xp": 4
+  },
+  "global_context_tags": [
+    {
+      "id": "city_night",
+      "name": "都市夜幕",
+      "effect": "潜行 +1"
+    },
+    {
+      "id": "thirty_oclock",
+      "name": "三点档",
+      "effect": "感知 -1"
+    }
+  ],
+  "act_1": {
+    "scene_id": "act1_the_apartment",
+    "title": "三点的公寓",
+    "description": "第七栋楼的监控在凌晨三点十七分断掉。四十七秒后恢复，画面里走廊空着，地上有一滩正在扩大的暗色。",
+    "environment": {
+      "mood": "老式日光灯管在嗡鸣。楼道里有一股关了很久的、甜腻的霉味。",
+      "tags": [
+        {
+          "id": "thirty_oclock",
+          "name": "三点档",
+          "effect": "感知 -1"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_scene",
+        "scene_type": "investigation",
+        "trigger": "勘查第五夜的现场。",
+        "prerequisite_nodes": [],
+        "next_nodes": [
+          "1.2_ledger"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "死者身上没有伤口,只有颈侧两个针孔大小的洞。血少了大半,却一滴都没洒在地上——都被喝干净了。",
+            "crit_success": "你在门框内侧摸到一层薄薄的粉末:面粉。有人按老规矩在门槛上撒了粉,想数它跨了几次门。",
+            "failure": "房间里全是甜味,你的胃先翻了。你只记住了窗帘是拉上的。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_ledger",
+        "scene_type": "investigation",
+        "trigger": "核对五名失踪者的住处。",
+        "prerequisite_nodes": [
+          "1.1_scene"
+        ],
+        "next_nodes": [
+          "1.3_fled"
+        ],
+        "layer_physics": {
+          "skill_check": "情报分析",
+          "modifier": -4
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "五个名字,五个住处,连成一条线——全都临河。而且每一户的门,都是从里面打开的。",
+            "crit_success": "第五户的水表读数异常:他整夜没有开过水,但楼下的进水阀整晚在响。有人反复经过河边。",
+            "failure": "名单上有一半是外租的，你连门牌号都对不上。"
+          }
+        }
+      },
+      {
+        "node_id": "1.3_fled",
+        "scene_type": "combat",
+        "trigger": "屋顶水箱后面，那个没有倒影的东西转过了头。",
+        "prerequisite_nodes": [
+          "1.2_ledger"
+        ],
+        "next_nodes": [
+          "2.1_kits"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "血裔",
+            "system": "wod"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "它扑上来的同时你把银弹拍进了它胸口。它连声音都没发出来就散了。",
+            "failure": "它比你快。牙齿擦过你的喉咙,留下两道火辣辣的沟。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_the_kits",
+    "title": "规矩",
+    "description": "东三条街的旧货铺掌柜是个不信邪的老头。但他认得银匠、认得教堂的神父、认得河对面那个卖蒜的。",
+    "environment": {
+      "mood": "铺子里堆着旧钟、坏掉的十字架、还有一箱箱来历不明的银餐具。",
+      "tags": [
+        {
+          "id": "city_night",
+          "name": "都市夜幕",
+          "effect": "潜行 +1"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_kits",
+        "scene_type": "feat",
+        "trigger": "说服掌柜把老规矩一条一条说清楚。",
+        "prerequisite_nodes": [
+          "1.3_fled"
+        ],
+        "next_nodes": [
+          "2.2_grave"
+        ],
+        "layer_physics": {
+          "skill_check": "话术",
+          "modifier": -3
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "他一条一条数给你听:木桩穿心,斧头斩首,火里烧干净;银的东西它碰不得;镜子照不出它;圣水和十字架它要绕着走;活水它过不去。最要紧的一条——『没请它,它进不了门』;门撒米粒,它数不清就进不来。",
+            "crit_success": "他还补了一句从没人提过的:它怕猫跳过尸体。所以坟地要有人守夜,还要带猫。",
+            "failure": "他啐了一口:『你们这些人,信这些有的没的。』但你还是记下了他说的每一句。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_grave",
+        "scene_type": "investigation",
+        "trigger": "河滩外的旧坟场，找到了第五夜那个人的空坟。",
+        "prerequisite_nodes": [
+          "2.1_kits"
+        ],
+        "next_nodes": [
+          "2.3_thrall"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": -2
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "坟是空的。棺材板从里面被顶开,钉子上有抓痕,土里有猫的脚印——它来过,但没敢停留。",
+            "crit_success": "土里埋着一张纸条,是失踪者自己的笔迹：『它不杀我,它要我替它带路。』",
+            "failure": "风把纸灰吹到你脸上。你什么也没看清,只希望自己没踩到什么东西。"
+          }
+        }
+      },
+      {
+        "node_id": "2.3_thrall",
+        "scene_type": "combat",
+        "trigger": "回城的桥上，一个你认识的人挡住了你——他眼睛颜色不对。",
+        "prerequisite_nodes": [
+          "2.2_grave"
+        ],
+        "next_nodes": [
+          "3.1_rooftop"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "血奴",
+            "system": "wod"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "他还认得你,还叫得出你的名字——但在认出你的同时,他的牙变长了。",
+            "failure": "他扑上来的时候,力气大得不像他。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_before_dawn",
+    "title": "天亮之前",
+    "description": "第七夜。它会在三点十七分来。你有四个小时的准备时间,和一堆来路不明的规矩。",
+    "environment": {
+      "mood": "天开始泛青的时候,河面上起了一层白雾。老钟敲了三下。",
+      "tags": [
+        {
+          "id": "thirty_oclock",
+          "name": "三点档",
+          "effect": "感知 -1"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "3.1_rooftop",
+        "scene_type": "combat",
+        "trigger": "楼顶。它没有影子,也没有倒影——你看不见它,但镜子能。",
+        "prerequisite_nodes": [
+          "2.3_thrall"
+        ],
+        "next_nodes": [
+          "3.2_corpse"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "游血族",
+            "system": "wod"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "银弹在它胸口炸开。它退了三步,第一次发出了声音——那不是任何活物该有的动静。",
+            "failure": "它绕开了你的银弹。你只剩最后一支,和脚下一道正在逼近的影子。"
+          }
+        }
+      },
+      {
+        "node_id": "3.2_corpse",
+        "scene_type": "combat",
+        "trigger": "楼道里，被它丢上来的东西开始爬起来。",
+        "prerequisite_nodes": [
+          "3.1_rooftop"
+        ],
+        "next_nodes": [
+          "3.3_dawn"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "尸仆",
+            "system": "wod"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你把圣水瓶砸在它额头上。它像被烫到一样缩回去,再没起来。",
+            "failure": "它不痛，也不快,只是不停。你必须在天亮前把它放倒。"
+          }
+        }
+      },
+      {
+        "node_id": "3.3_dawn",
+        "scene_type": "explore",
+        "trigger": "钟敲了四下。天边开始发白。",
+        "prerequisite_nodes": [
+          "3.2_corpse"
+        ],
+        "next_nodes": [],
+        "resolution_paths": [
+          {
+            "path": "钉入",
+            "method": "把木桩钉进它的心脏（需力量检定）",
+            "success": "它没有挣扎，只是慢慢塌下去，像一件终于被人收走的旧衣服。"
+          },
+          {
+            "path": "焚化",
+            "method": "浇上桐油点火（需敏捷检定）",
+            "success": "火舔过它的指骨时，天光正好翻过屋顶的轮廓。"
+          },
+          {
+            "path": "驱离",
+            "method": "撤出公寓、封死门，等太阳升起来",
+            "success": "你退到街上。太阳爬过楼顶的那一刻，三点十七分那个东西，从这个城市的账上被划掉了。"
+          }
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你把剩下的银弹收进口袋。今晚之后，这座城多了一条新规矩——而规矩，是活人定的。"
+          }
+        }
+      }
+    ]
+  },
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      { "场景": "1.1_scene", "检定": "感知", "失败": "胃先翻了" },
+      { "场景": "1.2_ledger", "检定": "情报分析 -4", "失败": "门牌号对不上" },
+      { "场景": "1.3_fled", "检定": "战斗（血裔）", "失败": "喉咙被擦伤" },
+      { "场景": "2.1_kits", "检定": "话术 -3", "失败": "掌柜不信这套" },
+      { "场景": "2.2_grave", "检定": "意志 -2", "失败": "不愿看清土里有什么" },
+      { "场景": "2.3_thrall", "检定": "战斗（血奴）", "失败": "他力气大得不像他" },
+      { "场景": "3.1_rooftop", "检定": "战斗（游血族）", "失败": "银弹被绕开" },
+      { "场景": "3.2_corpse", "检定": "战斗（尸仆）", "失败": "打不倒" },
+      { "场景": "3.3_dawn", "检定": "意志", "失败": "天亮得比预想慢" }
+    ],
+    "notes": [
+      "WoD 检定用属性名作为 skill_check（感知/意志/敏捷/力量/体质），骰池＝属性值；写具体技能名（情报分析/话术/心理学…）时骰池＝技能等级，务必加负修正把它压回 6-10 颗骰的常见区间，否则会过于轻松。",
+      "战斗敌人取自 data/wod/catalog.json（自有设定，非 White Wolf 官方资料）：血裔/血奴/游血族/尸仆；attack.pool 为攻击骰池，dodge 为闪避骰池，dr 为伤害平减。",
+      "民俗规则全部来自公开的东欧/斯拉夫吸血鬼传说：木桩穿心、斩首、焚烧、阳光、银器、镜子、圣水、十字架、大蒜、活水不可渡过、未受邀不得进门、门槛撒米粒或芥末籽以乱其计数、忌猫跳尸、葬仪面朝下并置镰刀与十字架。",
+      "本模组为原创都市设定，未使用任何 White Wolf 官方设定或数值。"
+    ]
+  }
+}

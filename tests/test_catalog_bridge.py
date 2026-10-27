@@ -116,6 +116,30 @@ def test_bridge_basics():
         check("  镜中倒影 dodge=10/dr=2", refl.dodge == 10 and refl.dr == 2, "dodge=%s dr=%s" % (refl.dodge, refl.dr))
         check("  镜中倒影 round-trip 一致", Enemy.from_dict(refl.to_dict()).name == refl.name)
 
+    # --- GURPS 纸人巷三敌（gurps_paper_alley 引用）---
+    for nm, etype, as_, dodge, dr in [("纸扎人", "mook", 10, 9, 0),
+                                      ("童男纸", "elite", 12, 11, 1),
+                                      ("走影", "wildcard", 14, 12, 0)]:
+        e = build_enemy_from_catalog(nm, "gurps")
+        check("GURPS %s 命中目录" % nm, e is not None, "返回 None")
+        if e:
+            check("  %s enemy_type=%s" % (nm, etype), e.enemy_type == etype, e.enemy_type)
+            check("  %s as=%s dodge=%s dr=%s" % (nm, as_, dodge, dr),
+                  e.attack_skill == as_ and e.dodge == dodge and e.dr == dr,
+                  "as=%s dodge=%s dr=%s" % (e.attack_skill, e.dodge, e.dr))
+            check("  %s round-trip 一致" % nm, Enemy.from_dict(e.to_dict()).name == e.name)
+
+    # --- WoD 长夜巡猎四敌（wod_long_night 引用）---
+    for nm, pool, dodge, dr in [("血裔", 5, 4, 1), ("血奴", 6, 5, 0),
+                                ("游血族", 8, 6, 2), ("尸仆", 5, 2, 3)]:
+        e = build_enemy_from_catalog(nm, "wod")
+        check("WoD %s 命中目录" % nm, e is not None, "返回 None")
+        if e:
+            check("  %s 攻击骰池=%s 闪避=%s dr=%s" % (nm, pool, dodge, dr),
+                  e.attack_skill == pool and e.dodge == dodge and e.dr == dr,
+                  "as=%s dodge=%s dr=%s" % (e.attack_skill, e.dodge, e.dr))
+            check("  %s round-trip 一致" % nm, Enemy.from_dict(e.to_dict()).name == e.name)
+
     # --- 落空 ---
     check("未知名称返回 None", build_enemy_from_catalog("不存在的怪物XYZ") is None)
 

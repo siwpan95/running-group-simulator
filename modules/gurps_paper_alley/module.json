@@ -1,0 +1,339 @@
+{
+  "meta": {
+    "module_id": "gurps_paper_alley",
+    "system_name": "Mirror of the Lost",
+    "module_title": "纸人巷",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "GURPS 4e",
+    "systems": [
+      "gurps"
+    ],
+    "playstyle": "市井怪谈 / 手艺行当 / 民俗禁忌",
+    "estimated_duration": "2-3 小时",
+    "player_count": "2-4 人",
+    "synopsis": "北平城南有条纸人巷，专卖丧葬纸活儿。这天早上街坊来报：办完白事的王家，纸人不见了，纸马也不见了——而死者，昨晚回了家。调查员要查清扎纸匠那行『半分笔，一分命』的老规矩，究竟是护着亡者，还是养着别的东西。多系统引擎 GURPS 4e 示例：3d6 检定、附庸阈值、部位伤害；战斗敌人直接引用 data/gurps/catalog.json 的自制条目。",
+    "base_xp": 4
+  },
+  "global_context_tags": [
+    {
+      "id": "paper_alley_stench",
+      "name": "浆糊与桐油味",
+      "effect": "感知 -2"
+    },
+    {
+      "id": "mourning_season",
+      "name": "丧期",
+      "effect": "意志 -1"
+    }
+  ],
+  "act_1": {
+    "scene_id": "act1_paper_alley",
+    "title": "纸人巷",
+    "description": "北平城南，一条三尺宽的窄巷。两侧门板上糊的白纸在风里鼓着，像一排没睡醒的肺。巷底飘着新浆糊和桐油混在一起的味道。",
+    "environment": {
+      "mood": "白幡还没撤。三家铺子关着门，只有一家还亮着灯，剪纸的影子在窗纸上一晃一晃。",
+      "tags": [
+        {
+          "id": "paper_alley_stench",
+          "name": "浆糊与桐油味",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_workshop",
+        "scene_type": "investigation",
+        "trigger": "推开『义兴纸马铺』的门。",
+        "prerequisite_nodes": [],
+        "next_nodes": [
+          "1.2_wailing"
+        ],
+        "layer_physics": {
+          "skill_check": "调查",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "作坊里横着一排未完工的纸人。骨架是高粱秸扎的，接节处缠着麻线，头脸是泥塑的。你注意到一个规矩：所有纸人，眼白画好了，黑眼珠空着。",
+            "crit_success": "工作台边压着一张手抄的『行规』：『纸人不点睛，纸马不扬鬃』，底下一行小字是『不点睛，夜里不睁眼』。",
+            "failure": "掌柜的挡在门口，脸上堆着笑，手却一直按着柜台下面的东西。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_wailing",
+        "scene_type": "perception",
+        "trigger": "巷子深处传来哭声——像小孩，又不完全像。",
+        "prerequisite_nodes": [
+          "1.1_workshop"
+        ],
+        "next_nodes": [
+          "1.3_chase"
+        ],
+        "environment": {
+          "mood": "哭声是从最里面那间没招牌的屋子传出来的。灯灭了一半。",
+          "tags": [
+            {
+              "id": "paper_alley_dark",
+              "name": "半明半暗",
+              "effect": "感知 -4"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "哭声是纸竹的响动——像关节被反复弯折。屋檐下挂着一串童男童女的纸像，红的绿的，脸上的笑被刻意抹平了。",
+            "crit_success": "你数了数：七个人像，六男一女。缺的那一个，纸屑还粘在门槛上，是新撕的。",
+            "failure": "你站住了。哭声也停了。整条巷子安静得能听见自己耳朵里的血流声。"
+          }
+        }
+      },
+      {
+        "node_id": "1.3_chase",
+        "scene_type": "feat",
+        "trigger": "影子在巷尾一晃——追上去。",
+        "prerequisite_nodes": [
+          "1.2_wailing"
+        ],
+        "next_nodes": [
+          "2.1_the_master"
+        ],
+        "layer_physics": {
+          "skill_check": "敏捷",
+          "modifier": -2
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你翻过晾衣绳，抄近路堵在它前面。是个穿红袄的小小身影，纸做的。",
+            "failure": "你踩空了一级台阶。等你爬起来，那串纸响已经绕到巷子另一头去了。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_the_workshop",
+    "title": "吃阴间饭的手艺人",
+    "description": "巷底那间没招牌的屋子里，一个老人正在给纸人上最后一道工序。他手边有个小碟子，碟子里是黑豆。",
+    "environment": {
+      "mood": "屋里没有窗。满墙挂着纸马、纸轿、纸糊的戏台。老人背对着门，手很稳。",
+      "tags": [
+        {
+          "id": "paper_alley_stench",
+          "name": "浆糊与桐油味",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_the_master",
+        "scene_type": "investigation",
+        "trigger": "和老人搭话。",
+        "prerequisite_nodes": [
+          "1.3_chase"
+        ],
+        "next_nodes": [
+          "2.2_taboo"
+        ],
+        "layer_physics": {
+          "skill_check": "话术",
+          "modifier": -5
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "老人不抬头，手上活儿不停：『你也是来问王家那事的？』他往碟子里加了一粒黑豆，『不是我不讲，是这行当里有一条：纸人不点睛，点了睛，它就该看人，也该跟人走了。』",
+            "crit_success": "你还问出了另一层：这条规矩不是防鬼，是防『走影』——纸人把活人的影子带走,替它去阴间当差。",
+            "failure": "『买纸活儿还是问丧事？』他答非所问。你再问,他就不再出声了。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_taboo",
+        "scene_type": "investigation",
+        "trigger": "趁着老人换线，去看墙角的行规手抄本。",
+        "prerequisite_nodes": [
+          "2.1_the_master"
+        ],
+        "next_nodes": [
+          "2.3_boy_effigy"
+        ],
+        "layer_physics": {
+          "checks": [
+            {
+              "id": "read_rules",
+              "type": "automatic",
+              "skill": "神秘学",
+              "dc": 11,
+              "on_success": {
+                "flag_set": [
+                  "knows_taboo"
+                ]
+              }
+            }
+          ]
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "本子上记着扎、糊、绘、剪四字诀，还有一条最要紧的：点睛要请高功法师，或者亲人亲自动手，在焚化之前最后一刻。",
+            "failure": "你刚翻开第一页，纸人堆里就有东西响了一下。你合上本子退回原处。"
+          }
+        }
+      },
+      {
+        "node_id": "2.3_boy_effigy",
+        "scene_type": "combat",
+        "trigger": "纸人堆里站起来一个。",
+        "prerequisite_nodes": [
+          "2.2_taboo"
+        ],
+        "next_nodes": [
+          "2.4_walking_shadow"
+        ],
+        "layer_physics": {
+          "enemy_type": "elite",
+          "catalog_ref": {
+            "name": "童男纸",
+            "system": "gurps"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你一巴掌拍在它后颈上,那对刚点上的黑眼珠被震散了一半。",
+            "failure": "它比你快得多。纸做的拳头打在身上,比你想的疼得多。"
+          }
+        }
+      },
+      {
+        "node_id": "2.4_walking_shadow",
+        "scene_type": "combat",
+        "trigger": "墙上的纸影脱离墙面，朝你压过来。",
+        "prerequisite_nodes": [
+          "2.3_boy_effigy"
+        ],
+        "next_nodes": [
+          "3.1_funeral"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "走影",
+            "system": "gurps"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你举起灯。影子缩回墙里,又从另一个方向扑出来。",
+            "failure": "它穿过了你的身体。你低头,自己的影子已经不在脚下了。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_the_funeral",
+    "title": "出殡",
+    "description": "王家的送葬队伍天一亮就要出门。纸人得走在最前面——如果走影真的一直跟着，这支队伍会把它送到该去的地方。",
+    "environment": {
+      "mood": "唢呐吹得很急。纸马纸轿一列列抬出门,围观的街坊谁也不说话。",
+      "tags": [
+        {
+          "id": "mourning_season",
+          "name": "丧期",
+          "effect": "意志 -1"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "3.1_funeral",
+        "scene_type": "combat",
+        "trigger": "纸人队伍走到巷口,前面那一排忽然同时转过了头。",
+        "prerequisite_nodes": [
+          "2.4_walking_shadow"
+        ],
+        "next_nodes": [
+          "3.2_open_eye"
+        ],
+        "layer_physics": {
+          "enemy_type": "mook",
+          "catalog_ref": {
+            "name": "纸扎人",
+            "system": "gurps"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你踢翻了最前面那盏纸灯。火沿着纸边窜过去,纸人们在半路上烧成一串火把。",
+            "failure": "它们一齐扑上来,纸爪子划开你的袖子。它们的脸上没有表情——本来就不该有。"
+          }
+        }
+      },
+      {
+        "node_id": "3.2_open_eye",
+        "scene_type": "feat",
+        "trigger": "在焚化之前，你决定怎么处置最后一对纸眼珠。",
+        "prerequisite_nodes": [
+          "3.1_funeral"
+        ],
+        "next_nodes": [
+          "3.3_ashes"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你什么也没点。你把黑豆倒回碟子,让火自己烧完。火点到最后一刻,那对眼睛始终是白的。",
+            "crit_success": "你在火里看见一个影子站起来,朝你深深鞠了一躬,然后散了。",
+            "failure": "火舌卷过纸面的一瞬,你看见黑眼珠在纸上睁开了。"
+          }
+        }
+      },
+      {
+        "node_id": "3.3_ashes",
+        "scene_type": "explore",
+        "trigger": "灰烬凉了。收拾东西，走出巷子。",
+        "prerequisite_nodes": [
+          "3.2_open_eye"
+        ],
+        "next_nodes": [],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "天光大亮。巷口的纸屑被扫成一堆，有人已经在旁边摆好了新的纸扎。日子照旧。"
+          }
+        }
+      }
+    ]
+  },
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      { "场景": "1.1_workshop", "检定": "调查", "失败": "掌柜挡门" },
+      { "场景": "1.2_wailing", "检定": "感知 -4（环境）", "失败": "哭声与巷子一起静下来" },
+      { "场景": "1.3_chase", "检定": "敏捷 -2", "失败": "被绕开" },
+      { "场景": "2.1_the_master", "检定": "话术 -5", "失败": "老人不再开口" },
+      { "场景": "2.2_taboo", "检定": "3d6 ≤ 11（神秘学）", "失败": "纸堆里有东西响" },
+      { "场景": "2.3_boy_effigy", "检定": "战斗（童男纸）", "失败": "纸拳打实了" },
+      { "场景": "2.4_walking_shadow", "检定": "战斗（走影）", "失败": "影子被带走" },
+      { "场景": "3.1_funeral", "检定": "战斗（纸扎人群）", "失败": "被围" },
+      { "场景": "3.2_open_eye", "检定": "意志", "失败": "火里睁开了眼" }
+    ],
+    "notes": [
+      "GURPS 检定：skill_check 写技能名（角色卡上有：调查/神秘学/心理学/话术/潜行/撬锁/历史/急救/摄影/鉴赏…），modifier 为情境加减；目标＝技能值＋修正，掷 3d6 不高于目标即成功。",
+      "2.2_taboo 用的是嵌套检定（3d6 直接对 DC，不含技能加成），DC 11 约 50%；成功会置 flag knows_taboo——该 flag 仅供 GM 参考，未用作任何节点的准入条件，因此失败也不会卡死流程。",
+      "战斗敌人取自 data/gurps/catalog.json：纸扎人（附庸群）、童男纸、走影。",
+      "民俗依据（均见于公开文献）：『纸人不点睛，纸马不扬鬃』见《太平广记》『面无睛目，以防魅魇』，明《大明律》禁给纸人彩绘眼珠；『男骑马、女骑牛』见《清稗类钞》；扎糊绘剪四字诀与高粱秸骨架、泥塑头脸见各地纸扎工艺志。本模组文字为原创演绎。"
+    ]
+  }
+}

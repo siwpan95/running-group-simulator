@@ -74,21 +74,26 @@ pt/
 │   ├── enemies.json             │  敌人库
 │   └── items.json               │  物品库
 │
-├── characters/                  ← 玩家角色卡（JSON，7 张预置）
+├── characters/                  ← 玩家角色卡（JSON，8 张预置）
 │   ├── 预置-调查记者.json
 │   ├── 预置-退役军警.json
 │   ├── 预置-神秘学学者.json
 │   ├── 预置-街头混混.json
 │   ├── 预置-急诊医生.json          │  IQ 13，急救/诊断/药学
 │   ├── 预置-自由黑客.json          │  IQ 14，计算机/电子/情报分析
-│   └── 预置-古董商.json            │  IQ 13，鉴赏/神秘学/历史
+│   ├── 预置-古董商.json            │  IQ 13，鉴赏/神秘学/历史
+│   └── 预置-CoC调查员.json         │  CoC 7e 调查员：百分比技能 + SAN 理智已启用
 │
-├── modules/                     ← 模组（每个模组一个子目录，5 个示例）
+├── modules/                     ← 模组（每个模组一个子目录，9 个示例）
 │   ├── mirror_house_alley/      ← 镜屋巷（GURPS 4e，3 幕）
 │   ├── coc_sample/              ← 旧宅的低语（CoC 7e，3 幕）
 │   ├── dnd_sample/              ← 哥布林洞窟（D&D 5e，3 幕）
 │   ├── wod_sample/              ← 夜之血约（WoD，3 幕）
-│   └── coc_saltmarsh/          ← 盐沼低语（CoC 7e，3 幕，引用扩充目录神话生物）
+│   ├── coc_saltmarsh/           ← 盐沼低语（CoC 7e，3 幕，引用扩充目录神话生物）
+│   ├── coc_dunwich/             ← 敦威治之夜（CoC 7e，3 幕，Lovecraft 公有领域）
+│   ├── dnd_phandalin/           ← 凡达林：红标之夜（D&D 5e，3 幕，SRD 5.1 结构）
+│   ├── gurps_paper_alley/       ← 纸人巷（GURPS 4e，3 幕，纸扎民俗）
+│   └── wod_long_night/          ← 长夜巡猎（WoD，3 幕，民俗驱魔）
 │
 ├── templates/                   ← 内容创作模板
 │   ├── characters/              │  角色卡 Excel 模板
@@ -168,6 +173,7 @@ python tests/test_excel_roundtrip.py
 python tests/test_rules_profiles.py      # v3.2 多系统画像
 python tests/test_catalog_service.py     # v3.6 内容目录服务
 python tests/test_catalog_bridge.py       # v3.6 目录→实体桥接（内容目录消费方）
+python tests/test_modules.py             # v3.7 模组完整性门禁（9 个模组）
 python tools/validate_catalogs.py        # 内容目录 schema 校验
 ```
 
@@ -385,6 +391,39 @@ python tests/test_excel_roundtrip.py
 6. **GURPS 目录**：新增 `data/gurps/catalog.json`（`gurps-catalog-v1`，收编 `mirror_house_alley` 的自制敌人 巨鼠群 / 镜中倒影），同样在 `catalog_service` 注册、`validate_catalogs` 增加 `gurps` schema 校验；`catalog_bridge` 新增 `_gurps_enemy`（原生 GURPS 数值：attack_skill=3d6 技能目标、dodge=闪避、dr=伤害抗力、damage 含 cut/imp/cr 类型）。节点的 `special_mechanic` / `minion_threshold` 等机制元数据保留在模块节点层，仍由场景引擎套用。
 
 测试：`tests/test_catalog_bridge.py`（46 项，零第三方依赖，覆盖 dnd5e / coc7 / wod / gurps 四套 schema）。
+
+## 新增模组（v3.7 · 2026-10-27）
+
+四个新模组，**每个系统各一**，全部经联网调研取材、全部战斗节点用 `catalog_ref` 消费目录内容：
+
+| 模组 | 系统 | 取材与调研依据 | 版权口径 |
+|------|------|----------------|----------|
+| `coc_dunwich`《敦威治之夜》 | CoC 7e | H.P. Lovecraft《敦威治之恐怖》(1928) 与《印斯茅斯之影》(1931)：深潜者混血「印斯茅斯面相」、哨兵山史前石阵、伊本-加齐之粉、夜鹰报丧 | 公有领域 |
+| `dnd_phandalin`《凡达林：红标之夜》 | D&D 5e | SRD 5.1《Lost Mine of Phandelver》结构：试炼之路哥布林伏击、克拉莫堡、红标帮、碎晶矿坑 | SRD 5.1（OGL + CC BY 4.0） |
+| `gurps_paper_alley`《纸人巷》 | GURPS 4e | 中国纸扎民俗：「纸人不点睛，纸马不扬鬃」（《太平广记》）、明《大明律》禁彩绘眼珠、扎糊绘剪四字诀、男骑马女骑牛、红男绿女 | 民俗/公开文献，文字原创 |
+| `wod_long_night`《长夜巡猎》 | WoD | 东欧/斯拉夫吸血鬼民俗：木桩穿心、银器、镜子、活水不可渡、未受邀不得入门、门槛撒米粒乱其计数、忌猫跳尸 | 民俗，设定原创 |
+
+配套新增：
+- `characters/预置-CoC调查员.json`：CoC 7e 调查员（百分比技能 + **SAN 理智已启用**）——此前所有角色卡 `san_max=0`，SAN 机制整条无法触发。
+- `data/gurps/catalog.json` 增 3（纸扎人 / 童男纸 / 走影）；`data/wod/catalog.json` 增 4（血裔 / 血奴 / 游血族 / 尸仆）。
+- `tests/test_modules.py`（172 项）：模组工程化门禁——meta 完整性、三幕结构、节点 id 唯一、**节点图引用自洽**、战斗节点 `catalog_ref` 必须命中目录、`layer_physics` 形态合法、场景引擎可加载且能生成敌人。
+
+### 同期修掉的两个引擎缺陷
+
+1. **战斗节点丢弃 `san_loss`**：CoC 最该掉理智的场合（直面怪物）反而不掉——`core/scene_engine._handle_combat_node` 现已无条件应用战斗节点的 SAN 损失。
+2. **CoC 双值写法 `0/1d6` 被解析成 0**：`_parse_dice_amount` 现在按「取较重的一档」解析 `a/b` 形式（`0/1d6`→1d6、`1d6/1d20`→1d20）。这同时让既有 `coc_saltmarsh` 模组里一直失效的 SAN 损失恢复生效。
+
+### 写作与检定的系统约定
+
+| 系统 | `skill_check` 写什么 | 引擎如何折算 |
+|------|--------------------|-------------|
+| GURPS 4e | 技能名（调查/神秘学/话术…）或属性名 | 目标＝技能值＋modifier，掷 3d6 不高于目标即成功 |
+| CoC 7e | 属性名（感知/意志/敏捷/智力） | 目标＝属性×5（CoC 惯例），modifier 为情境加减 |
+| D&D 5e | `侦查` / 属性名（敏捷/感知/力量） | d20＋总加成 对抗 `dc`；`advantage` 控优劣势 |
+| WoD | 属性名（感知/意志/敏捷） | 骰池＝属性值；写技能名时须加负修正压回 6-10 颗骰 |
+
+> 嵌套 `checks` 数组一律按 3d6 对 DC 判定（不含技能加成），因此**仅在 GURPS 模组里语义正确**；CoC/D&D/WoD 模组请用单次 `skill_check`。
+
 
 ## 多系统裁决中间件（v3.2 · 2026-09-02）
 
