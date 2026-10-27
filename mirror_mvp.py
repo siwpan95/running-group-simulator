@@ -62,9 +62,9 @@ class MirrorOfLost:
         self.vm.anchor_library = self.system.get("content_libraries", {}).get("anchor_phrases", {})
 
     def _init_environment(self):
-        """初始化环境系统"""
+        """初始化环境系统（全局氛围标签作为 baseline，进入无局部环境的节点时回退到这里）"""
         tags = self.module.get("global_context_tags", [])
-        self.env.load_tags(tags)
+        self.env.load_tags(tags, baseline=True)
 
     def set_character(self, pc: Character):
         """设置玩家角色（v3.3：按 module meta.systems 路由系统画像）"""

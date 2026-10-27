@@ -19,7 +19,7 @@
     {
       "id": "salt_fog",
       "name": "咸雾弥漫",
-      "effect": "侦查 -10，听觉 +10"
+      "effect": "雾里声音传得远，眼睛却看不见"
     },
     {
       "id": "tide_pull",
@@ -56,7 +56,7 @@
             {
               "id": "interview",
               "type": "automatic",
-              "skill": "话术",
+              "skill": "意志",
               "dc": 50,
               "on_success": {
                 "flag_set": [
@@ -67,7 +67,7 @@
             {
               "id": "rumor",
               "type": "optional",
-              "skill": "图书馆使用",
+              "skill": "智力",
               "dc": 30,
               "on_success": {
                 "flag_set": [
@@ -93,7 +93,7 @@
           "2.1_cave_mouth"
         ],
         "layer_physics": {
-          "skill_check": "追踪",
+          "skill_check": "感知",
           "modifier": -10,
           "critical_effects": {
             "crit_success": "你数清了脚印数量——恰好对应三名失踪者，外加一个更大的、不属于任何人的轮廓。",
@@ -122,7 +122,7 @@
             {
               "id": "read_codex",
               "type": "automatic",
-              "skill": "神秘学",
+              "skill": "智力",
               "dc": 40,
               "on_success": {
                 "flag_set": [
@@ -172,7 +172,7 @@
           "2.2_ambush"
         ],
         "layer_physics": {
-          "skill_check": "侦查",
+          "skill_check": "感知",
           "modifier": -10,
           "san_loss": {
             "amount": 1,
@@ -236,7 +236,7 @@
           "3.2_resolve"
         ],
         "layer_physics": {
-          "skill_check": "理智",
+          "skill_check": "意志",
           "modifier": 0,
           "san_loss": {
             "amount": "1d6/1d20",
@@ -293,7 +293,7 @@
     "quick_ref_table": [
       {
         "场景": "1.2_track_footprints",
-        "检定": "追踪 -10",
+        "检定": "感知 -10",
         "失败": "丢失足迹，凭记忆找洞口"
       },
       {
@@ -303,7 +303,7 @@
       },
       {
         "场景": "3.1_sanctum",
-        "检定": "理智",
+        "检定": "意志",
         "失败": "SAN 1d20（≥19 触发不定期疯狂）"
       },
       {

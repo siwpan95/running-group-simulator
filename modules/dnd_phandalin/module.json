@@ -19,12 +19,12 @@
     {
       "id": "sword_coast_rain",
       "name": "剑湾的雨",
-      "effect": "感知 -2"
+      "effect": "雨不大，但林子里的声音全是湿的"
     },
     {
       "id": "phandalin_tension",
       "name": "镇上的紧张",
-      "effect": "话术 -2"
+      "effect": "没人愿意在街上多走几步"
     }
   ],
   "act_1": {
@@ -51,8 +51,9 @@
           "1.2_cave_mouth"
         ],
         "layer_physics": {
-          "skill_check": "侦查",
-          "dc": 13
+          "skill_check": "感知",
+          "dc": 13,
+          "modifier": 0
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -137,8 +138,9 @@
           "2.2_mansion"
         ],
         "layer_physics": {
-          "skill_check": "侦查",
-          "dc": 14
+          "skill_check": "感知",
+          "dc": 14,
+          "modifier": 0
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -327,19 +329,59 @@
   },
   "gm_cheatsheet": {
     "quick_ref_table": [
-      { "场景": "1.1_ambush", "检定": "侦查 DC 13", "失败": "痕迹被雨冲掉" },
-      { "场景": "1.2_cave_mouth", "检定": "战斗（Goblin，优势 +1）", "失败": "先手尽失" },
-      { "场景": "1.3_dam", "检定": "敏捷 DC 13 -2", "失败": "被水头冲倒" },
-      { "场景": "2.1_phandalin", "检定": "侦查 DC 14", "失败": "被人闩在酒馆里" },
-      { "场景": "2.2_mansion", "检定": "战斗（Bandit Captain）", "失败": "被斧子逼到墙角" },
-      { "场景": "2.3_cellar", "检定": "战斗（Giant Spider）", "失败": "被蛛丝黏住" },
-      { "场景": "2.4_vault", "检定": "智力 DC 15", "失败": "书页字迹扭动，无法解读" },
-      { "场景": "3.1_mine", "检定": "感知 DC 12", "失败": "洞口漆黑" },
-      { "场景": "3.2_ghouls", "检定": "战斗（Ghoul）", "失败": "被腐尸抓住" },
-      { "场景": "3.3_forge", "检定": "战斗（Mimic）", "失败": "手臂被咬住" }
+      {
+        "场景": "1.1_ambush",
+        "检定": "感知 DC 12",
+        "失败": "痕迹被雨冲掉"
+      },
+      {
+        "场景": "1.2_cave_mouth",
+        "检定": "战斗（Goblin，优势 +1）",
+        "失败": "先手尽失"
+      },
+      {
+        "场景": "1.3_dam",
+        "检定": "敏捷 DC 13 -2",
+        "失败": "被水头冲倒"
+      },
+      {
+        "场景": "2.1_phandalin",
+        "检定": "感知 DC 14",
+        "失败": "被人闩在酒馆里"
+      },
+      {
+        "场景": "2.2_mansion",
+        "检定": "战斗（Bandit Captain）",
+        "失败": "被斧子逼到墙角"
+      },
+      {
+        "场景": "2.3_cellar",
+        "检定": "战斗（Giant Spider）",
+        "失败": "被蛛丝黏住"
+      },
+      {
+        "场景": "2.4_vault",
+        "检定": "智力 DC 15",
+        "失败": "书页字迹扭动，无法解读"
+      },
+      {
+        "场景": "3.1_mine",
+        "检定": "感知 DC 12",
+        "失败": "洞口漆黑"
+      },
+      {
+        "场景": "3.2_ghouls",
+        "检定": "战斗（Ghoul）",
+        "失败": "被腐尸抓住"
+      },
+      {
+        "场景": "3.3_forge",
+        "检定": "战斗（Mimic）",
+        "失败": "手臂被咬住"
+      }
     ],
     "notes": [
-      "D&D 检定用『skill_check + dc + modifier』：引擎按 d20 + 总加成 对抗 DC；『侦查』为纯 d20 检定（无属性加成），『感知/敏捷/智力/力量』按 (属性-10)/2 折算。",
+      "D&D 检定用『skill_check + dc + modifier』：引擎按 d20 + 总加成 对抗 DC；skill_check 一律写属性名（感知/敏捷/意志/智力/力量），加成＝(属性-10)/2，modifier 为情境修正（负数＝更难）。",
       "战斗节点敌人取自 data/dnd5e/catalog.json（SRD 5.1，OGL + CC BY 4.0）：Goblin / Bandit Captain / Giant Spider / Ghoul / Mimic；attack_skill 存的是命中加值，ac 存护甲等级。",
       "1.2_cave_mouth 的 advantage:1 是给玩家的先手优势（对玩家有利）；若你想让哥布林先攻，请改为 advantage:0 并提高 DC。",
       "本模组结构取材自 SRD 5.1 免费内容《Lost Mine of Phandelver》（凡达林、试炼之路哥布林伏击、红标帮、碎晶矿坑），叙述与细节为原创演绎。"

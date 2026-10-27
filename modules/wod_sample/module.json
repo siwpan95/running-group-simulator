@@ -19,12 +19,12 @@
     {
       "id": "city_night",
       "name": "都市夜幕",
-      "effect": "潜行骰池 +1"
+      "effect": "路灯昏黄，巷口有风"
     },
     {
       "id": "blood_scent",
       "name": "血腥气",
-      "effect": "追踪相关骰池 +1"
+      "effect": "空气里有洗不掉的铁锈味"
     }
   ],
   "act_1": {
@@ -51,8 +51,8 @@
           "1.2_trail"
         ],
         "layer_physics": {
-          "skill_check": "侦查",
-          "modifier": 3
+          "skill_check": "感知",
+          "modifier": -6
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -73,8 +73,8 @@
           "2.1_confront"
         ],
         "layer_physics": {
-          "skill_check": "潜行",
-          "modifier": 4
+          "skill_check": "敏捷",
+          "modifier": -6
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -128,7 +128,7 @@
         "next_nodes": [],
         "layer_physics": {
           "skill_check": "意志",
-          "modifier": 3
+          "modifier": -6
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -154,7 +154,7 @@
         "next_nodes": [],
         "layer_physics": {
           "skill_check": "意志",
-          "modifier": 2
+          "modifier": -6
         },
         "layer_narrative": {
           "anchor_phrases": {

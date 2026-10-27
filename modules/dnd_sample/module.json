@@ -19,12 +19,12 @@
     {
       "id": "cave_dark",
       "name": "洞窟昏暗",
-      "effect": "无光源时侦查劣势"
+      "effect": "没有光源时看不清远处"
     },
     {
       "id": "slippery_floor",
       "name": "湿滑地面",
-      "effect": "敏捷豁免 -2"
+      "effect": "踩上去会打滑"
     }
   ],
   "act_1": {
@@ -51,9 +51,10 @@
           "1.2_trap"
         ],
         "layer_physics": {
-          "skill_check": "侦查",
+          "skill_check": "感知",
           "dc": 12,
-          "advantage": 0
+          "advantage": 0,
+          "modifier": 0
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -136,7 +137,7 @@
         ],
         "next_nodes": [],
         "layer_physics": {
-          "skill_check": "调查",
+          "skill_check": "智力",
           "dc": 14
         },
         "layer_narrative": {

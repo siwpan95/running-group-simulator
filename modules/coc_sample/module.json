@@ -19,12 +19,12 @@
     {
       "id": "musty_air",
       "name": "霉味浓重",
-      "effect": "嗅觉感知惩罚骰"
+      "effect": "鼻腔里全是霉味，压不下去"
     },
     {
       "id": "dark_hallway",
       "name": "昏暗走廊",
-      "effect": "侦查 -10"
+      "effect": "走廊里只剩一线光"
     }
   ],
   "act_1": {
@@ -51,7 +51,7 @@
           "1.2_study"
         ],
         "layer_physics": {
-          "skill_check": "侦查",
+          "skill_check": "感知",
           "modifier": -10
         },
         "layer_narrative": {
@@ -77,7 +77,7 @@
             {
               "id": "read_diary",
               "type": "automatic",
-              "skill": "图书馆使用",
+              "skill": "智力",
               "dc": 40,
               "on_success": {
                 "flag_set": [
@@ -126,7 +126,7 @@
           "2.2_face_creature"
         ],
         "layer_physics": {
-          "skill_check": "聆听",
+          "skill_check": "感知",
           "modifier": 0,
           "san_loss": {
             "amount": 1,

@@ -101,6 +101,22 @@ def test_modules():
                     bad_act_sys.append("%s:%s" % (ak, s))
         check("%s 幕级 systems 合法" % mod_name, not bad_act_sys, str(bad_act_sys))
 
+        # 全部模组一律属性驱动（不使用具名技能）——角色卡是 GURPS 尺度的，
+        # 技能名在 CoC/D&D/WoD 里会折算出离谱数值。
+        GURPS_ATTRS = ("感知", "意志", "力量", "敏捷", "智力", "体质")
+        skill_leaks = []
+        for ak in acts:
+            for n in mod.get(ak, {}).get("nodes", []) or []:
+                lp = n.get("layer_physics") or {}
+                sc = lp.get("skill_check")
+                if sc and sc not in GURPS_ATTRS:
+                    skill_leaks.append("%s:%s=%s" % (ak, n.get("node_id"), sc))
+                for c in lp.get("checks") or []:
+                    sk = c.get("skill")
+                    if sk and sk not in GURPS_ATTRS:
+                        skill_leaks.append("%s:%s[nested]=%s" % (ak, n.get("node_id"), sk))
+        check("%s 检定全部属性驱动" % mod_name, not skill_leaks, str(skill_leaks))
+
         # 节点图自洽
         bad_refs = []
         for _, n in all_nodes:
