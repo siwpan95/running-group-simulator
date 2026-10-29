@@ -29,21 +29,37 @@ def _parse_int(value, default=0):
 
 
 def _parse_dice_amount(value, default=1):
-    """解析伤害/损失数额：int 或 'XdY' / 'XdY±Z' 骰子表达式。"""
+    """解析伤害/损失数额：int 或 'XdY' / 'XdY±Z' 骰子表达式。
+
+    另支持 CoC 常用的双值写法 'a/b'（如 '0/1d6'、'1/1d6'、'1d6/1d20'）：
+    取两种情形中较重的一个（worst case）。此前 '0/1d6' 会被正则在起始处
+    匹配成 0，导致这类 SAN 损失整条失效。
+    """
     if isinstance(value, (int, float)):
         return max(0, int(value))
     if isinstance(value, str):
-        m = re.match(r'(\d+)?d(\d+)([+-]\d+)?', value.strip())
+        text = value.strip()
+        if "/" in text:
+            parts = [p for p in text.split("/") if p.strip()]
+            vals = [_parse_dice_amount(p, 0) for p in parts]
+            return max(vals) if vals else default
+        m = re.match(r'(\d+)?d(\d+)([+-]\d+)?', text)
         if m:
             import random
             count = int(m.group(1) or 1)
             sides = int(m.group(2))
             mod = int(m.group(3) or 0)
             return max(0, sum(random.randint(1, sides) for _ in range(count)) + mod)
-        m2 = re.match(r'([+-]?\d+)', value.strip())
+        m2 = re.match(r'([+-]?\d+)', text)
         if m2:
             return max(0, int(m2.group(1)))
     return default
+
+
+def _act_num(key: str) -> int:
+    """'act_3' → 3（用于幕的排序，act_10 排在 act_9 之后）。"""
+    m = re.search(r'(\d+)$', key or "")
+    return int(m.group(1)) if m else 999
 
 
 class SceneEngine:
@@ -62,6 +78,10 @@ class SceneEngine:
         self.combat = CombatEngine(system_id)
         self.resolver = SceneResolver()
 
+        # v3.7：多系统模组支持——节点/幕可声明各自的系统画像，运行到哪一幕就切到哪套规则
+        self.base_system_id = system_id
+        self.current_system_id = system_id
+
         # 追踪上一次掷骰（给 View 层读取）
         self._last_packet: Optional[Dict] = None
 
@@ -73,11 +93,18 @@ class SceneEngine:
 
         # 构建节点索引
         self._node_index: Dict[str, Dict] = {}
+        self._act_of_node: Dict[str, str] = {}
         self._build_node_index()
+
+    def _act_keys(self) -> List[str]:
+        """模组内的幕列表（act_1、act_2…，按数字排序，兼容 3 幕以上）。"""
+        keys = [k for k, v in self.module.items()
+                if isinstance(v, dict) and k.startswith("act") and "nodes" in v]
+        return sorted(keys, key=lambda k: (_act_num(k), k))
 
     def _build_node_index(self):
         """构建 node_id → node 的快速查找索引"""
-        for act_key in ["act_1", "act_2", "act_3"]:
+        for act_key in self._act_keys():
             act = self.module.get(act_key, {})
             for node in act.get("nodes", []):
                 nid = node.get("node_id", "")
@@ -90,6 +117,36 @@ class SceneEngine:
                     node.setdefault("next_nodes", [])
                     node.setdefault("unlocks_flags", [])
                     self._node_index[nid] = node
+                    self._act_of_node[nid] = act_key
+
+    def system_for_node(self, node: Dict) -> str:
+        """解析该节点生效的系统画像。
+
+        优先级：node.system > 所在幕 act.systems[0] > 模组 meta.systems[0] > 构造时默认。
+        这让「一个模组跨多套规则」成为可能（每幕各用一套系统画像）。
+        """
+        sys_id = node.get("system")
+        if not sys_id:
+            act_key = self._act_of_node.get(node.get("node_id", ""), "")
+            act = self.module.get(act_key, {}) or {}
+            acts = act.get("systems")
+            if acts:
+                sys_id = acts[0] if isinstance(acts, list) else acts
+        if not sys_id:
+            meta = self.module.get("meta", {}) or {}
+            acts = meta.get("systems")
+            if acts:
+                sys_id = acts[0] if isinstance(acts, list) else acts
+        return str(sys_id or self.base_system_id)
+
+    def _apply_system(self, node: Dict) -> str:
+        """若该节点所属幕声明了别的系统画像，则就地切换（并重建战斗引擎）。"""
+        sys_id = self.system_for_node(node)
+        if sys_id != self.current_system_id:
+            self.current_system_id = sys_id
+            self.profile = get_profile(sys_id)
+            self.combat = CombatEngine(sys_id)
+        return sys_id
 
     def _infer_scene_type(self, node: Dict) -> str:
         """从节点内容推断场景类型"""
@@ -144,6 +201,9 @@ class SceneEngine:
 
         self.current_node = node
         scene_type = node.get("scene_type", "explore")
+
+        # v3.7：按幕/按节点切换系统画像（多系统模组）
+        self._apply_system(node)
 
         # 进入场景 → 更新环境
         self.env.on_scene_enter(node)
@@ -313,25 +373,35 @@ class SceneEngine:
         """处理战斗节点"""
         physics = node.get("layer_physics", {})
 
-        # 从 JSON 构建敌人
-        enemy_type = physics.get("enemy_type", "mook")
-        stats = physics.get("unit_stats", {})
+        # 优先从内容目录生成敌人（v3.6 内容目录消费方）
+        # catalog_ref: "深潜者" 或 {"name": "深潜者", "system": "coc7"}
+        catalog_ref = physics.get("catalog_ref")
+        enemy = None
+        if catalog_ref:
+            try:
+                from services.catalog_bridge import build_enemy_from_catalog
+                ref = catalog_ref if isinstance(catalog_ref, dict) else {"name": catalog_ref}
+                enemy = build_enemy_from_catalog(ref.get("name"), ref.get("system"))
+            except Exception:  # pragma: no cover - 目录缺失时回退内联
+                enemy = None
+        if enemy is None:
+            enemy = self._build_inline_enemy(node, physics)
 
-        enemy_name = node.get("title", node.get("trigger", "未知敌人"))
-        enemy = Enemy(
-            name=enemy_name,
-            enemy_type="wildcard" if "wildcard" in enemy_type.lower() else "mook",
-            hp=stats.get("hp", 10),
-            hp_max=stats.get("hp", 10),
-            attack_skill=stats.get("attack_skill", 12),
-            damage=stats.get("damage", "1d6 cut"),
-            dodge=stats.get("dodge", 8),
-        )
-
-        # 特殊机制
+        # 特殊机制（目录与内联两条路径都适用）
         special = physics.get("special_mechanic", {})
         if special:
             enemy.special_abilities.append(special)
+
+        # 直面恐怖 → SAN 损失（v3.7：战斗节点此前会丢弃 san_loss，
+        # 导致 CoC 7e 模组最该掉理智的场合反而不掉）
+        san_cfg = physics.get("san_loss")
+        if san_cfg and self.pc.san_max > 0:
+            loss = _parse_dice_amount(san_cfg.get("amount", 1))
+            r = self.pc.add_san_loss(loss, san_cfg.get("source", enemy.name))
+            if r.get("indefinite_insanity"):
+                self.pc.add_tag("不定期疯狂", modifier=-20, duration="permanent")
+            elif r.get("temp_insanity"):
+                self.pc.add_tag("临时疯狂", modifier=-20, duration="scene")
 
         vm_result = ViewModelResult()
         vm_result.narrative = node.get("layer_narrative", {}).get("anchor_phrases", {}).get("success", "战斗开始！")
@@ -344,6 +414,21 @@ class SceneEngine:
 
         self.completed_nodes.add(node["node_id"])
         return vm_result
+
+    def _build_inline_enemy(self, node: Dict, physics: Dict) -> "Enemy":
+        """从 layer_physics.unit_stats 内联构造敌人（catalog_ref 未命中时的回退）。"""
+        enemy_type = physics.get("enemy_type", "mook")
+        stats = physics.get("unit_stats", {})
+        enemy_name = node.get("title", node.get("trigger", "未知敌人"))
+        return Enemy(
+            name=enemy_name,
+            enemy_type="wildcard" if "wildcard" in enemy_type.lower() else "mook",
+            hp=stats.get("hp", 10),
+            hp_max=stats.get("hp", 10),
+            attack_skill=stats.get("attack_skill", 12),
+            damage=stats.get("damage", "1d6 cut"),
+            dodge=stats.get("dodge", 8),
+        )
 
     # === 状态管理 ===
 
@@ -371,19 +456,26 @@ class SceneEngine:
             return False
         return all(n["node_id"] in self.completed_nodes for n in nodes)
 
+    def is_story_complete(self) -> bool:
+        """全部幕（不限幕数）均已完成 → 主线结束。"""
+        acts = self._act_keys()
+        return bool(acts) and all(self.is_act_complete(a) for a in acts)
+
     def get_progress_summary(self) -> Dict:
         """获取进度摘要"""
         total = len(self._node_index)
         done = len(self.completed_nodes)
-        current_act = "act_1"
-        if self.is_act_complete("act_1"):
-            current_act = "act_2"
-        if self.is_act_complete("act_2"):
-            current_act = "act_3"
+        acts = self._act_keys()
+        current_act = acts[-1] if acts else "act_1"
+        for ak in acts:
+            if not self.is_act_complete(ak):
+                current_act = ak
+                break
 
         return {
             "total_nodes": total,
             "completed_nodes": done,
             "current_act": current_act,
+            "current_system": self.current_system_id,
             "flags": dict(self.flags),
         }

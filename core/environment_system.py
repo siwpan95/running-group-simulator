@@ -10,12 +10,15 @@ class EnvironmentSystem:
     """环境运行时系统"""
 
     def __init__(self):
-        self.tags: List[Dict] = []  # [{"name":"暴雨湿滑","modifier":-2,"duration":"scene","active":True}]
+        self.tags: List[Dict] = []
+        # 全局氛围标签（baseline）：进入没有局部环境的节点时回退到这一组，
+        # 否则上一个节点的局部条件会一路泄漏到后面的节点。
+        self.baseline_tags: List[Dict] = []
         self.ambient_narrative: str = ""
-        self.pending_changes: List[Dict] = []  # VM 产出的环境变化
+        self.pending_changes: List[Dict] = []
 
-    def load_tags(self, tags_config: List[Dict]):
-        """从 module.json 加载环境标签"""
+    def load_tags(self, tags_config: List[Dict], baseline: bool = False):
+        """加载环境标签。baseline=True 时同时记为全局氛围标签。"""
         self.tags = []
         for tag in tags_config:
             self.tags.append({
@@ -26,6 +29,8 @@ class EnvironmentSystem:
                 "duration": "scene",
                 "progression": tag.get("progression", None),  # 渐进恶化配置
             })
+        if baseline:
+            self.baseline_tags = [dict(t) for t in self.tags]
 
     def _parse_modifier(self, effect_str: str) -> int:
         """从效果文本解析修正值"""
@@ -53,6 +58,9 @@ class EnvironmentSystem:
         env = node.get("environment", {})
         if env.get("tags"):
             self.load_tags(env["tags"])
+        else:
+            # 无局部环境 → 回退到全局氛围标签，避免上一节点的局部条件泄漏
+            self.load_tags(self.baseline_tags)
         self.ambient_narrative = env.get("mood", "")
 
         # 也处理环境更新指令

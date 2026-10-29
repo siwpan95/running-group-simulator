@@ -6,7 +6,9 @@
     "version": "1.0",
     "author": "TRPG Architect",
     "compatible_core": "CoC 7e",
-    "systems": ["coc7"],
+    "systems": [
+      "coc7"
+    ],
     "playstyle": "现代都市 / 调查恐怖",
     "estimated_duration": "1-2 小时",
     "player_count": "2-4 人",
@@ -14,8 +16,16 @@
     "base_xp": 3
   },
   "global_context_tags": [
-    { "id": "musty_air", "name": "霉味浓重", "effect": "嗅觉感知惩罚骰" },
-    { "id": "dark_hallway", "name": "昏暗走廊", "effect": "侦查 -10" }
+    {
+      "id": "musty_air",
+      "name": "霉味浓重",
+      "effect": "鼻腔里全是霉味，压不下去"
+    },
+    {
+      "id": "dark_hallway",
+      "name": "昏暗走廊",
+      "effect": "走廊里只剩一线光"
+    }
   ],
   "act_1": {
     "scene_id": "act1_the_house",
@@ -24,7 +34,11 @@
     "environment": {
       "mood": "傍晚的光线从积灰的窗户斜切进来，家具都蒙着白布。",
       "tags": [
-        { "id": "musty_air", "name": "霉味浓重", "effect": "嗅觉感知惩罚骰" }
+        {
+          "id": "musty_air",
+          "name": "霉味浓重",
+          "effect": "嗅觉感知惩罚骰"
+        }
       ]
     },
     "nodes": [
@@ -33,9 +47,11 @@
         "scene_type": "perception",
         "trigger": "调查员踏入玄关，扫视昏暗的走廊。",
         "prerequisite_nodes": [],
-        "next_nodes": ["1.2_study"],
+        "next_nodes": [
+          "1.2_study"
+        ],
         "layer_physics": {
-          "skill_check": "侦查",
+          "skill_check": "感知",
           "modifier": -10
         },
         "layer_narrative": {
@@ -50,19 +66,30 @@
         "node_id": "1.2_study",
         "scene_type": "investigation",
         "trigger": "书房桌上摊着一本日记，最后几页的字迹抖得厉害。",
-        "prerequisite_nodes": ["1.1_enter_hall"],
-        "next_nodes": ["2.1_attic_stairs"],
+        "prerequisite_nodes": [
+          "1.1_enter_hall"
+        ],
+        "next_nodes": [
+          "2.1_attic_stairs"
+        ],
         "layer_physics": {
           "checks": [
             {
               "id": "read_diary",
               "type": "automatic",
-              "skill": "图书馆使用",
+              "skill": "智力",
               "dc": 40,
-              "on_success": { "flag_set": ["diary_read"] }
+              "on_success": {
+                "flag_set": [
+                  "diary_read"
+                ]
+              }
             }
           ],
-          "san_loss": { "amount": "1d3", "source": "阅读日记" }
+          "san_loss": {
+            "amount": "1d3",
+            "source": "阅读日记"
+          }
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -80,7 +107,11 @@
     "environment": {
       "mood": "楼梯每响一声，那呼吸就停一下。",
       "tags": [
-        { "id": "dark_hallway", "name": "昏暗走廊", "effect": "侦查 -10" }
+        {
+          "id": "dark_hallway",
+          "name": "昏暗走廊",
+          "effect": "侦查 -10"
+        }
       ]
     },
     "nodes": [
@@ -88,12 +119,19 @@
         "node_id": "2.1_attic_stairs",
         "scene_type": "perception",
         "trigger": "调查员摸上阁楼楼梯，那低语声越来越近。",
-        "prerequisite_nodes": ["1.2_study"],
-        "next_nodes": ["2.2_face_creature"],
+        "prerequisite_nodes": [
+          "1.2_study"
+        ],
+        "next_nodes": [
+          "2.2_face_creature"
+        ],
         "layer_physics": {
-          "skill_check": "聆听",
+          "skill_check": "感知",
           "modifier": 0,
-          "san_loss": { "amount": 1, "source": "听到低语" }
+          "san_loss": {
+            "amount": 1,
+            "source": "听到低语"
+          }
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -106,19 +144,22 @@
         "node_id": "2.2_face_creature",
         "scene_type": "combat",
         "trigger": "楼梯顶端，一只不属于这栋房子的东西回过头来。",
-        "prerequisite_nodes": ["2.1_attic_stairs"],
-        "next_nodes": ["2.3_escape"],
+        "prerequisite_nodes": [
+          "2.1_attic_stairs"
+        ],
+        "next_nodes": [
+          "2.3_escape"
+        ],
         "layer_physics": {
           "enemy_type": "wildcard",
-          "unit_stats": {
-            "name": "食尸鬼",
-            "hp": 13,
-            "attack_skill": 30,
-            "damage": "1d6+1",
-            "dodge": 25,
-            "dr": 0
+          "san_loss": {
+            "amount": "1d6",
+            "source": "目击食尸鬼"
           },
-          "san_loss": { "amount": "1d6", "source": "目击食尸鬼" }
+          "catalog_ref": {
+            "name": "食尸鬼",
+            "system": "coc7"
+          }
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -131,7 +172,9 @@
         "node_id": "2.3_escape",
         "scene_type": "feat",
         "trigger": "冲出老宅，把黑暗关在身后。",
-        "prerequisite_nodes": ["2.2_face_creature"],
+        "prerequisite_nodes": [
+          "2.2_face_creature"
+        ],
         "next_nodes": [],
         "layer_physics": {
           "skill_check": "敏捷",
@@ -155,11 +198,16 @@
         "node_id": "3.1_debrief",
         "scene_type": "explore",
         "trigger": "在安全处回想这一夜。",
-        "prerequisite_nodes": ["2.3_escape"],
+        "prerequisite_nodes": [
+          "2.3_escape"
+        ],
         "next_nodes": [],
         "layer_physics": {
           "skill_check": "意志",
-          "san_loss": { "amount": 0, "source": "回响" }
+          "san_loss": {
+            "amount": 0,
+            "source": "回响"
+          }
         },
         "layer_narrative": {
           "anchor_phrases": {

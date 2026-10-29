@@ -2,7 +2,8 @@
   "schema": "dnd5e-catalog-v1",
   "generated_by": "tools/make_dnd5e_catalog.py（人工选定条目 + 解析 + 抽核）",
   "sources": [
-    "5thsrd.org SRD 5.1（CC BY 4.0，attribution 见各条 source）"
+    "5thsrd.org SRD 5.1（CC BY 4.0，attribution 见各条 source）",
+    "tools/expand_catalogs.py 扩充批次（SRD 5.1 怪物/法术，CC BY 4.0）"
   ],
   "monsters": [
     {
@@ -344,6 +345,1570 @@
         "damage": "1d4) poison damage"
       },
       "source": "5thsrd.org/monsters/spider (CC BY 4.0)"
+    },
+    {
+      "name": "Bandit Captain",
+      "name_en": "Bandit Captain",
+      "type_line": "Medium humanoid (any race), any non-lawful alignment",
+      "ac": 15,
+      "hp": "10d8+20",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 15,
+        "DEX": 16,
+        "CON": 14,
+        "INT": 14,
+        "WIS": 11,
+        "CHA": 14
+      },
+      "attack": {
+        "name": "Scimitar",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d6 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Commoner",
+      "name_en": "Commoner",
+      "type_line": "Medium humanoid (any race), any alignment",
+      "ac": 10,
+      "hp": "1d8",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 10,
+        "DEX": 10,
+        "CON": 10,
+        "INT": 10,
+        "WIS": 10,
+        "CHA": 10
+      },
+      "attack": {
+        "name": "Club",
+        "type": "Melee",
+        "hit": "+2",
+        "damage": "1d4 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Acolyte",
+      "name_en": "Acolyte",
+      "type_line": "Medium humanoid (any race), any alignment",
+      "ac": 10,
+      "hp": "2d8",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 10,
+        "DEX": 10,
+        "CON": 10,
+        "INT": 10,
+        "WIS": 14,
+        "CHA": 11
+      },
+      "attack": {
+        "name": "Club",
+        "type": "Melee",
+        "hit": "+2",
+        "damage": "1d4 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Guard",
+      "name_en": "Guard",
+      "type_line": "Medium humanoid (any race), any alignment",
+      "ac": 16,
+      "hp": "2d8+2",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 13,
+        "DEX": 12,
+        "CON": 12,
+        "INT": 10,
+        "WIS": 11,
+        "CHA": 10
+      },
+      "attack": {
+        "name": "Spear",
+        "type": "Melee",
+        "hit": "+3",
+        "damage": "1d6 + 1 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Spy",
+      "name_en": "Spy",
+      "type_line": "Medium humanoid (any race), any alignment",
+      "ac": 12,
+      "hp": "6d8",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 10,
+        "DEX": 15,
+        "CON": 10,
+        "INT": 12,
+        "WIS": 14,
+        "CHA": 13
+      },
+      "attack": {
+        "name": "Shortsword",
+        "type": "Melee",
+        "hit": "+4",
+        "damage": "1d6 + 2 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Thug",
+      "name_en": "Thug",
+      "type_line": "Medium humanoid (any race), any non-good alignment",
+      "ac": 11,
+      "hp": "5d8+5",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 15,
+        "DEX": 11,
+        "CON": 12,
+        "INT": 10,
+        "WIS": 10,
+        "CHA": 10
+      },
+      "attack": {
+        "name": "Mace",
+        "type": "Melee",
+        "hit": "+4",
+        "damage": "1d6 + 2 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Tribal Warrior",
+      "name_en": "Tribal Warrior",
+      "type_line": "Medium humanoid (any race), any alignment",
+      "ac": 12,
+      "hp": "2d8+2",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 13,
+        "DEX": 11,
+        "CON": 12,
+        "INT": 8,
+        "WIS": 11,
+        "CHA": 8
+      },
+      "attack": {
+        "name": "Spear",
+        "type": "Melee",
+        "hit": "+3",
+        "damage": "1d6 + 1 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Knight",
+      "name_en": "Knight",
+      "type_line": "Medium humanoid (any race), any alignment",
+      "ac": 18,
+      "hp": "8d8+16",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 16,
+        "DEX": 11,
+        "CON": 14,
+        "INT": 11,
+        "WIS": 11,
+        "CHA": 15
+      },
+      "attack": {
+        "name": "Greatsword",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "2d6 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Bat",
+      "name_en": "Bat",
+      "type_line": "Tiny beast, unaligned",
+      "ac": 12,
+      "hp": "1d4-1",
+      "speed": "5 ft., fly 30 ft.",
+      "stats": {
+        "STR": 2,
+        "DEX": 15,
+        "CON": 8,
+        "INT": 2,
+        "WIS": 12,
+        "CHA": 4
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+0",
+        "damage": "1 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Giant Bat",
+      "name_en": "Giant Bat",
+      "type_line": "Large beast, unaligned",
+      "ac": 13,
+      "hp": "4d10",
+      "speed": "10 ft., fly 60 ft.",
+      "stats": {
+        "STR": 15,
+        "DEX": 16,
+        "CON": 11,
+        "INT": 2,
+        "WIS": 12,
+        "CHA": 6
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d8 + 2 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Giant Spider",
+      "name_en": "Giant Spider",
+      "type_line": "Large beast, unaligned",
+      "ac": 14,
+      "hp": "4d10+4",
+      "speed": "30 ft., climb 30 ft.",
+      "stats": {
+        "STR": 14,
+        "DEX": 16,
+        "CON": 12,
+        "INT": 2,
+        "WIS": 11,
+        "CHA": 4
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d8 + 3 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Dire Wolf",
+      "name_en": "Dire Wolf",
+      "type_line": "Large beast, unaligned",
+      "ac": 14,
+      "hp": "5d10+10",
+      "speed": "50 ft.",
+      "stats": {
+        "STR": 17,
+        "DEX": 15,
+        "CON": 15,
+        "INT": 3,
+        "WIS": 12,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "2d6 + 3 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Black Bear",
+      "name_en": "Black Bear",
+      "type_line": "Medium beast, unaligned",
+      "ac": 11,
+      "hp": "3d8+6",
+      "speed": "40 ft., climb 30 ft.",
+      "stats": {
+        "STR": 15,
+        "DEX": 10,
+        "CON": 14,
+        "INT": 2,
+        "WIS": 12,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+3",
+        "damage": "1d6 + 2 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Giant Eagle",
+      "name_en": "Giant Eagle",
+      "type_line": "Large beast, neutral good",
+      "ac": 13,
+      "hp": "4d10+4",
+      "speed": "10 ft., fly 80 ft.",
+      "stats": {
+        "STR": 16,
+        "DEX": 17,
+        "CON": 13,
+        "INT": 8,
+        "WIS": 14,
+        "CHA": 10
+      },
+      "attack": {
+        "name": "Talons",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "2d6 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Polar Bear",
+      "name_en": "Polar Bear",
+      "type_line": "Large beast, unaligned",
+      "ac": 12,
+      "hp": "5d10+15",
+      "speed": "40 ft., swim 30 ft.",
+      "stats": {
+        "STR": 20,
+        "DEX": 10,
+        "CON": 16,
+        "INT": 2,
+        "WIS": 13,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+7",
+        "damage": "1d8 + 5 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Tiger",
+      "name_en": "Tiger",
+      "type_line": "Large beast, unaligned",
+      "ac": 12,
+      "hp": "5d10+10",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 17,
+        "DEX": 15,
+        "CON": 14,
+        "INT": 3,
+        "WIS": 12,
+        "CHA": 8
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d10 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Boar",
+      "name_en": "Boar",
+      "type_line": "Medium beast, unaligned",
+      "ac": 11,
+      "hp": "2d8+2",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 13,
+        "DEX": 10,
+        "CON": 12,
+        "INT": 2,
+        "WIS": 9,
+        "CHA": 4
+      },
+      "attack": {
+        "name": "Tusk",
+        "type": "Melee",
+        "hit": "+3",
+        "damage": "1d6 + 1 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Giant Boar",
+      "name_en": "Giant Boar",
+      "type_line": "Large beast, unaligned",
+      "ac": 12,
+      "hp": "5d10+15",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 17,
+        "DEX": 10,
+        "CON": 16,
+        "INT": 2,
+        "WIS": 9,
+        "CHA": 4
+      },
+      "attack": {
+        "name": "Tusk",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "2d6 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Ape",
+      "name_en": "Ape",
+      "type_line": "Medium beast, unaligned",
+      "ac": 12,
+      "hp": "3d8+6",
+      "speed": "30 ft., climb 30 ft.",
+      "stats": {
+        "STR": 16,
+        "DEX": 14,
+        "CON": 14,
+        "INT": 6,
+        "WIS": 12,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Fist",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d6 + 3 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Giant Ape",
+      "name_en": "Giant Ape",
+      "type_line": "Huge beast, unaligned",
+      "ac": 12,
+      "hp": "15d12+60",
+      "speed": "40 ft., climb 40 ft.",
+      "stats": {
+        "STR": 23,
+        "DEX": 10,
+        "CON": 18,
+        "INT": 7,
+        "WIS": 12,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Fist",
+        "type": "Melee",
+        "hit": "+9",
+        "damage": "3d10 + 6 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Crocodile",
+      "name_en": "Crocodile",
+      "type_line": "Large beast, unaligned",
+      "ac": 12,
+      "hp": "3d10+3",
+      "speed": "20 ft., swim 30 ft.",
+      "stats": {
+        "STR": 15,
+        "DEX": 10,
+        "CON": 13,
+        "INT": 2,
+        "WIS": 10,
+        "CHA": 5
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+4",
+        "damage": "1d10 + 2 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Giant Crocodile",
+      "name_en": "Giant Crocodile",
+      "type_line": "Huge beast, unaligned",
+      "ac": 14,
+      "hp": "9d12+27",
+      "speed": "30 ft., swim 50 ft.",
+      "stats": {
+        "STR": 21,
+        "DEX": 9,
+        "CON": 17,
+        "INT": 2,
+        "WIS": 10,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+7",
+        "damage": "2d10 + 5 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Elephant",
+      "name_en": "Elephant",
+      "type_line": "Huge beast, unaligned",
+      "ac": 12,
+      "hp": "8d12+24",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 22,
+        "DEX": 9,
+        "CON": 17,
+        "INT": 3,
+        "WIS": 11,
+        "CHA": 6
+      },
+      "attack": {
+        "name": "Tusk",
+        "type": "Melee",
+        "hit": "+8",
+        "damage": "2d8 + 6 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Ghoul",
+      "name_en": "Ghoul",
+      "type_line": "Medium undead, chaotic evil",
+      "ac": 12,
+      "hp": "5d8",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 13,
+        "DEX": 15,
+        "CON": 10,
+        "INT": 12,
+        "WIS": 11,
+        "CHA": 14
+      },
+      "attack": {
+        "name": "Claw",
+        "type": "Melee",
+        "hit": "+3",
+        "damage": "2d4 + 1 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Ghast",
+      "name_en": "Ghast",
+      "type_line": "Medium undead, chaotic evil",
+      "ac": 13,
+      "hp": "8d8",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 16,
+        "DEX": 17,
+        "CON": 10,
+        "INT": 11,
+        "WIS": 10,
+        "CHA": 14
+      },
+      "attack": {
+        "name": "Claw",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "2d4 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Wight",
+      "name_en": "Wight",
+      "type_line": "Medium undead, neutral evil",
+      "ac": 14,
+      "hp": "6d8+18",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 15,
+        "DEX": 14,
+        "CON": 16,
+        "INT": 10,
+        "WIS": 13,
+        "CHA": 15
+      },
+      "attack": {
+        "name": "Longsword",
+        "type": "Melee",
+        "hit": "+4",
+        "damage": "1d8 + 2 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Wraith",
+      "name_en": "Wraith",
+      "type_line": "Medium undead, neutral evil",
+      "ac": 13,
+      "hp": "9d8+27",
+      "speed": "0 ft., fly 60 ft. (hover)",
+      "stats": {
+        "STR": 6,
+        "DEX": 16,
+        "CON": 16,
+        "INT": 12,
+        "WIS": 14,
+        "CHA": 15
+      },
+      "attack": {
+        "name": "Life Drain",
+        "type": "Melee",
+        "hit": "+6",
+        "damage": "4d6 + 3 necrotic damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Mummy",
+      "name_en": "Mummy",
+      "type_line": "Medium undead, lawful evil",
+      "ac": 11,
+      "hp": "9d8+18",
+      "speed": "20 ft.",
+      "stats": {
+        "STR": 16,
+        "DEX": 8,
+        "CON": 15,
+        "INT": 6,
+        "WIS": 10,
+        "CHA": 12
+      },
+      "attack": {
+        "name": "Rotting Fist",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "2d6 + 3 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Shadow",
+      "name_en": "Shadow",
+      "type_line": "Medium undead, chaotic evil",
+      "ac": 12,
+      "hp": "3d8+3",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 6,
+        "DEX": 14,
+        "CON": 13,
+        "INT": 6,
+        "WIS": 10,
+        "CHA": 8
+      },
+      "attack": {
+        "name": "Strength Drain",
+        "type": "Melee",
+        "hit": "+4",
+        "damage": "2d6 + 2 necrotic damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Specter",
+      "name_en": "Specter",
+      "type_line": "Medium undead, chaotic evil",
+      "ac": 12,
+      "hp": "5d8",
+      "speed": "0 ft., fly 50 ft. (hover)",
+      "stats": {
+        "STR": 1,
+        "DEX": 14,
+        "CON": 11,
+        "INT": 10,
+        "WIS": 10,
+        "CHA": 11
+      },
+      "attack": {
+        "name": "Life Drain",
+        "type": "Melee",
+        "hit": "+4",
+        "damage": "3d6 necrotic damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Young Red Dragon",
+      "name_en": "Young Red Dragon",
+      "type_line": "Huge dragon, chaotic evil",
+      "ac": 18,
+      "hp": "17d12+68",
+      "speed": "40 ft., fly 80 ft.",
+      "stats": {
+        "STR": 23,
+        "DEX": 10,
+        "CON": 19,
+        "INT": 14,
+        "WIS": 11,
+        "CHA": 19
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+10",
+        "damage": "2d10 + 6 fire damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Adult Red Dragon",
+      "name_en": "Adult Red Dragon",
+      "type_line": "Huge dragon, chaotic evil",
+      "ac": 19,
+      "hp": "19d12+114",
+      "speed": "40 ft., fly 80 ft.",
+      "stats": {
+        "STR": 27,
+        "DEX": 10,
+        "CON": 23,
+        "INT": 17,
+        "WIS": 13,
+        "CHA": 21
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+14",
+        "damage": "2d10 + 8 fire damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Ancient Red Dragon",
+      "name_en": "Ancient Red Dragon",
+      "type_line": "Gargantuan dragon, chaotic evil",
+      "ac": 22,
+      "hp": "28d20+224",
+      "speed": "40 ft., fly 80 ft., swim 40 ft.",
+      "stats": {
+        "STR": 30,
+        "DEX": 10,
+        "CON": 26,
+        "INT": 20,
+        "WIS": 15,
+        "CHA": 23
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+17",
+        "damage": "2d10 + 10 fire damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Adult Blue Dragon",
+      "name_en": "Adult Blue Dragon",
+      "type_line": "Huge dragon, lawful evil",
+      "ac": 19,
+      "hp": "18d12+90",
+      "speed": "40 ft., burrow 30 ft., fly 80 ft.",
+      "stats": {
+        "STR": 25,
+        "DEX": 10,
+        "CON": 21,
+        "INT": 16,
+        "WIS": 13,
+        "CHA": 19
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+12",
+        "damage": "2d10 + 7 lightning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Young White Dragon",
+      "name_en": "Young White Dragon",
+      "type_line": "Medium dragon, chaotic evil",
+      "ac": 16,
+      "hp": "14d8+70",
+      "speed": "40 ft., burrow 20 ft., fly 80 ft., swim 40 ft.",
+      "stats": {
+        "STR": 18,
+        "DEX": 10,
+        "CON": 21,
+        "INT": 8,
+        "WIS": 11,
+        "CHA": 12
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+6",
+        "damage": "1d10 + 4 cold damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Adult White Dragon",
+      "name_en": "Adult White Dragon",
+      "type_line": "Huge dragon, chaotic evil",
+      "ac": 18,
+      "hp": "16d12+96",
+      "speed": "40 ft., burrow 30 ft., fly 80 ft., swim 40 ft.",
+      "stats": {
+        "STR": 22,
+        "DEX": 10,
+        "CON": 22,
+        "INT": 8,
+        "WIS": 12,
+        "CHA": 12
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+10",
+        "damage": "2d10 + 6 cold damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Adult Silver Dragon",
+      "name_en": "Adult Silver Dragon",
+      "type_line": "Huge dragon, lawful good",
+      "ac": 19,
+      "hp": "18d12+108",
+      "speed": "40 ft., fly 80 ft.",
+      "stats": {
+        "STR": 27,
+        "DEX": 10,
+        "CON": 23,
+        "INT": 16,
+        "WIS": 13,
+        "CHA": 21
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+14",
+        "damage": "2d10 + 8 cold damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Adult Gold Dragon",
+      "name_en": "Adult Gold Dragon",
+      "type_line": "Huge dragon, lawful good",
+      "ac": 19,
+      "hp": "19d12+133",
+      "speed": "40 ft., fly 80 ft., swim 40 ft.",
+      "stats": {
+        "STR": 27,
+        "DEX": 14,
+        "CON": 25,
+        "INT": 16,
+        "WIS": 15,
+        "CHA": 24
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+14",
+        "damage": "2d10 + 8 fire damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Ancient Gold Dragon",
+      "name_en": "Ancient Gold Dragon",
+      "type_line": "Gargantuan dragon, lawful good",
+      "ac": 22,
+      "hp": "28d20+224",
+      "speed": "40 ft., fly 80 ft., swim 40 ft.",
+      "stats": {
+        "STR": 30,
+        "DEX": 10,
+        "CON": 26,
+        "INT": 20,
+        "WIS": 17,
+        "CHA": 28
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+17",
+        "damage": "2d10 + 10 fire damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Owlbear",
+      "name_en": "Owlbear",
+      "type_line": "Large monstrosity, unaligned",
+      "ac": 13,
+      "hp": "7d10+21",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 20,
+        "DEX": 12,
+        "CON": 17,
+        "INT": 3,
+        "WIS": 12,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Claw",
+        "type": "Melee",
+        "hit": "+7",
+        "damage": "2d8 + 5 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Hill Giant",
+      "name_en": "Hill Giant",
+      "type_line": "Huge giant, chaotic evil",
+      "ac": 13,
+      "hp": "10d12+40",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 21,
+        "DEX": 8,
+        "CON": 19,
+        "INT": 5,
+        "WIS": 9,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Greatclub",
+        "type": "Melee",
+        "hit": "+8",
+        "damage": "3d8 + 5 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Stone Giant",
+      "name_en": "Stone Giant",
+      "type_line": "Huge giant, neutral",
+      "ac": 17,
+      "hp": "11d12+55",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 23,
+        "DEX": 15,
+        "CON": 20,
+        "INT": 10,
+        "WIS": 12,
+        "CHA": 11
+      },
+      "attack": {
+        "name": "Greatclub",
+        "type": "Melee",
+        "hit": "+9",
+        "damage": "3d8 + 6 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Frost Giant",
+      "name_en": "Frost Giant",
+      "type_line": "Huge giant, neutral evil",
+      "ac": 15,
+      "hp": "12d12+60",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 23,
+        "DEX": 9,
+        "CON": 21,
+        "INT": 9,
+        "WIS": 10,
+        "CHA": 12
+      },
+      "attack": {
+        "name": "Greatsword",
+        "type": "Melee",
+        "hit": "+10",
+        "damage": "3d6 + 6 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Fire Giant",
+      "name_en": "Fire Giant",
+      "type_line": "Huge giant, lawful evil",
+      "ac": 18,
+      "hp": "13d12+78",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 25,
+        "DEX": 9,
+        "CON": 23,
+        "INT": 10,
+        "WIS": 14,
+        "CHA": 13
+      },
+      "attack": {
+        "name": "Greatsword",
+        "type": "Melee",
+        "hit": "+11",
+        "damage": "3d6 + 7 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Chimera",
+      "name_en": "Chimera",
+      "type_line": "Large monstrosity, chaotic evil",
+      "ac": 14,
+      "hp": "12d10+48",
+      "speed": "30 ft., fly 60 ft.",
+      "stats": {
+        "STR": 19,
+        "DEX": 13,
+        "CON": 19,
+        "INT": 3,
+        "WIS": 14,
+        "CHA": 10
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+7",
+        "damage": "2d6 + 4 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Gelatinous Cube",
+      "name_en": "Gelatinous Cube",
+      "type_line": "Large ooze, unaligned",
+      "ac": 6,
+      "hp": "8d10+40",
+      "speed": "15 ft.",
+      "stats": {
+        "STR": 14,
+        "DEX": 3,
+        "CON": 20,
+        "INT": 1,
+        "WIS": 6,
+        "CHA": 1
+      },
+      "attack": {
+        "name": "Pseudopod",
+        "type": "Melee",
+        "hit": "+4",
+        "damage": "2d6 + 2 acid damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Mimic",
+      "name_en": "Mimic",
+      "type_line": "Medium monstrosity (shapechanger), neutral",
+      "ac": 12,
+      "hp": "9d8+18",
+      "speed": "15 ft.",
+      "stats": {
+        "STR": 17,
+        "DEX": 12,
+        "CON": 15,
+        "INT": 5,
+        "WIS": 13,
+        "CHA": 8
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d8 + 3 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Beholder",
+      "name_en": "Beholder",
+      "type_line": "Large aberration, lawful evil",
+      "ac": 18,
+      "hp": "19d10+76",
+      "speed": "0 ft., fly 20 ft. (hover)",
+      "stats": {
+        "STR": 10,
+        "DEX": 14,
+        "CON": 18,
+        "INT": 17,
+        "WIS": 15,
+        "CHA": 17
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "2d6 + 2 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Mind Flayer",
+      "name_en": "Mind Flayer",
+      "type_line": "Medium aberration, lawful evil",
+      "ac": 15,
+      "hp": "13d8+13",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 11,
+        "DEX": 12,
+        "CON": 12,
+        "INT": 19,
+        "WIS": 17,
+        "CHA": 17
+      },
+      "attack": {
+        "name": "Tentacles",
+        "type": "Melee",
+        "hit": "+7",
+        "damage": "2d4 + 3 psychic damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Basilisk",
+      "name_en": "Basilisk",
+      "type_line": "Medium monstrosity, unaligned",
+      "ac": 15,
+      "hp": "8d8+16",
+      "speed": "20 ft.",
+      "stats": {
+        "STR": 16,
+        "DEX": 8,
+        "CON": 15,
+        "INT": 2,
+        "WIS": 8,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d10 + 3 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Gorgon",
+      "name_en": "Gorgon",
+      "type_line": "Large monstrosity, unaligned",
+      "ac": 19,
+      "hp": "12d10+48",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 20,
+        "DEX": 14,
+        "CON": 18,
+        "INT": 2,
+        "WIS": 12,
+        "CHA": 7
+      },
+      "attack": {
+        "name": "Gore",
+        "type": "Melee",
+        "hit": "+8",
+        "damage": "2d10 + 5 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Griffon",
+      "name_en": "Griffon",
+      "type_line": "Large monstrosity, neutral",
+      "ac": 12,
+      "hp": "7d10+21",
+      "speed": "30 ft., fly 80 ft.",
+      "stats": {
+        "STR": 18,
+        "DEX": 15,
+        "CON": 16,
+        "INT": 2,
+        "WIS": 13,
+        "CHA": 8
+      },
+      "attack": {
+        "name": "Claw",
+        "type": "Melee",
+        "hit": "+6",
+        "damage": "2d4 + 4 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Manticore",
+      "name_en": "Manticore",
+      "type_line": "Large monstrosity, lawful evil",
+      "ac": 14,
+      "hp": "8d10+24",
+      "speed": "30 ft., fly 50 ft.",
+      "stats": {
+        "STR": 17,
+        "DEX": 16,
+        "CON": 17,
+        "INT": 7,
+        "WIS": 12,
+        "CHA": 8
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d8 + 3 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Hell Hound",
+      "name_en": "Hell Hound",
+      "type_line": "Medium fiend, lawful evil",
+      "ac": 15,
+      "hp": "7d8+14",
+      "speed": "50 ft.",
+      "stats": {
+        "STR": 17,
+        "DEX": 12,
+        "CON": 14,
+        "INT": 6,
+        "WIS": 13,
+        "CHA": 6
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d8 + 3 fire damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Imp",
+      "name_en": "Imp",
+      "type_line": "Tiny fiend, lawful evil",
+      "ac": 13,
+      "hp": "3d4+3",
+      "speed": "20 ft., fly 40 ft.",
+      "stats": {
+        "STR": 6,
+        "DEX": 17,
+        "CON": 13,
+        "INT": 11,
+        "WIS": 12,
+        "CHA": 11
+      },
+      "attack": {
+        "name": "Claw",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d4 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Quasit",
+      "name_en": "Quasit",
+      "type_line": "Tiny fiend, chaotic evil",
+      "ac": 13,
+      "hp": "3d6+6",
+      "speed": "40 ft., fly 40 ft.",
+      "stats": {
+        "STR": 5,
+        "DEX": 17,
+        "CON": 14,
+        "INT": 7,
+        "WIS": 10,
+        "CHA": 10
+      },
+      "attack": {
+        "name": "Claw",
+        "type": "Melee",
+        "hit": "+4",
+        "damage": "1d4 + 2 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Bearded Devil",
+      "name_en": "Bearded Devil",
+      "type_line": "Medium fiend, lawful evil",
+      "ac": 13,
+      "hp": "7d8+21",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 16,
+        "DEX": 15,
+        "CON": 16,
+        "INT": 9,
+        "WIS": 11,
+        "CHA": 11
+      },
+      "attack": {
+        "name": "Glaive",
+        "type": "Melee",
+        "hit": "+5",
+        "damage": "1d10 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Chain Devil",
+      "name_en": "Chain Devil",
+      "type_line": "Medium fiend, lawful evil",
+      "ac": 16,
+      "hp": "10d8+40",
+      "speed": "30 ft.",
+      "stats": {
+        "STR": 18,
+        "DEX": 16,
+        "CON": 18,
+        "INT": 11,
+        "WIS": 14,
+        "CHA": 12
+      },
+      "attack": {
+        "name": "Chain",
+        "type": "Melee",
+        "hit": "+8",
+        "damage": "2d6 + 4 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Bone Devil",
+      "name_en": "Bone Devil",
+      "type_line": "Large fiend (devil), lawful evil",
+      "ac": 19,
+      "hp": "15d8+75",
+      "speed": "40 ft., fly 40 ft.",
+      "stats": {
+        "STR": 18,
+        "DEX": 16,
+        "CON": 20,
+        "INT": 14,
+        "WIS": 14,
+        "CHA": 16
+      },
+      "attack": {
+        "name": "Sting",
+        "type": "Melee",
+        "hit": "+8",
+        "damage": "2d6 + 4 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Erinyes",
+      "name_en": "Erinyes",
+      "type_line": "Medium fiend, lawful evil",
+      "ac": 18,
+      "hp": "18d8+72",
+      "speed": "30 ft., fly 60 ft.",
+      "stats": {
+        "STR": 16,
+        "DEX": 17,
+        "CON": 18,
+        "INT": 14,
+        "WIS": 14,
+        "CHA": 18
+      },
+      "attack": {
+        "name": "Longsword",
+        "type": "Melee",
+        "hit": "+7",
+        "damage": "1d8 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Ice Devil",
+      "name_en": "Ice Devil",
+      "type_line": "Large fiend, lawful evil",
+      "ac": 18,
+      "hp": "19d8+95",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 21,
+        "DEX": 14,
+        "CON": 20,
+        "INT": 14,
+        "WIS": 16,
+        "CHA": 18
+      },
+      "attack": {
+        "name": "Claw",
+        "type": "Melee",
+        "hit": "+9",
+        "damage": "2d4 + 5 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Pit Fiend",
+      "name_en": "Pit Fiend",
+      "type_line": "Large fiend, lawful evil",
+      "ac": 19,
+      "hp": "24d8+168",
+      "speed": "30 ft., fly 60 ft.",
+      "stats": {
+        "STR": 26,
+        "DEX": 14,
+        "CON": 24,
+        "INT": 22,
+        "WIS": 18,
+        "CHA": 24
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+14",
+        "damage": "2d8 + 9 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Rakshasa",
+      "name_en": "Rakshasa",
+      "type_line": "Medium fiend, lawful evil",
+      "ac": 16,
+      "hp": "13d8+52",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 14,
+        "DEX": 17,
+        "CON": 18,
+        "INT": 13,
+        "WIS": 16,
+        "CHA": 20
+      },
+      "attack": {
+        "name": "Claw",
+        "type": "Melee",
+        "hit": "+7",
+        "damage": "2d6 + 3 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Couatl",
+      "name_en": "Couatl",
+      "type_line": "Medium celestial, lawful good",
+      "ac": 19,
+      "hp": "13d8+39",
+      "speed": "20 ft., fly 60 ft.",
+      "stats": {
+        "STR": 16,
+        "DEX": 20,
+        "CON": 17,
+        "INT": 18,
+        "WIS": 17,
+        "CHA": 18
+      },
+      "attack": {
+        "name": "Constrict",
+        "type": "Melee",
+        "hit": "+8",
+        "damage": "2d6 + 4 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Djinni",
+      "name_en": "Djinni",
+      "type_line": "Large elemental, chaotic good",
+      "ac": 17,
+      "hp": "14d10+84",
+      "speed": "30 ft., fly 90 ft. (hover)",
+      "stats": {
+        "STR": 21,
+        "DEX": 15,
+        "CON": 22,
+        "INT": 15,
+        "WIS": 16,
+        "CHA": 20
+      },
+      "attack": {
+        "name": "Slam",
+        "type": "Melee",
+        "hit": "+8",
+        "damage": "2d6 + 5 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Efreeti",
+      "name_en": "Efreeti",
+      "type_line": "Large elemental, lawful evil",
+      "ac": 17,
+      "hp": "16d10+112",
+      "speed": "40 ft., fly 60 ft.",
+      "stats": {
+        "STR": 22,
+        "DEX": 12,
+        "CON": 24,
+        "INT": 16,
+        "WIS": 15,
+        "CHA": 16
+      },
+      "attack": {
+        "name": "Scimitar",
+        "type": "Melee",
+        "hit": "+10",
+        "damage": "2d6 + 6 slashing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Invisible Stalker",
+      "name_en": "Invisible Stalker",
+      "type_line": "Large elemental, neutral",
+      "ac": 14,
+      "hp": "11d10+44",
+      "speed": "50 ft., fly 50 ft. (hover)",
+      "stats": {
+        "STR": 16,
+        "DEX": 19,
+        "CON": 18,
+        "INT": 10,
+        "WIS": 15,
+        "CHA": 11
+      },
+      "attack": {
+        "name": "Slam",
+        "type": "Melee",
+        "hit": "+6",
+        "damage": "2d6 + 3 bludgeoning damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Blink Dog",
+      "name_en": "Blink Dog",
+      "type_line": "Medium fey, lawful good",
+      "ac": 13,
+      "hp": "4d8+4",
+      "speed": "40 ft.",
+      "stats": {
+        "STR": 12,
+        "DEX": 17,
+        "CON": 12,
+        "INT": 10,
+        "WIS": 13,
+        "CHA": 11
+      },
+      "attack": {
+        "name": "Bite",
+        "type": "Melee",
+        "hit": "+3",
+        "damage": "1d6 + 1 piercing damage"
+      },
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
     }
   ],
   "spells": [
@@ -446,6 +2011,376 @@
       "duration": "Instantaneous",
       "description": "Range: Self (15-foot cube) Components: V, S",
       "source": "5thsrd.org/spells/thunderwave (CC BY 4.0)"
+    },
+    {
+      "name": "Acid Splash",
+      "level_school": "conjuration cantrip",
+      "casting_time": "1 action",
+      "range": "60 feet",
+      "components": "V, S",
+      "duration": "Instantaneous",
+      "description": "飞溅强酸，1d6 强酸伤害。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Chill Touch",
+      "level_school": "necromancy cantrip",
+      "casting_time": "1 action",
+      "range": "120 feet",
+      "components": "V, S",
+      "duration": "1 round",
+      "description": "亡灵触击，1d8 暗蚀伤害，阻止回血。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Fire Bolt",
+      "level_school": "evocation cantrip",
+      "casting_time": "1 action",
+      "range": "120 feet",
+      "components": "V, S",
+      "duration": "Instantaneous",
+      "description": "射出火弹，1d10 火焰伤害。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Mage Hand",
+      "level_school": "conjuration cantrip",
+      "casting_time": "1 action",
+      "range": "30 feet",
+      "components": "V, S",
+      "duration": "1 minute",
+      "description": "召唤悬浮的幽灵手。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Prestidigitation",
+      "level_school": "transmutation cantrip",
+      "casting_time": "1 action",
+      "range": "10 feet",
+      "components": "V, S",
+      "duration": "Up to 1 hour",
+      "description": "小幅戏法效果。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Ray of Frost",
+      "level_school": "evocation cantrip",
+      "casting_time": "1 action",
+      "range": "60 feet",
+      "components": "V, S",
+      "duration": "Instantaneous",
+      "description": "冰霜射线，1d8 寒冷伤害，减速。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Shocking Grasp",
+      "level_school": "evocation cantrip",
+      "casting_time": "1 action",
+      "range": "Touch",
+      "components": "V, S",
+      "duration": "Instantaneous",
+      "description": "电击抓握，1d8 闪电伤害。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "True Strike",
+      "level_school": "divination cantrip",
+      "casting_time": "1 action",
+      "range": "Self",
+      "components": "V, S",
+      "duration": "Concentration, 1 round",
+      "description": "下次攻击优势。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Alarm",
+      "level_school": "1st-level abjuration (ritual)",
+      "casting_time": "1 minute",
+      "range": "30 feet",
+      "components": "V, S, M",
+      "duration": "8 hours",
+      "description": "设下声响或精神警报结界。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Animal Friendship",
+      "level_school": "1st-level enchantment",
+      "casting_time": "1 action",
+      "range": "30 feet",
+      "components": "V, S, M",
+      "duration": "24 hours",
+      "description": "使野兽视你为好友。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Charm Person",
+      "level_school": "1st-level enchantment",
+      "casting_time": "1 action",
+      "range": "30 feet",
+      "components": "V, S",
+      "duration": "1 hour",
+      "description": "魅惑类人生物。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Comprehend Languages",
+      "level_school": "1st-level divination (ritual)",
+      "casting_time": "1 action",
+      "range": "Self",
+      "components": "V, S, M",
+      "duration": "1 hour",
+      "description": "读懂/听懂任意语言。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Disguise Self",
+      "level_school": "1st-level illusion",
+      "casting_time": "1 action",
+      "range": "Self",
+      "components": "V, S",
+      "duration": "1 hour",
+      "description": "改变自身外观。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Expeditious Retreat",
+      "level_school": "1st-level transmutation",
+      "casting_time": "1 bonus action",
+      "range": "Self",
+      "components": "V, S",
+      "duration": "Concentration, up to 10 minutes",
+      "description": "本回合及之后移动加倍。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Faerie Fire",
+      "level_school": "1st-level evocation",
+      "casting_time": "1 action",
+      "range": "60 feet",
+      "components": "V",
+      "duration": "Concentration, up to 1 minute",
+      "description": "目标区域发光，失去隐身。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Feather Fall",
+      "level_school": "1st-level transmutation",
+      "casting_time": "1 reaction",
+      "range": "60 feet",
+      "components": "V, M",
+      "duration": "1 minute",
+      "description": "缓落，免疫坠落伤害。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Healing Word",
+      "level_school": "1st-level evocation",
+      "casting_time": "1 bonus action",
+      "range": "60 feet",
+      "components": "V",
+      "duration": "Instantaneous",
+      "description": "1d4 + 施法者调整值治疗。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Heroism",
+      "level_school": "1st-level enchantment",
+      "casting_time": "1 action",
+      "range": "Touch",
+      "components": "V, S",
+      "duration": "Concentration, up to 1 minute",
+      "description": "赋予无畏与临时 HP。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Hideous Laughter",
+      "level_school": "1st-level enchantment",
+      "casting_time": "1 action",
+      "range": "30 feet",
+      "components": "V, S, M",
+      "duration": "Concentration, up to 1 minute",
+      "description": "目标倒地大笑，无法行动。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Identify",
+      "level_school": "1st-level divination (ritual)",
+      "casting_time": "1 minute",
+      "range": "Touch",
+      "components": "V, S, M",
+      "duration": "Instantaneous",
+      "description": "获知物品魔法属性。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Jump",
+      "level_school": "1st-level transmutation",
+      "casting_time": "1 action",
+      "range": "Touch",
+      "components": "V, S, M",
+      "duration": "1 minute",
+      "description": "跳跃距离 ×3。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Longstrider",
+      "level_school": "1st-level transmutation",
+      "casting_time": "1 action",
+      "range": "Touch",
+      "components": "V, S, M",
+      "duration": "1 hour",
+      "description": "速度 +10 尺。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Silent Image",
+      "level_school": "1st-level illusion",
+      "casting_time": "1 action",
+      "range": "60 feet",
+      "components": "V, S, M",
+      "duration": "Concentration, up to 10 minutes",
+      "description": "制造静默幻象。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Invisibility",
+      "level_school": "2nd-level illusion",
+      "casting_time": "1 action",
+      "range": "Touch",
+      "components": "V, S, M",
+      "duration": "Concentration, up to 1 hour",
+      "description": "目标隐形。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Knock",
+      "level_school": "2nd-level transmutation",
+      "casting_time": "1 action",
+      "range": "60 feet",
+      "components": "V",
+      "duration": "Instantaneous",
+      "description": "开锁/破门。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Levitate",
+      "level_school": "2nd-level transmutation",
+      "casting_time": "1 action",
+      "range": "60 feet",
+      "components": "V, S, M",
+      "duration": "Concentration, up to 10 minutes",
+      "description": "使目标漂浮。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Mirror Image",
+      "level_school": "2nd-level illusion",
+      "casting_time": "1 action",
+      "range": "Self",
+      "components": "V, S",
+      "duration": "1 minute",
+      "description": "生成 3 个分身承受攻击。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Misty Step",
+      "level_school": "2nd-level conjuration",
+      "casting_time": "1 bonus action",
+      "range": "Self",
+      "components": "V",
+      "duration": "Instantaneous",
+      "description": "短距传送 30 尺。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Scorching Ray",
+      "level_school": "2nd-level evocation",
+      "casting_time": "1 action",
+      "range": "120 feet",
+      "components": "V, S",
+      "duration": "Instantaneous",
+      "description": "射出 3 道火焰射线，各 2d6 火焰。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "See Invisibility",
+      "level_school": "2nd-level divination",
+      "casting_time": "1 action",
+      "range": "Self",
+      "components": "V, S, M",
+      "duration": "1 hour",
+      "description": "看见隐形与以太生物。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Suggestion",
+      "level_school": "2nd-level enchantment",
+      "casting_time": "1 action",
+      "range": "30 feet",
+      "components": "V, M",
+      "duration": "Concentration, up to 8 hours",
+      "description": "命令目标执行合理动作。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Web",
+      "level_school": "2nd-level conjuration",
+      "casting_time": "1 action",
+      "range": "60 feet",
+      "components": "V, S, M",
+      "duration": "Concentration, up to 1 hour",
+      "description": "制造黏网困住目标。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Counterspell",
+      "level_school": "3rd-level abjuration",
+      "casting_time": "1 reaction",
+      "range": "60 feet",
+      "components": "S",
+      "duration": "Instantaneous",
+      "description": "尝试反制正在施放的法术。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Dispel Magic",
+      "level_school": "3rd-level abjuration",
+      "casting_time": "1 action",
+      "range": "120 feet",
+      "components": "V, S",
+      "duration": "Instantaneous",
+      "description": "解除目标上的魔法效果。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Fly",
+      "level_school": "3rd-level transmutation",
+      "casting_time": "1 action",
+      "range": "Touch",
+      "components": "V, S, M",
+      "duration": "Concentration, up to 1 hour",
+      "description": "赋予飞行速度 60 尺。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Lightning Bolt",
+      "level_school": "3rd-level evocation",
+      "casting_time": "1 action",
+      "range": "Self (100-foot line)",
+      "components": "V, S, M",
+      "duration": "Instantaneous",
+      "description": "100 尺线状闪电，8d6 闪电。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
+    },
+    {
+      "name": "Cone of Cold",
+      "level_school": "5th-level evocation",
+      "casting_time": "1 action",
+      "range": "Self (60-foot cone)",
+      "components": "V, S, M",
+      "duration": "Instantaneous",
+      "description": "60 尺锥状寒冰，8d8 寒冷。",
+      "source": "5thsrd.org SRD 5.1 (CC BY 4.0)"
     }
   ],
   "items": [

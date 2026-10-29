@@ -81,6 +81,9 @@ class Dnd5eProfile(SystemProfile):
             "力量": character.st, "敏捷": character.dx,
             "体质": character.ht, "智力": character.iq,
             "感知": character.per,
+            # 意志 ≈ 5e 的魅力/意志豁免：跨系统模组常用「意志」检定，
+            # 没有映射会退化成 +0，等于白检定。
+            "意志": character.will,
         }.get(name)
         if attr is not None:
             return (attr - 10) // 2

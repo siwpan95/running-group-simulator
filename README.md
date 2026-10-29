@@ -74,15 +74,29 @@ pt/
 │   ├── enemies.json             │  敌人库
 │   └── items.json               │  物品库
 │
-├── characters/                  ← 玩家角色卡（JSON）
+├── characters/                  ← 玩家角色卡（JSON，8 张预置）
 │   ├── 预置-调查记者.json
 │   ├── 预置-退役军警.json
 │   ├── 预置-神秘学学者.json
-│   └── 预置-街头混混.json
+│   ├── 预置-街头混混.json
+│   ├── 预置-急诊医生.json          │  IQ 13，急救/诊断/药学
+│   ├── 预置-自由黑客.json          │  IQ 14，计算机/电子/情报分析
+│   ├── 预置-古董商.json            │  IQ 13，鉴赏/神秘学/历史
+│   └── 预置-CoC调查员.json         │  CoC 7e 调查员：百分比技能 + SAN 理智已启用
 │
-├── modules/                     ← 模组（每个模组一个子目录）
-│   └── mirror_house_alley/
-│       └── module.json          │  镜屋巷模组（完整 3 幕）
+├── modules/                     ← 模组（每个模组一个子目录，12 个示例）
+│   ├── mirror_house_alley/      ← 镜屋巷（GURPS 4e，3 幕）
+│   ├── coc_sample/              ← 旧宅的低语（CoC 7e，3 幕）
+│   ├── dnd_sample/              ← 哥布林洞窟（D&D 5e，3 幕）
+│   ├── wod_sample/              ← 夜之血约（WoD，3 幕）
+│   ├── coc_saltmarsh/           ← 盐沼低语（CoC 7e，3 幕，引用扩充目录神话生物）
+│   ├── coc_dunwich/             ← 敦威治之夜（CoC 7e，3 幕，Lovecraft 公有领域）
+│   ├── dnd_phandalin/           ← 凡达林：红标之夜（D&D 5e，3 幕，SRD 5.1 结构）
+│   ├── gurps_paper_alley/       ← 纸人巷（GURPS 4e，**5 幕主线**，纸扎民俗）
+│   ├── wod_long_night/          ← 长夜巡猎（WoD，3 幕，民俗驱魔）
+│   ├── coc_hastur/              ← 黄印与暗夜神庙（CoC 7e，3 幕，钱伯斯+洛夫克拉夫特）
+│   ├── dnd_snow_queen/          ← 冰雪女王（D&D 5e，3 幕，安徒生/格林）
+│   └── mirror_crossroad/        ← 镜中之失（**跨四系统主线**，4 幕各一套规则）
 │
 ├── templates/                   ← 内容创作模板
 │   ├── characters/              │  角色卡 Excel 模板
@@ -161,6 +175,8 @@ python tests/test_comprehensive.py
 python tests/test_excel_roundtrip.py
 python tests/test_rules_profiles.py      # v3.2 多系统画像
 python tests/test_catalog_service.py     # v3.6 内容目录服务
+python tests/test_catalog_bridge.py       # v3.6 目录→实体桥接（内容目录消费方）
+python tests/test_modules.py             # v3.7 模组完整性门禁（9 个模组）
 python tools/validate_catalogs.py        # 内容目录 schema 校验
 ```
 
@@ -234,6 +250,22 @@ python tests/test_excel_roundtrip.py
 | `elite` | 精英——完整追踪 HP，有属性 |
 | `wildcard` | 特殊——有复杂特殊机制 |
 | `boss` | Boss——完整属性 + 多阶段 |
+
+### 从内容目录引用敌人（推荐）
+
+战斗节点里无需手写属性——直接引用已扩充的目录条目，由 `services/catalog_bridge` 落地为可战斗实体：
+
+```json
+{
+  "node_id": "2.2_ambush",
+  "scene_type": "combat",
+  "layer_physics": {
+    "catalog_ref": { "name": "深潜者", "system": "coc7" }
+  }
+}
+```
+
+`catalog_ref` 也接受纯字符串（如 `"Goblin"`）。引擎按模块 `meta.systems` 自动选用对应系统画像解释数值。详见 `tests/test_catalog_bridge.py`。
 
 ### 创建物品
 
@@ -329,6 +361,110 @@ python tests/test_excel_roundtrip.py
 
 > 归属：该资源库为**本项目配套资源**（用户 2026-09-02 明确），不是独立项目；
 > 库本身尚未建立版本控制，如需入仓另行规划。
+
+## 内容规模（2026-10-26 扩充）
+
+结合联网核对（SRD 5.1 以 OGL + CC BY 4.0 双重许可发布，可带署名转载；克苏鲁神话本体已进入公有领域）对内容目录做了大幅扩充，**全部通过 `tools/validate_catalogs.py` 校验**：
+
+| 内容 | 扩充前 | 扩充后 |
+|------|--------|--------|
+| `data/dnd5e/catalog.json` 怪物 | 15 | **83** |
+| `data/dnd5e/catalog.json` 法术 | 10 | **47** |
+| `data/dnd5e/catalog.json` 物品（SRD 武器+护甲全表） | 50 | 50（本就全表，未重复） |
+| `data/coc7/catalog.json` 神话生物 | 35 | **57** |
+| 玩家预置角色卡 | 4 | **7** |
+| 敌人库 / 物品库 / 示例模组 | — | 各新增若干（敌人 +4、物品 +4、模组 +1《盐沼低语》） |
+
+扩充脚本 `tools/expand_catalogs.py`（目录）与 `tools/expand_content.py`（角色/敌人/物品）均按 `name` 去重、不覆盖既有条目，可重复运行追加。
+
+### 内容目录消费方（v3.6 · 解决“只扩充不消费”）
+
+目录里的怪物 / 神话生物现在**真正接入引擎**，不再只是被 `CatalogService` 检索：
+
+1. **`services/catalog_bridge.py`（新增，`build_enemy_from_catalog(name, system)`）**：把 `data/<system>/catalog.json` 的策展条目落地为 `core.enemy.Enemy`。D&D 输出原生数值（`attack_skill`=命中加值、`ac`=护甲等级），CoC 输出原生数值（`attack_skill`=武器百分比、`dodge`=DEX×2、`dr`=护甲值），由战斗引擎按模块 `meta.systems` 自动路由到对应系统画像解释。
+2. **场景引擎战斗节点**：`core/scene_engine.py._handle_combat_node` 支持 `layer_physics.catalog_ref`（字符串或 `{name, system}`）。命中目录时由 bridge 生成敌人，未命中则回退内联 `unit_stats`。
+3. **MVP 便捷入口**：`mirror_mvp.MirrorOfLost.spawn_enemy_from_catalog / start_combat_from_catalog`。
+4. **示例模组接线**：所有示例模组的战斗节点都已用 `catalog_ref` 真正引用目录条目（而非仅文字提及）：
+   - `coc_saltmarsh` `2.2_ambush` → `{name: "深潜者", system: "coc7"}`
+   - `coc_sample` `2.2_face_creature` → `{name: "食尸鬼", system: "coc7"}`
+   - `dnd_sample` `2.1_goblin_camp` → `{name: "Goblin", system: "dnd5e"}`
+   - `wod_sample` `2.1_confront` → `{name: "被放逐的长者", system: "wod"}`（新增 WoD 目录支撑）
+   - `mirror_house_alley` `2.2_rat_swarm` → `{name: "巨鼠群", system: "gurps"}`、`3.1_the_reflection` → `{name: "镜中倒影", system: "gurps"}`（新增 GURPS 目录支撑，原内联自制敌人收编进目录）
+5. **WoD 目录**：新增 `data/wod/catalog.json`（`wod-catalog-v1`，自有设定生物，非 White Wolf 官方资料），并在 `services/catalog_service.py` 注册、`tools/validate_catalogs.py` 增加 `wod` schema 校验；`catalog_bridge` 新增 `_wod_enemy`（attack_skill/dodge = d10 骰池、dr = 伤害平减）。
+6. **GURPS 目录**：新增 `data/gurps/catalog.json`（`gurps-catalog-v1`，收编 `mirror_house_alley` 的自制敌人 巨鼠群 / 镜中倒影），同样在 `catalog_service` 注册、`validate_catalogs` 增加 `gurps` schema 校验；`catalog_bridge` 新增 `_gurps_enemy`（原生 GURPS 数值：attack_skill=3d6 技能目标、dodge=闪避、dr=伤害抗力、damage 含 cut/imp/cr 类型）。节点的 `special_mechanic` / `minion_threshold` 等机制元数据保留在模块节点层，仍由场景引擎套用。
+
+测试：`tests/test_catalog_bridge.py`（46 项，零第三方依赖，覆盖 dnd5e / coc7 / wod / gurps 四套 schema）。
+
+## 新增模组（v3.7 · 2026-10-27）
+
+四个新模组，**每个系统各一**，全部经联网调研取材、全部战斗节点用 `catalog_ref` 消费目录内容：
+
+| 模组 | 系统 | 取材与调研依据 | 版权口径 |
+|------|------|----------------|----------|
+| `coc_dunwich`《敦威治之夜》 | CoC 7e | H.P. Lovecraft《敦威治之恐怖》(1928) 与《印斯茅斯之影》(1931)：深潜者混血「印斯茅斯面相」、哨兵山史前石阵、伊本-加齐之粉、夜鹰报丧 | 公有领域 |
+| `dnd_phandalin`《凡达林：红标之夜》 | D&D 5e | SRD 5.1《Lost Mine of Phandelver》结构：试炼之路哥布林伏击、克拉莫堡、红标帮、碎晶矿坑 | SRD 5.1（OGL + CC BY 4.0） |
+| `gurps_paper_alley`《纸人巷》 | GURPS 4e | 中国纸扎民俗：「纸人不点睛，纸马不扬鬃」（《太平广记》）、明《大明律》禁彩绘眼珠、扎糊绘剪四字诀、男骑马女骑牛、红男绿女 | 民俗/公开文献，文字原创 |
+| `wod_long_night`《长夜巡猎》 | WoD | 东欧/斯拉夫吸血鬼民俗：木桩穿心、银器、镜子、活水不可渡、未受邀不得入门、门槛撒米粒乱其计数、忌猫跳尸 | 民俗，设定原创 |
+| `coc_hastur`《黄印与暗夜神庙》 | CoC 7e | 钱伯斯《黄衣之王》(1895)：被禁的剧本、第一幕与第二幕、黄印、卡索沙、哈利湖；洛夫克拉夫特《暗夜呢喃》《暗夜窃魂者》：德维尔礁、黑暗神庙 | 公有领域 |
+| `dnd_snow_queen`《冰雪女王》 | D&D 5e | 安徒生《冰雪皇后》(1845)/格林《白雪女王》(1812)：恶魔之镜碎片、樱桃树篱巫婆、两只渡鸦、强盗女孩、驯鹿、永恒字谜 | 公有领域 |
+| `mirror_crossroad`《镜中之失》 | **跨四系统** | 本项目主线：同一角色、四幕四套规则（现实→神话→异界→都市），配套专属跨系统角色卡 | 原创 |
+
+《纸人巷》已从 3 幕单元剧扩为 **5 幕主线**：纸人巷 → 作坊 → 出殡 → **城隍庙后的纸行** → **焚化场**（新增两幕取材自「报庙/接三」「烧还魂钱/黄昏钱」「蒙面遮鲜」等丧葬旧俗）。
+
+配套新增：
+- `characters/预置-CoC调查员.json`：CoC 7e 调查员（百分比技能 + **SAN 理智已启用**）——此前所有角色卡 `san_max=0`，SAN 机制整条无法触发。
+- `data/gurps/catalog.json` 增 3（纸扎人 / 童男纸 / 走影）；`data/wod/catalog.json` 增 4（血裔 / 血奴 / 游血族 / 尸仆）。
+- `tests/test_modules.py`（172 项）：模组工程化门禁——meta 完整性、三幕结构、节点 id 唯一、**节点图引用自洽**、战斗节点 `catalog_ref` 必须命中目录、`layer_physics` 形态合法、场景引擎可加载且能生成敌人。
+
+### 同期修掉的两个引擎缺陷
+
+1. **战斗节点丢弃 `san_loss`**：CoC 最该掉理智的场合（直面怪物）反而不掉——`core/scene_engine._handle_combat_node` 现已无条件应用战斗节点的 SAN 损失。
+2. **CoC 双值写法 `0/1d6` 被解析成 0**：`_parse_dice_amount` 现在按「取较重的一档」解析 `a/b` 形式（`0/1d6`→1d6、`1d6/1d20`→1d20）。这同时让既有 `coc_saltmarsh` 模组里一直失效的 SAN 损失恢复生效。
+
+### 写作与检定的系统约定
+
+| 系统 | `skill_check` 写什么 | 引擎如何折算 | modifier 取值 |
+|------|--------------------|-------------|--------------|
+| GURPS 4e | **属性名**（感知/意志/力量/敏捷/智力/体质） | 目标＝属性值＋modifier，掷 3d6 不高于目标即成功 | 负数＝更难，典型 0 ~ −5 |
+| CoC 7e | 属性名（感知/意志/敏捷/智力） | 目标＝属性×5（CoC 惯例，百分比） | 负数＝更难，典型 0 ~ −10 |
+| D&D 5e | 属性名（感知/敏捷/意志/智力/力量） | d20＋(属性−10)/2＋modifier 对抗 `dc` | 0 或小幅负；`advantage` 控优劣势 |
+| WoD | 属性名（感知/意志/敏捷/力量/体质） | 骰池＝属性值＋modifier（d10 池，≥1 成功即成） | **必须为负**，把池压到 4~8 颗 |
+
+> **全部模组一律属性驱动**（不使用具名技能）：角色卡是 GURPS 尺度的（属性 8~14、技能 9~16），技能名换算到别的系统会离谱——5e 里「调查=14」变成 +14 的荒谬加成，WoD 里「潜行=14」变成 14 颗骰池 ≈ 99.8% 必成，CoC 里「话术=13」变成 13% 几乎必败。改用属性后，任何角色卡都能直接开局，差异体现在属性高低上。`tests/test_modules.py` 有门禁防止技能名回流。
+> 嵌套 `checks` 数组一律按 3d6 对 DC 判定（不含属性加成），因此**仅在 GURPS 模组里语义正确**；CoC/D&D/WoD 模组请用单次 `skill_check`。
+
+### 环境标签的三层分工（v3.8）
+
+环境系统的修正值会被**无差别加到该节点的每一个检定上**（引擎不解析标签文案里的属性名），所以三层必须分工明确：
+
+| 层级 | 用途 | 能否带数值 |
+|------|------|-----------|
+| `global_context_tags` | 全局氛围（叙述用） | **不能**——带数字就会被当成对所有检定的通用惩罚 |
+| 节点 `environment.tags` | 局部条件（该节点生效，会替换全局标签） | 可以 |
+| 节点 `layer_physics.modifier` | 该检定的情境难度 | 可以（负数＝更难） |
+
+`EnvironmentSystem` 现在记住全局标签作为 baseline：进入**没有**局部环境的节点时回退到 baseline，不会再把上一个节点的局部条件泄漏到后面。
+
+
+### 跨系统模组：按幕切换规则（v3.8）
+
+一个模组可以**每幕用一套系统画像**。在幕里写 `systems` 字段即可，引擎进入该幕时自动切换（含战斗引擎）：
+
+```json
+"meta": { "systems": ["gurps"] },
+"act_1": { "systems": ["gurps"], "nodes": [ … ] },
+"act_2": { "systems": ["coc7"],  "nodes": [ … ] },
+"act_3": { "systems": ["dnd5e"], "nodes": [ … ] },
+"act_4": { "systems": ["wod"],   "nodes": [ … ] }
+```
+
+优先级：**节点 `system` > 幕 `systems[0]` > 模组 `meta.systems[0]`**。
+
+配套要点：
+- **角色卡必须跨系统安全**——只用属性（感知/意志/力量/敏捷/智力），不依赖具名技能。同一组属性在四套规则下都能正确折算（见上表），而技能名会失真（例如 5e 里「调查=14」会变成 +14 的荒谬加成）。
+- 幕数不再限于 3：引擎按 `act_N` 自动发现（`act_10` 排在 `act_9` 之后），`is_story_complete()` 判定全部幕完成。
+- 范例见 `modules/mirror_crossroad`（配 `characters/预置-镜中调查员.json`）。
+
 
 ## 多系统裁决中间件（v3.2 · 2026-09-02）
 

@@ -3,7 +3,12 @@
     "name": "手电筒",
     "type": "tool",
     "slot": "hand",
-    "effects": [{"tag_mod": "remove:低能见度", "range": "5m"}],
+    "effects": [
+      {
+        "tag_mod": "remove:低能见度",
+        "range": "5m"
+      }
+    ],
     "uses": -1,
     "description": "一把老式手电筒，电池还很足。"
   },
@@ -11,7 +16,11 @@
     "name": "急救包",
     "type": "consumable",
     "slot": "backpack",
-    "effects": [{"restore_hp": "1d6"}],
+    "effects": [
+      {
+        "restore_hp": "1d6"
+      }
+    ],
     "uses": 1,
     "description": "标准急救包，包含绷带和消毒液。"
   },
@@ -21,7 +30,9 @@
     "slot": "body",
     "dr": 4,
     "dr_location": "躯干",
-    "penalty": {"dx": -1},
+    "penalty": {
+      "dx": -1
+    },
     "description": "轻型防弹背心，略微影响灵活性。"
   },
   "手枪": {
@@ -35,7 +46,12 @@
     "name": "撬棍",
     "type": "tool",
     "slot": "hand",
-    "effects": [{"tool_bonus": 2, "skill": "ST"}],
+    "effects": [
+      {
+        "tool_bonus": 2,
+        "skill": "ST"
+      }
+    ],
     "damage": "1d6+1 cr",
     "description": "一根有些磨损的撬棍，破门破墙都好用。"
   },
@@ -43,7 +59,67 @@
     "name": "铜镜",
     "type": "key_item",
     "slot": "hand",
-    "effects": [{"psychic_resistance": -1}],
+    "effects": [
+      {
+        "psychic_resistance": -1
+      }
+    ],
     "description": "一面直径20厘米的古铜镜，镜背刻有倒转的炼金符号。"
+  },
+  "信号枪": {
+    "name": "信号枪",
+    "type": "weapon",
+    "slot": "hand",
+    "damage": "1d6 burn",
+    "effects": [
+      {
+        "tag_mod": "add:照明",
+        "range": "30m"
+      }
+    ],
+    "uses": 3,
+    "description": "一发红色信号弹，能照亮大片区域，也能吓退畏光之物。"
+  },
+  "夜视仪": {
+    "name": "夜视仪",
+    "type": "tool",
+    "slot": "head",
+    "effects": [
+      {
+        "tag_mod": "remove:低能见度",
+        "range": "self"
+      }
+    ],
+    "uses": -1,
+    "description": "军用级微光夜视仪，让黑暗不再成为阻碍。"
+  },
+  "防毒面具": {
+    "name": "防毒面具",
+    "type": "armor",
+    "slot": "face",
+    "dr": 0,
+    "effects": [
+      {
+        "tag_mod": "resist:毒气"
+      }
+    ],
+    "penalty": {
+      "per": -1
+    },
+    "uses": -1,
+    "description": "活性炭滤罐，能滤过大部分瓦斯与孢子。"
+  },
+  "撬锁工具组": {
+    "name": "撬锁工具组",
+    "type": "tool",
+    "slot": "backpack",
+    "effects": [
+      {
+        "tool_bonus": 3,
+        "skill": "撬锁"
+      }
+    ],
+    "uses": -1,
+    "description": "一套精密的撬锁钩与扭力扳手，老练的手指能用它打开大多数机械锁。"
   }
 }

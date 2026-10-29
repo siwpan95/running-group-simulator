@@ -2,7 +2,8 @@
   "schema": "coc7-catalog-v1",
   "generated_by": "tools/make_coc7_catalog.py（半自动提取，人工抽核）",
   "sources": [
-    "T.R.O.W. 最深的地下城 版块69 tid11676《[CoC TRPG] 神话生物》（玖羽/Frend 译，2009）"
+    "T.R.O.W. 最深的地下城 版块69 tid11676《[CoC TRPG] 神话生物》（玖羽/Frend 译，2009）",
+    "tools/expand_catalogs.py 扩充批次（公有领域神话生物综合）"
   ],
   "creatures": [
     {
@@ -767,6 +768,485 @@
       "san_loss": "0/1d6",
       "weapons": [
         "触肢50% (抓住+1/2伤害加权"
+      ]
+    },
+    {
+      "name": "克苏鲁",
+      "name_en": "Cthulhu",
+      "class": "外神",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 100,
+        "con": 100,
+        "siz": 100,
+        "int": 90,
+        "pow": 100,
+        "dex": 20
+      },
+      "move": "10／飞行30",
+      "hp": 20,
+      "damage_bonus": "+3d6",
+      "armor": "10(非地球物质)",
+      "san_loss": "1d10/1d100",
+      "weapons": [
+        "爪60% (1d6+伤害加权",
+        "触肢缠绕"
+      ]
+    },
+    {
+      "name": "奈亚拉托提普",
+      "name_en": "Nyarlathotep",
+      "class": "外神（千面之神）",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 50,
+        "con": 50,
+        "siz": 30,
+        "int": 80,
+        "pow": 90,
+        "dex": 40
+      },
+      "move": "10／飞行30",
+      "hp": 8,
+      "damage_bonus": "+1d6",
+      "armor": "无",
+      "san_loss": "1d10/1d100",
+      "weapons": [
+        "触肢50% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "哈斯塔",
+      "name_en": "Hastur",
+      "class": "旧日支配者",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 60,
+        "con": 50,
+        "siz": 40,
+        "int": 80,
+        "pow": 80,
+        "dex": 40
+      },
+      "move": "10／飞行20",
+      "hp": 9,
+      "damage_bonus": "+1d6",
+      "armor": "无",
+      "san_loss": "1d6/1d20",
+      "weapons": [
+        "触肢45% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "犹格·索托斯",
+      "name_en": "Yog-Sothoth",
+      "class": "外神",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "int": 100,
+        "pow": 100
+      },
+      "move": "—",
+      "hp": 0,
+      "damage_bonus": "+0",
+      "armor": "无（不可物理接触）",
+      "san_loss": "1d10/1d100",
+      "weapons": [
+        "现实扭曲（概念性攻击）"
+      ]
+    },
+    {
+      "name": "阿撒托斯",
+      "name_en": "Azathoth",
+      "class": "盲目痴愚之神",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 100,
+        "con": 100,
+        "siz": 100,
+        "pow": 100
+      },
+      "move": "—",
+      "hp": 20,
+      "damage_bonus": "+3d6",
+      "armor": "无",
+      "san_loss": "—",
+      "weapons": [
+        "混沌音律（概念性湮灭）"
+      ]
+    },
+    {
+      "name": "达贡",
+      "name_en": "Dagon",
+      "class": "下级仆从种族（深潜者领袖）",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 80,
+        "con": 60,
+        "siz": 80,
+        "int": 50,
+        "pow": 60,
+        "dex": 20
+      },
+      "move": "8／游泳10",
+      "hp": 14,
+      "damage_bonus": "+1d6",
+      "armor": "2(鳞与皮)",
+      "san_loss": "1d2/1d10",
+      "weapons": [
+        "爪40% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "星之精魂",
+      "name_en": "Star Spawn",
+      "class": "克苏鲁之子",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 60,
+        "con": 40,
+        "siz": 60,
+        "int": 20,
+        "pow": 40,
+        "dex": 20
+      },
+      "move": "6",
+      "hp": 10,
+      "damage_bonus": "+1d6",
+      "armor": "3(黏腻表皮)",
+      "san_loss": "1d3/1d15",
+      "weapons": [
+        "触肢45% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "廷达罗斯猎犬",
+      "name_en": "Hound of Tindalos",
+      "class": "下级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 50,
+        "con": 50,
+        "siz": 40,
+        "int": 30,
+        "pow": 50,
+        "dex": 60
+      },
+      "move": "10",
+      "hp": 9,
+      "damage_bonus": "+1d6",
+      "armor": "无",
+      "san_loss": "1d6/1d20",
+      "weapons": [
+        "撕咬50% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "飞旋息肉",
+      "name_en": "Flying Polyp",
+      "class": "上级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 60,
+        "con": 50,
+        "siz": 50,
+        "int": 30,
+        "pow": 35,
+        "dex": 20
+      },
+      "move": "10／飞行20",
+      "hp": 10,
+      "damage_bonus": "+1d6",
+      "armor": "无",
+      "san_loss": "1d6/1d20",
+      "weapons": [
+        "风暴触肢45% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "无形孽胎",
+      "name_en": "Formless Spawn",
+      "class": "下级独立种族（撒达·赫格拉之仆）",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 30,
+        "con": 30,
+        "siz": 30,
+        "int": 10,
+        "pow": 20,
+        "dex": 20
+      },
+      "move": "8",
+      "hp": 6,
+      "damage_bonus": "+0",
+      "armor": "无",
+      "san_loss": "1d2/1d10",
+      "weapons": [
+        "绞缠40% (1d6"
+      ]
+    },
+    {
+      "name": "狩猎魔",
+      "name_en": "Hunting Horror",
+      "class": "下级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 30,
+        "con": 30,
+        "siz": 30,
+        "int": 20,
+        "pow": 30,
+        "dex": 40
+      },
+      "move": "10／飞行30",
+      "hp": 6,
+      "damage_bonus": "+0",
+      "armor": "无",
+      "san_loss": "1d3/1d12",
+      "weapons": [
+        "啮咬45% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "深潜者混血",
+      "name_en": "Deep One Hybrid",
+      "class": "下级仆从种族（混血）",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 25,
+        "con": 20,
+        "siz": 20,
+        "int": 20,
+        "pow": 20,
+        "dex": 18
+      },
+      "move": "8／游泳10",
+      "hp": 4,
+      "damage_bonus": "+0",
+      "armor": "1(鳞)",
+      "san_loss": "0/1d6",
+      "weapons": [
+        "爪25% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "撒达·赫格拉之子",
+      "name_en": "Spawn of Tsathoggua",
+      "class": "下级仆从种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 25,
+        "con": 30,
+        "siz": 25,
+        "int": 10,
+        "pow": 25,
+        "dex": 10
+      },
+      "move": "6",
+      "hp": 6,
+      "damage_bonus": "+0",
+      "armor": "1(黏滑皮肤)",
+      "san_loss": "1/1d8",
+      "weapons": [
+        "掐绞35% (1d6"
+      ]
+    },
+    {
+      "name": "乌波·萨斯拉",
+      "name_en": "Ubbo-Sathla",
+      "class": "旧日支配者（本源之浑沌）",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 100,
+        "con": 100,
+        "siz": 100,
+        "int": 5,
+        "pow": 30,
+        "dex": 5
+      },
+      "move": "1",
+      "hp": 20,
+      "damage_bonus": "+3d6",
+      "armor": "5(原生质)",
+      "san_loss": "1d6/1d20",
+      "weapons": [
+        "原生质触手20% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "扎尔与洛伊戈尔",
+      "name_en": "Zhar & Lloigor",
+      "class": "上级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 70,
+        "con": 60,
+        "siz": 70,
+        "int": 50,
+        "pow": 60,
+        "dex": 20
+      },
+      "move": "8",
+      "hp": 13,
+      "damage_bonus": "+1d6",
+      "armor": "5(云状躯体)",
+      "san_loss": "1d4/1d15",
+      "weapons": [
+        "精神触手40% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "犹格斯巨人",
+      "name_en": "Giants of Yuggoth",
+      "class": "下级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 100,
+        "con": 100,
+        "siz": 100,
+        "int": 60,
+        "pow": 60,
+        "dex": 10
+      },
+      "move": "8",
+      "hp": 20,
+      "damage_bonus": "+3d6",
+      "armor": "8(几丁质)",
+      "san_loss": "1d6/1d20",
+      "weapons": [
+        "钳爪45% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "古老者",
+      "name_en": "Elder Thing",
+      "class": "下级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 80,
+        "con": 90,
+        "siz": 80,
+        "int": 85,
+        "pow": 80,
+        "dex": 60
+      },
+      "move": "8(陆地)/6(水下)",
+      "hp": 17,
+      "damage_bonus": "+1d4",
+      "armor": "3(坚韧外壳)+再生",
+      "san_loss": "1d3/1d6",
+      "weapons": [
+        "触手55% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "沙之住民",
+      "name_en": "Sand Dweller",
+      "class": "下级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 30,
+        "con": 30,
+        "siz": 30,
+        "int": 25,
+        "pow": 20,
+        "dex": 15
+      },
+      "move": "8",
+      "hp": 6,
+      "damage_bonus": "+0",
+      "armor": "无",
+      "san_loss": "0/1d8",
+      "weapons": [
+        "爪25% (1d6"
+      ]
+    },
+    {
+      "name": "伏米斯",
+      "name_en": "Voormis",
+      "class": "下级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 30,
+        "con": 30,
+        "siz": 25,
+        "int": 10,
+        "pow": 15,
+        "dex": 10
+      },
+      "move": "8",
+      "hp": 6,
+      "damage_bonus": "+0",
+      "armor": "无",
+      "san_loss": "1/1d8",
+      "weapons": [
+        "利爪25% (1d6"
+      ]
+    },
+    {
+      "name": "诺弗克",
+      "name_en": "Gnophkeh",
+      "class": "下级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 40,
+        "con": 40,
+        "siz": 40,
+        "int": 12,
+        "pow": 20,
+        "dex": 15
+      },
+      "move": "8",
+      "hp": 8,
+      "damage_bonus": "+1d4",
+      "armor": "无",
+      "san_loss": "1/1d10",
+      "weapons": [
+        "爪30% (1d6+伤害加权"
+      ]
+    },
+    {
+      "name": "格诺里",
+      "name_en": "Gnorri",
+      "class": "下级独立种族",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 25,
+        "con": 25,
+        "siz": 20,
+        "int": 15,
+        "pow": 15,
+        "dex": 20
+      },
+      "move": "8",
+      "hp": 5,
+      "damage_bonus": "+0",
+      "armor": "无",
+      "san_loss": "0/1d8",
+      "weapons": [
+        "爪25% (1d6"
+      ]
+    },
+    {
+      "name": "珊族",
+      "name_en": "Tcho-Tcho",
+      "class": "下级仆从种族（人类邪教徒）",
+      "source": "trow-11676 / 公有领域克苏鲁神话综合",
+      "stats": {
+        "str": 15,
+        "con": 15,
+        "siz": 12,
+        "int": 15,
+        "pow": 20,
+        "dex": 15
+      },
+      "move": "9",
+      "hp": 3,
+      "damage_bonus": "+0",
+      "armor": "无",
+      "san_loss": "1/1d6",
+      "weapons": [
+        "匕首30% (1d6"
       ]
     }
   ],

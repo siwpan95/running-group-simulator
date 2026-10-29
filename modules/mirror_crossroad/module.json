@@ -1,0 +1,505 @@
+{
+  "meta": {
+    "module_id": "mirror_crossroad",
+    "system_name": "Mirror of the Lost",
+    "module_title": "镜中之失",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "GURPS 4e / CoC 7e / D&D 5e / WoD（按幕切换）",
+    "systems": [
+      "gurps"
+    ],
+    "playstyle": "跨系统主线 / 镜与失物 / 四幕递进",
+    "estimated_duration": "4-6 小时",
+    "player_count": "3-5 人",
+    "synopsis": "委托人只说了一句话：『我家的镜子，映出来的我不是我。』调查员进屋，发现整栋房子的镜子都被白纸糊上了——办丧事的老规矩，蒙面遮鲜，说镜子能照见死人的影子。第一幕是现实（GURPS 3d6），第二幕是神话（CoC d100，理智开始掉），第三幕穿过镜面、落入碎裂的异界（D&D d20 vs DC），第四幕回到都市、面对把碎片收集起来的人（WoD d10 骰池）。同一个角色，四套规则，四个幕。",
+    "base_xp": 6
+  },
+  "global_context_tags": [
+    {
+      "id": "papered_mirrors",
+      "name": "糊纸的镜",
+      "effect": "屋里的镜子全被白纸糊上了"
+    }
+  ],
+  "act_1": {
+    "scene_id": "act1_the_house",
+    "title": "镜巷·旧宅",
+    "systems": [
+      "gurps"
+    ],
+    "description": "槐树巷 17 号。委托人是这栋宅子的最后一房主人，四十岁，独自住，出高价请你来看一眼家里的镜子。",
+    "environment": {
+      "mood": "楼道里的光是从纸缝里漏出来的。整条巷子安静得能听见自己走路的声音。",
+      "tags": [
+        {
+          "id": "papered_mirrors",
+          "name": "糊纸的镜",
+          "effect": "意志 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_door",
+        "scene_type": "perception",
+        "trigger": "进屋，先看客厅那面穿衣镜。",
+        "prerequisite_nodes": [],
+        "next_nodes": [
+          "1.2_hall"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": -2
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "镜子被白纸糊死了，只留一道缝。你从缝里看进去——倒影没有跟着你动。",
+            "crit_success": "纸是新的。糨糊还没干透，边缘卷着。这面镜是今天早上才糊上的。",
+            "failure": "你什么都看不见，只摸到一层粗糙的纸面。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_hall",
+        "scene_type": "investigation",
+        "trigger": "搜一遍屋子，找没被糊上的镜面。",
+        "prerequisite_nodes": [
+          "1.1_door"
+        ],
+        "next_nodes": [
+          "1.3_reflection"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "屋里有九面镜，全糊了——衣柜门、梳妆台、连灶间的锅盖都糊了。只有卫生间那面没糊，因为太小，糊不上。",
+            "crit_success": "你在糊镜子的纸背面看到一行铅笔字：『别让它照到你。』笔迹和委托人的一模一样。",
+            "failure": "你把纸撕开了一个角，刚要往里看，忽然觉得不该看，就把纸按了回去。"
+          }
+        }
+      },
+      {
+        "node_id": "1.3_reflection",
+        "scene_type": "combat",
+        "trigger": "卫生间的镜子里，站着另一个你。",
+        "prerequisite_nodes": [
+          "1.2_hall"
+        ],
+        "next_nodes": [
+          "2.1_basement"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "镜中倒影",
+            "system": "gurps"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你先动的手。它伸手的时机比你慢半拍——那就是它唯一的破绽。",
+            "failure": "它比你快，而且它知道你所有的习惯。你在小巷里打了个趔趄，镜子碎在地上的声音传遍了整条巷子。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_the_folio",
+    "title": "地窖里的古卷",
+    "systems": [
+      "coc7"
+    ],
+    "description": "碎镜的地砖下面有一道向下的台阶。台阶尽头不是地窖——是一片没有尽头的黑暗，和一本用纸糊住封面的书。",
+    "environment": {
+      "mood": "越往下越暖。空气里有一股旧纸和霉味混在一起的气息，像有人刚刚读完一页。",
+      "tags": [
+        {
+          "id": "yellow_sign",
+          "name": "残页的黄意",
+          "effect": "意志 -5"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_basement",
+        "scene_type": "perception",
+        "trigger": "掀开地砖，往下看。",
+        "prerequisite_nodes": [
+          "1.3_reflection"
+        ],
+        "next_nodes": [
+          "2.2_read"
+        ],
+        "environment": {
+          "mood": "台阶上有一排烛台，蜡油是新的。这里有人常来。",
+          "tags": [
+            {
+              "id": "basement_dark",
+              "name": "地窖无光",
+              "effect": "感知 -10"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "台阶尽头放着一本书，封皮糊着黄纸。纸边压着七颗石子，排成北斗的形状。",
+            "crit_success": "书页的空白处有前人留下的批注：『读第二遍时，它开始认识你。』",
+            "failure": "台阶下面传来翻页的声音。你一个人站在这里，可你没有带书。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_read",
+        "scene_type": "feat",
+        "trigger": "把黄纸揭开，读一页。",
+        "prerequisite_nodes": [
+          "2.1_basement"
+        ],
+        "next_nodes": [
+          "2.3_spawn"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": -10,
+          "san_loss": {
+            "amount": "1d6",
+            "source": "阅读镜中谱系的书页"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "书页上是一幅图：一个人站在镜前，另一个站在镜后。它们之间牵着一根线——线的两头，是同一个人的手。",
+            "crit_success": "图下有一行字：『镜不是用来照人的。镜是用来收人的。』",
+            "failure": "字迹在你眼前游动，像水底的鱼。你读完了，却说不出自己读了什么。"
+          }
+        }
+      },
+      {
+        "node_id": "2.3_spawn",
+        "scene_type": "combat",
+        "trigger": "书页上的墨活了过来，从纸上站起来。",
+        "prerequisite_nodes": [
+          "2.2_read"
+        ],
+        "next_nodes": [
+          "3.1_threshold"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "撒达·赫格拉之子",
+            "system": "coc7"
+          },
+          "san_loss": {
+            "amount": "1/1d8",
+            "source": "遭遇撒达·赫格拉之子"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "它从纸面上剥离的一瞬，你把书合上了。半张纸还留在它身上，它烧了起来。",
+            "failure": "它掐住了你的脖子，可你的手没有感到重量——像被一只纸做的手扼住。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_beyond",
+    "title": "镜中",
+    "systems": [
+      "dnd5e"
+    ],
+    "description": "你从那面最小的镜子穿了过去。另一侧没有房间——只有一整片碎裂的荒原，天上落着不化的雪，地面是无数块镜子的残片。",
+    "environment": {
+      "mood": "冷不是天气，是距离。这里所有的镜面都碎成了七零八落的大小，踩上去会响。",
+      "tags": [
+        {
+          "id": "eternal_winter",
+          "name": "不散的冬",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "3.1_threshold",
+        "scene_type": "perception",
+        "trigger": "在碎镜荒原上辨认方向。",
+        "prerequisite_nodes": [
+          "2.3_spawn"
+        ],
+        "next_nodes": [
+          "3.2_wasteland"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "dc": 12
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "荒原中央立着一座冰做的宫殿。更远处有一排巨人的石像，全部朝着宫殿跪着。",
+            "crit_success": "有一块碎镜映出的不是荒原——是槐树巷 17 号的客厅。你的倒影正在看着你。",
+            "failure": "四面八方都是镜子，映出四个方向的你。你分不清哪个才是自己。"
+          }
+        }
+      },
+      {
+        "node_id": "3.2_wasteland",
+        "scene_type": "feat",
+        "trigger": "穿过荒原。每一步都要在碎镜上选一个落点。",
+        "prerequisite_nodes": [
+          "3.1_threshold"
+        ],
+        "next_nodes": [
+          "3.3_giant"
+        ],
+        "layer_physics": {
+          "skill_check": "敏捷",
+          "dc": 14,
+          "modifier": -2
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你像走在一块会呼吸的冰面上，每一步都踩实了。",
+            "failure": "碎片翻了面。你的脚踝陷进去半截，镜面里映出另一个你陷得更深。"
+          }
+        }
+      },
+      {
+        "node_id": "3.3_giant",
+        "scene_type": "combat",
+        "trigger": "冰宫的守门人醒了：两头霜巨人，扛着比人还高的冰柱。",
+        "prerequisite_nodes": [
+          "3.2_wasteland"
+        ],
+        "next_nodes": [
+          "3.4_word"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "Frost Giant",
+            "system": "dnd5e"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你从它们脚下的碎镜里挑了个好角度——巨人的重心，碎镜早替你算好了。",
+            "failure": "冰柱砸下来的地方离你只有两步。你听见自己牙齿打架的声音。"
+          }
+        }
+      },
+      {
+        "node_id": "3.4_word",
+        "scene_type": "feat",
+        "trigger": "冰宫的地板上散着无数冰片，像一副被打乱的字。",
+        "prerequisite_nodes": [
+          "3.3_giant"
+        ],
+        "next_nodes": [
+          "4.1_return"
+        ],
+        "layer_physics": {
+          "skill_check": "智力",
+          "dc": 16
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你拼出了那个词。它不是词，是名字——刻在镜背面的那个名字。拼完的瞬间，冰宫的所有镜子同时朝向你。",
+            "crit_success": "冰片拼成的不是一个词，是一幅图：一个老人，把另一个人从镜子里拉出来。",
+            "failure": "冰片在你手里碎成粉。这里的一切都拒绝被读懂。"
+          }
+        }
+      }
+    ]
+  },
+  "act_4": {
+    "scene_id": "act4_the_city",
+    "title": "归城",
+    "systems": [
+      "wod"
+    ],
+    "description": "你从镜子里走出来时，已经在三天后的城市里了。委托人死了，尸体被抬走时，所有镜子都朝着他转了过去。",
+    "environment": {
+      "mood": "城市的夜里有一种新气味：像旧纸，像新雪。有人在收集碎镜。",
+      "tags": [
+        {
+          "id": "city_night",
+          "name": "都市夜幕",
+          "effect": "潜行 +1"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "4.1_return",
+        "scene_type": "investigation",
+        "trigger": "查清谁在收集这栋宅子里的碎镜。",
+        "prerequisite_nodes": [
+          "3.4_word"
+        ],
+        "next_nodes": [
+          "4.2_corpse"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": -3
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "一整层楼的租客都换过镜子。收镜子的贩子只收碎片，出价高得不正常，付款方式是『不问你姓名』。",
+            "crit_success": "你顺着收镜子的路线走，发现终点是一家通宵营业的旧货铺。掌柜的脸——你今天早上在镜子里见过。",
+            "failure": "线索断在第三个转角。城市里碎镜太多了，它们全指向同一个方向，你分不清。"
+          }
+        }
+      },
+      {
+        "node_id": "4.2_corpse",
+        "scene_type": "combat",
+        "trigger": "旧货铺的地下室里，躺着被拼起来的东西。",
+        "prerequisite_nodes": [
+          "4.1_return"
+        ],
+        "next_nodes": [
+          "4.3_choice"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "尸仆",
+            "system": "wod"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你打碎它身上最后一块镜子。它塌了，像一件终于被拆开的家具。",
+            "failure": "它身上每一块镜子都映着一张脸，全是死者的脸。它朝你走来时，那些脸轮流朝你微笑。"
+          }
+        }
+      },
+      {
+        "node_id": "4.3_choice",
+        "scene_type": "feat",
+        "trigger": "地下室的正中央，放着一面完整的镜子。",
+        "prerequisite_nodes": [
+          "4.2_corpse"
+        ],
+        "next_nodes": [],
+        "resolution_paths": [
+          {
+            "path": "砸碎",
+            "method": "抡起铁锤，砸向镜心（需力量检定）",
+            "success": "镜子炸开的时候没有声音。碎片落地，每一片都映着一个正常的、没有被收走的人。"
+          },
+          {
+            "path": "走进去",
+            "method": "站到镜前，等它映出真正的你（需意志检定）",
+            "success": "镜里的你终于和你同步了——你抬手，它也抬手。那一刻，你不确定谁在模仿谁。"
+          },
+          {
+            "path": "带它走",
+            "method": "把镜子收进箱子里，交给委托人留下的那个孩子",
+            "success": "孩子抱住镜子，问你：里面那个，是谁呀？你答不上来。"
+          }
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": -6
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "天亮了。槐树巷 17 号的门牌被人摘走了，留在门框上的是一个干净的圆形印子——像一面镜子的形状。",
+            "failure": "你走出旧货铺，回头看，铺子已经不在了。只有一块碎镜躺在原地，映着一个正往城外走的你。"
+          }
+        }
+      }
+    ]
+  },
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      {
+        "场景": "1.1_door",
+        "检定": "感知 -2（GURPS 3d6）",
+        "失败": "只摸到纸面"
+      },
+      {
+        "场景": "1.2_hall",
+        "检定": "感知",
+        "失败": "手自己把纸按了回去"
+      },
+      {
+        "场景": "1.3_reflection",
+        "检定": "战斗（镜中倒影）",
+        "失败": "被自己的习惯出卖"
+      },
+      {
+        "场景": "2.1_basement",
+        "检定": "感知 -10（CoC d100）",
+        "失败": "听见翻页声"
+      },
+      {
+        "场景": "2.2_read",
+        "检定": "意志 -10",
+        "失败": "SAN 1d6"
+      },
+      {
+        "场景": "2.3_spawn",
+        "检定": "战斗（撒达·赫格拉之子 35%）",
+        "失败": "SAN 1/1d8"
+      },
+      {
+        "场景": "3.1_threshold",
+        "检定": "感知 DC 12（D&D d20）",
+        "失败": "分不清哪个是自己"
+      },
+      {
+        "场景": "3.2_wasteland",
+        "检定": "敏捷 DC 14 -2",
+        "失败": "脚踝陷进碎镜"
+      },
+      {
+        "场景": "3.3_giant",
+        "检定": "战斗（Frost Giant）",
+        "失败": "听见自己牙齿打架"
+      },
+      {
+        "场景": "3.4_word",
+        "检定": "智力 DC 16",
+        "失败": "冰片碎成粉"
+      },
+      {
+        "场景": "4.1_return",
+        "检定": "感知 -3（WoD 骰池）",
+        "失败": "线索断在第三个转角"
+      },
+      {
+        "场景": "4.2_corpse",
+        "检定": "战斗（尸仆）",
+        "失败": "那些脸轮流朝你微笑"
+      },
+      {
+        "场景": "4.3_choice",
+        "检定": "意志 -6",
+        "失败": "旧货铺不在了"
+      }
+    ],
+    "notes": [
+      "本模组是『多系统』的样板：一套角色、四幕四套规则。幕级 systems 字段决定该幕用哪套画像——act_1=GURPS(3d6)、act_2=CoC(d100+SAN)、act_3=D&D(d20 vs DC)、act_4=WoD(d10 骰池)。引擎会在进入该幕时自动切换。",
+      "配套角色卡「预置-镜中调查员」刻意不带具名技能，只用属性（感知/意志/力量/敏捷/智力）——因为同一组属性在四套规则下都能正确折算：GURPS 3d6 目标、CoC 属性×5 百分比、5e (属性-10)/2 加成、WoD 属性值骰池。",
+      "全模组检定一律写属性名，不写技能名：技能名在别的系统里会失去含义（例如 5e 里『调查=14』会变成 +14 的荒谬加成）。",
+      "战斗节点敌人分别取自四套目录：镜中倒影(gurps) / 撒达·赫格拉之子(coc7) / Frost Giant(dnd5e) / 尸仆(wod)。",
+      "第三幕的『拼词』与模组《冰雪女王》共享同一个母题（安徒生《冰雪皇后》的永恒字谜），可作为跨模组的呼应彩蛋。"
+    ]
+  }
+}

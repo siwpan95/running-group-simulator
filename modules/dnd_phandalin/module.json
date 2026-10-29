@@ -1,0 +1,390 @@
+{
+  "meta": {
+    "module_id": "dnd_phandalin",
+    "system_name": "Mirror of the Lost",
+    "module_title": "凡达林：红标之夜",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "D&D 5e",
+    "systems": [
+      "dnd5e"
+    ],
+    "playstyle": "剑湾边陲 / 镇城探案 / 地城搜刮",
+    "estimated_duration": "3-4 小时",
+    "player_count": "3-5 人",
+    "synopsis": "两匹死马横在试炼之路上，箭杆上的羽毛是黑的。追着哥布林进山 caves，你会拿到半张地图；顺着地图找到碎晶矿坑，你会发现矿坑里真正值钱的东西，一直有人在替你清场。多系统引擎 D&D 5e 示例：d20 检定 vs DC、优劣势、AC 战斗；战斗敌人直接引用 data/dnd5e/catalog.json 的 SRD 怪物条目。",
+    "base_xp": 4
+  },
+  "global_context_tags": [
+    {
+      "id": "sword_coast_rain",
+      "name": "剑湾的雨",
+      "effect": "雨不大，但林子里的声音全是湿的"
+    },
+    {
+      "id": "phandalin_tension",
+      "name": "镇上的紧张",
+      "effect": "没人愿意在街上多走几步"
+    }
+  ],
+  "act_1": {
+    "scene_id": "act1_triboar_trail",
+    "title": "试炼之路",
+    "description": "从冷风港往东南两日路程，通往凡达林的唯一一条车辙路。路被两匹死马堵住了，箭还插在马身上，羽毛是黑的。",
+    "environment": {
+      "mood": "雨不大，但林子里的声音全是湿的。远处有金属碰撞的声音，断断续续。",
+      "tags": [
+        {
+          "id": "sword_coast_rain",
+          "name": "剑湾的雨",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_ambush",
+        "scene_type": "perception",
+        "trigger": "检查死马与路边的灌木丛。",
+        "prerequisite_nodes": [],
+        "next_nodes": [
+          "1.2_cave_mouth"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "dc": 13,
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "马是被人从背后射死的。箭羽黑得发亮，箭杆是削得极细的榉木——林子里有人在做箭。",
+            "crit_success": "你还在泥地里找到半张羊皮：画着一条矿道，标着一个记号，旁边潦草地写着『碎晶』。",
+            "failure": "雨把痕迹冲没了。你只知道马死了，别的什么也看不出来。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_cave_mouth",
+        "scene_type": "combat",
+        "trigger": "灌木丛里窜出四只矮小的身影，两只举弓，两只扑上来。",
+        "prerequisite_nodes": [
+          "1.1_ambush"
+        ],
+        "next_nodes": [
+          "1.3_dam"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "advantage": 1,
+          "catalog_ref": {
+            "name": "Goblin",
+            "system": "dnd5e"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你在它们扑到之前就抬起了武器——先手是你带来的最大优势。",
+            "failure": "箭先到了。你听见自己装备上一声脆响，才知道箭头已经找过你。"
+          }
+        }
+      },
+      {
+        "node_id": "1.3_dam",
+        "scene_type": "feat",
+        "trigger": "洞里的水声不对劲——上游有什么东西在蓄着。",
+        "prerequisite_nodes": [
+          "1.2_cave_mouth"
+        ],
+        "next_nodes": [
+          "2.1_phandalin"
+        ],
+        "layer_physics": {
+          "skill_check": "敏捷",
+          "dc": 13,
+          "modifier": -2
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你蹚过齐膝的冷水，贴住岩壁。水放下来时，你已经站在了石头后面。",
+            "failure": "水头比你算的来得早。你被冲得撞在石壁上，耳朵里全是轰鸣。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_phandalin",
+    "title": "凡达林与红标帮",
+    "description": "避难所的烟囱冒着烟，但镇子安静得反常。没人愿意在街上多走几步。",
+    "environment": {
+      "mood": "半塌的石匠避难所是全镇唯一还亮着灯的地方。街上每扇窗户都闭着。",
+      "tags": [
+        {
+          "id": "phandalin_tension",
+          "name": "镇上的紧张",
+          "effect": "话术 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_phandalin",
+        "scene_type": "investigation",
+        "trigger": "在镇子的酒馆里打听消息。",
+        "prerequisite_nodes": [
+          "1.3_dam"
+        ],
+        "next_nodes": [
+          "2.2_mansion"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "dc": 14,
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "酒保压低声音说了三个名字：盖兹、施罗德、泽伦。他说这三个是红标帮的骨架，而红标帮占据了镇子东边那座红标庄园。",
+            "crit_success": "你还问出一件事：庄园地下室里养着什么东西，镇上的猎户说那『能自己吃人，还能替人保管尸体』。",
+            "failure": "酒保的杯子一直在抖。你问到第三句时，店里的灯突然灭了——有人把门从外面闩上了。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_mansion",
+        "scene_type": "combat",
+        "trigger": "红标庄园的走廊里，斧手洛斯挡住了去路。",
+        "prerequisite_nodes": [
+          "2.1_phandalin"
+        ],
+        "next_nodes": [
+          "2.3_cellar"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "Bandit Captain",
+            "system": "dnd5e"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "他一拳砸在门框上，木屑飞溅——那是你唯一的机会。",
+            "failure": "他的斧子比看上去更快。你贴着门板才没被劈成两半。"
+          }
+        }
+      },
+      {
+        "node_id": "2.3_cellar",
+        "scene_type": "combat",
+        "trigger": "地下室的蛛网足有一人高，丝线上还挂着新鲜的茧。",
+        "prerequisite_nodes": [
+          "2.2_mansion"
+        ],
+        "next_nodes": [
+          "2.4_vault"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "Giant Spider",
+            "system": "dnd5e"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你砍断了它的丝线。它坠下来，砸起一片灰尘。",
+            "failure": "你被丝线黏住，抬不起手。它从房梁上压下来，节肢敲在石板上，一声一声。"
+          }
+        }
+      },
+      {
+        "node_id": "2.4_vault",
+        "scene_type": "feat",
+        "trigger": "密室里，泽伦的法术书还摊在桌上，末页被火燎过。",
+        "prerequisite_nodes": [
+          "2.3_cellar"
+        ],
+        "next_nodes": [
+          "3.1_mine"
+        ],
+        "layer_physics": {
+          "skill_check": "智力",
+          "dc": 15
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你读懂了那几行字：红标帮不是红标帮，他们是在替矿坑里的人清理道路。",
+            "crit_success": "书页上写着『幻石』二字，还有一张符文的拓片——把普通石头变成会说话的幻象。",
+            "failure": "字迹在你眼前扭动。你一个字也读不下去，只把书合上了。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_lost_mine",
+    "title": "碎晶矿坑",
+    "description": "羊皮上的记号指向半山腰一个被藤蔓盖住的洞口。矿坑在雨里发出很低的声音，像有人在下面翻身。",
+    "environment": {
+      "mood": "越往里走越暖。空气里有硫和铁锈的味道，还有一种更甜、更闷的气息。",
+      "tags": [
+        {
+          "id": "sword_coast_rain",
+          "name": "剑湾的雨",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "3.1_mine",
+        "scene_type": "perception",
+        "trigger": "在矿坑外沿辨认入口。",
+        "prerequisite_nodes": [
+          "2.4_vault"
+        ],
+        "next_nodes": [
+          "3.2_ghouls"
+        ],
+        "layer_physics": {
+          "skill_check": "感知",
+          "dc": 12
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "轨道还在，矿车还停在原处。地上散着人类的骨头——都被啃过，而且啃得很干净。",
+            "failure": "洞口黑得像张开的嘴。你在外面的石头上做了记号，才敢往里迈。"
+          }
+        }
+      },
+      {
+        "node_id": "3.2_ghouls",
+        "scene_type": "combat",
+        "trigger": "矿道尽头传来湿漉漉的咀嚼声。",
+        "prerequisite_nodes": [
+          "3.1_mine"
+        ],
+        "next_nodes": [
+          "3.3_forge"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "Ghoul",
+            "system": "dnd5e"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你打在它的肩上，那具身体像湿麻袋一样塌下去，又慢慢立起来。",
+            "failure": "它的手指扣进了你的前臂。腐肉的味道贴着你的脸。"
+          }
+        }
+      },
+      {
+        "node_id": "3.3_forge",
+        "scene_type": "combat",
+        "trigger": "熔炉房里，一口旧箱子『啪』地合上了。",
+        "prerequisite_nodes": [
+          "3.2_ghouls"
+        ],
+        "next_nodes": [
+          "3.4_departure"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "Mimic",
+            "system": "dnd5e"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你识破了假牙——在它合上之前，一柄短剑从它的下颚捅了进去。",
+            "failure": "牙齿已经扣住了你的手臂。你只能把一件外套塞进它嘴里，趁那一瞬挣脱。"
+          }
+        }
+      },
+      {
+        "node_id": "3.4_departure",
+        "scene_type": "explore",
+        "trigger": "在熔炉边坐一会儿，然后走出矿坑。",
+        "prerequisite_nodes": [
+          "3.3_forge"
+        ],
+        "next_nodes": [],
+        "layer_physics": {
+          "skill_check": "感知",
+          "dc": 13
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你在熔炉的余温里烤干衣服，忽然听清了一件事：这矿坑里不止有人在挖矿。",
+            "crit_success": "风从矿道深处吹来，带着一句话的碎片——『幻石已经醒了』。你把它记在了本子上。"
+          }
+        }
+      }
+    ]
+  },
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      {
+        "场景": "1.1_ambush",
+        "检定": "感知 DC 12",
+        "失败": "痕迹被雨冲掉"
+      },
+      {
+        "场景": "1.2_cave_mouth",
+        "检定": "战斗（Goblin，优势 +1）",
+        "失败": "先手尽失"
+      },
+      {
+        "场景": "1.3_dam",
+        "检定": "敏捷 DC 13 -2",
+        "失败": "被水头冲倒"
+      },
+      {
+        "场景": "2.1_phandalin",
+        "检定": "感知 DC 14",
+        "失败": "被人闩在酒馆里"
+      },
+      {
+        "场景": "2.2_mansion",
+        "检定": "战斗（Bandit Captain）",
+        "失败": "被斧子逼到墙角"
+      },
+      {
+        "场景": "2.3_cellar",
+        "检定": "战斗（Giant Spider）",
+        "失败": "被蛛丝黏住"
+      },
+      {
+        "场景": "2.4_vault",
+        "检定": "智力 DC 15",
+        "失败": "书页字迹扭动，无法解读"
+      },
+      {
+        "场景": "3.1_mine",
+        "检定": "感知 DC 12",
+        "失败": "洞口漆黑"
+      },
+      {
+        "场景": "3.2_ghouls",
+        "检定": "战斗（Ghoul）",
+        "失败": "被腐尸抓住"
+      },
+      {
+        "场景": "3.3_forge",
+        "检定": "战斗（Mimic）",
+        "失败": "手臂被咬住"
+      }
+    ],
+    "notes": [
+      "D&D 检定用『skill_check + dc + modifier』：引擎按 d20 + 总加成 对抗 DC；skill_check 一律写属性名（感知/敏捷/意志/智力/力量），加成＝(属性-10)/2，modifier 为情境修正（负数＝更难）。",
+      "战斗节点敌人取自 data/dnd5e/catalog.json（SRD 5.1，OGL + CC BY 4.0）：Goblin / Bandit Captain / Giant Spider / Ghoul / Mimic；attack_skill 存的是命中加值，ac 存护甲等级。",
+      "1.2_cave_mouth 的 advantage:1 是给玩家的先手优势（对玩家有利）；若你想让哥布林先攻，请改为 advantage:0 并提高 DC。",
+      "本模组结构取材自 SRD 5.1 免费内容《Lost Mine of Phandelver》（凡达林、试炼之路哥布林伏击、红标帮、碎晶矿坑），叙述与细节为原创演绎。"
+    ]
+  }
+}

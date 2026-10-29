@@ -6,7 +6,9 @@
     "version": "1.0",
     "author": "TRPG Architect",
     "compatible_core": "D&D 5e",
-    "systems": ["dnd5e"],
+    "systems": [
+      "dnd5e"
+    ],
     "playstyle": "地城探险 / 战斗",
     "estimated_duration": "1-2 小时",
     "player_count": "3-5 人",
@@ -14,8 +16,16 @@
     "base_xp": 3
   },
   "global_context_tags": [
-    { "id": "cave_dark", "name": "洞窟昏暗", "effect": "无光源时侦查劣势" },
-    { "id": "slippery_floor", "name": "湿滑地面", "effect": "敏捷豁免 -2" }
+    {
+      "id": "cave_dark",
+      "name": "洞窟昏暗",
+      "effect": "没有光源时看不清远处"
+    },
+    {
+      "id": "slippery_floor",
+      "name": "湿滑地面",
+      "effect": "踩上去会打滑"
+    }
   ],
   "act_1": {
     "scene_id": "act1_the_cave_mouth",
@@ -24,7 +34,11 @@
     "environment": {
       "mood": "山风穿过洞口，带来潮湿的霉味和一丝血腥。",
       "tags": [
-        { "id": "cave_dark", "name": "洞窟昏暗", "effect": "无光源时侦查劣势" }
+        {
+          "id": "cave_dark",
+          "name": "洞窟昏暗",
+          "effect": "无光源时侦查劣势"
+        }
       ]
     },
     "nodes": [
@@ -33,11 +47,14 @@
         "scene_type": "perception",
         "trigger": "调查地上的拖拽痕迹。",
         "prerequisite_nodes": [],
-        "next_nodes": ["1.2_trap"],
+        "next_nodes": [
+          "1.2_trap"
+        ],
         "layer_physics": {
-          "skill_check": "侦查",
+          "skill_check": "感知",
           "dc": 12,
-          "advantage": 0
+          "advantage": 0,
+          "modifier": 0
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -51,8 +68,12 @@
         "node_id": "1.2_trap",
         "scene_type": "feat",
         "trigger": "小心通过洞口内的一截下坡。",
-        "prerequisite_nodes": ["1.1_tracks"],
-        "next_nodes": ["2.1_goblin_camp"],
+        "prerequisite_nodes": [
+          "1.1_tracks"
+        ],
+        "next_nodes": [
+          "2.1_goblin_camp"
+        ],
         "layer_physics": {
           "skill_check": "敏捷",
           "dc": 13,
@@ -74,7 +95,11 @@
     "environment": {
       "mood": "火把噼啪作响，映着几张贪婪的小脸。",
       "tags": [
-        { "id": "slippery_floor", "name": "湿滑地面", "effect": "敏捷豁免 -2" }
+        {
+          "id": "slippery_floor",
+          "name": "湿滑地面",
+          "effect": "敏捷豁免 -2"
+        }
       ]
     },
     "nodes": [
@@ -82,20 +107,19 @@
         "node_id": "2.1_goblin_camp",
         "scene_type": "combat",
         "trigger": "一只哨兵哥布林发现了你，尖啸起来。",
-        "prerequisite_nodes": ["1.2_trap"],
-        "next_nodes": ["2.2_loot"],
+        "prerequisite_nodes": [
+          "1.2_trap"
+        ],
+        "next_nodes": [
+          "2.2_loot"
+        ],
         "layer_physics": {
           "enemy_type": "wildcard",
-          "unit_stats": {
-            "name": "哥布林哨兵",
-            "hp": 7,
-            "attack_skill": 4,
-            "damage": "1d6+2 挥砍",
-            "ac": 15,
-            "dodge": 0,
-            "dr": 0
-          },
-          "advantage": 1
+          "advantage": 1,
+          "catalog_ref": {
+            "name": "Goblin",
+            "system": "dnd5e"
+          }
         },
         "layer_narrative": {
           "anchor_phrases": {
@@ -108,10 +132,12 @@
         "node_id": "2.2_loot",
         "scene_type": "investigation",
         "trigger": "搜索哥布林的赃物堆。",
-        "prerequisite_nodes": ["2.1_goblin_camp"],
+        "prerequisite_nodes": [
+          "2.1_goblin_camp"
+        ],
         "next_nodes": [],
         "layer_physics": {
-          "skill_check": "调查",
+          "skill_check": "智力",
           "dc": 14
         },
         "layer_narrative": {
@@ -132,7 +158,9 @@
         "node_id": "3.1_return",
         "scene_type": "explore",
         "trigger": "走出洞窟，天色已暗。",
-        "prerequisite_nodes": ["2.2_loot"],
+        "prerequisite_nodes": [
+          "2.2_loot"
+        ],
         "next_nodes": [],
         "layer_physics": {
           "skill_check": "感知",

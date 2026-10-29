@@ -1,0 +1,32 @@
+{
+  "character_id": "er_doctor_su",
+  "name": "苏晴 · 急诊医生",
+  "version": 1,
+  "attributes": { "ST": 10, "DX": 11, "IQ": 13, "HT": 11 },
+  "secondary": { "HP": 11, "FP": 11, "Will": 12, "Per": 12 },
+  "skills": [
+    { "name": "急救", "level": 15, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 6 },
+    { "name": "诊断", "level": 14, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 4 },
+    { "name": "药学", "level": 13, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 2 },
+    { "name": "话术", "level": 12, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 1 },
+    { "name": "驾驶", "level": 11, "difficulty": "Avg", "base_attribute": "DX", "points_spent": 1 },
+    { "name": "近战", "level": 10, "difficulty": "Avg", "base_attribute": "DX", "points_spent": 1 },
+    { "name": "心理学", "level": 12, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 2 }
+  ],
+  "advantages": ["镇定", "夜班耐性"],
+  "disadvantages": ["工作狂", "失眠"],
+  "features": [
+    { "name": "黄金十分钟", "trigger_condition": "同伴重伤倒地时", "cost": 1, "effect": "急救检定 +3，并锁定一次额外处理", "per_scene_limit": 1 },
+    { "name": "临床直觉", "trigger_condition": "面对非自然伤势时", "cost": 1, "effect": "请求 GM 给出一条关于伤势来源的线索", "per_scene_limit": 2 },
+    { "name": "安抚", "trigger_condition": "同伴陷入恐慌/疯狂时", "cost": 1, "effect": "给予同伴 +2 下一次意志/理智相关检定", "per_scene_limit": 1 }
+  ],
+  "anchors": ["随身急救包", "已故导师的听诊器"],
+  "equipment": [
+    { "name": "随身急救包", "type": "consumable", "slot": "backpack", "dr": 0, "effects": [{"restore_hp": "2d6"}], "uses": 2, "description": "医生自配的加强版急救包" },
+    { "name": "手电筒", "type": "tool", "slot": "hand", "dr": 0, "effects": [{"tag_mod": "remove:低能见度"}], "uses": -1, "description": "医用强光笔式手电" }
+  ],
+  "focus_max": 3,
+  "luck_max": 2,
+  "xp_log": [],
+  "total_xp": 0
+}

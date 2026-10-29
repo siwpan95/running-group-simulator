@@ -16,6 +16,50 @@
 
 ## [Unreleased]
 
+### Added
+
+- **模组扩至 12 个（v3.8，2026-10-27）**：
+  - `modules/coc_hastur/`《黄印与暗夜神庙》（CoC 7e，3 幕）：取材 R.W. 钱伯斯《黄衣之王》(1895)——被禁剧本的第一幕/第二幕、黄印（见之者丧 0/1d6 理智）、卡索沙、哈利湖、昴宿增九；并接洛夫克拉夫特《暗夜呢喃》《暗夜窃魂者》的德维尔礁与黑暗神庙。战斗节点引 米·戈 / 星之精 / 外神之仆役 / 修格斯。公有领域。
+  - `modules/dnd_snow_queen/`《冰雪女王》（D&D 5e，3 幕）：取材安徒生《冰雪皇后》(1845) 与格林《白雪女王》(1812)——恶魔之镜碎片、樱桃树篱巫婆、两只渡鸦、金马车与强盗女孩、屋梁鸽子、铜环驯鹿、冰之亡魂、用冰拼『永恒』的谜题；与本项目『镜』主题互为呼应。战斗节点引 Bandit / Wraith。公有领域。
+  - `modules/mirror_crossroad/`《镜中之失》（**跨四系统主线**，4 幕各一套规则）：act_1=GURPS 现实 → act_2=CoC 神话（SAN）→ act_3=D&D 异界 → act_4=WoD 都市。配套 `characters/预置-镜中调查员.json`（**无具名技能、纯属性驱动 + SAN 启用**，同一组属性在四套规则下均能正确折算）。
+  - **《纸人巷》由 3 幕单元剧扩为 5 幕主线**：新增 act_4《城隍庙后的纸行》、act_5《焚化场》——取材丧葬旧俗「报庙/接三」「烧还魂钱/黄昏钱」「蒙面遮鲜」；3.3_ashes 不再是终点，案子由此转向城隍庙的报庙与纸行的『户』账；新增 Boss 敌人「祖纸」。
+- **新增 4 个示例模组（2026-10-27，v3.7，结合联网调研取材）——每个系统各一**：
+  - `modules/coc_dunwich/`《敦威治之夜》（CoC 7e，3 幕）：取材 H.P. Lovecraft《敦威治之恐怖》(1928) 与《印斯茅斯之影》(1931)——深潜者混血「印斯茅斯面相」、哨兵山史前石阵、伊本-加齐之粉、夜鹰报丧；战斗节点引用 深潜者混血 / 拜亚基 / 无形孽胎。公有领域。
+  - `modules/dnd_phandalin/`《凡达林：红标之夜》（D&D 5e，3 幕）：取材 SRD 5.1《Lost Mine of Phandelver》结构——试炼之路哥布林伏击、红标帮庄园、地下巨蛛巢、碎晶矿坑与幻石；战斗节点引用 Goblin / Bandit Captain / Giant Spider / Ghoul / Mimic。
+  - `modules/gurps_paper_alley/`《纸人巷》（GURPS 4e，**5 幕主线**，v3.7 建为 3 幕、v3.8 扩为 5 幕）：取材中国纸扎民俗——「纸人不点睛，纸马不扬鬃」（《太平广记》「面无睛目，以防魅魇」）、明《大明律》禁彩绘眼珠、扎糊绘剪四字诀、男骑马女骑牛、红男绿女、借壳还魂的「走影」。
+  - `modules/wod_long_night/`《长夜巡猎》（WoD，3 幕）：取材东欧/斯拉夫吸血鬼民俗——木桩穿心、银器、镜子、活水不可渡、未受邀不得进门、门槛撒米粒乱其计数、忌猫跳尸；设定完全原创（未用任何 White Wolf 官方资料）。
+- **新增 CoC 7e 调查员角色卡** `characters/预置-CoC调查员.json`：百分比技能 + **SAN 理智启用**（此前所有角色卡 `san_max=0`，CoC 的 SAN 机制整条无法触发）。
+- **新增跨系统角色卡** `characters/预置-镜中调查员.json`：无具名技能、纯属性驱动 + SAN 启用，供跨四系统主线使用。
+- **新增模组工程化门禁** `tests/test_modules.py`（276 项，零第三方依赖）：meta 完整性、三幕结构、节点 id 唯一、**节点图引用自洽**、幕级 `systems` 合法、**全部检定属性驱动**、战斗节点 `catalog_ref` 必须命中目录、`layer_physics` 形态合法（单次检定/嵌套检定/战斗三者之一）、场景引擎可加载每个模组且能生成敌人、**按幕切换系统画像生效**、CoC 幕战斗节点确实触发 SAN 损失。
+- 目录扩充：`data/gurps/catalog.json` 2 → **6**（增 纸扎人/童男纸/走影/祖纸）；`data/wod/catalog.json` 3 → **7**（增 血裔/血奴/游血族/尸仆）。
+- **内容目录大规模扩充（2026-10-26，结合联网核对）**：
+  - `data/dnd5e/catalog.json`：怪物 15 → **83**（增 68，覆盖人形 NPC / 野兽 / 不死 / 五色+金属龙 / 巨怪 / 魔鬼 / 元素精类）；法术 10 → **47**（增 37，覆盖戏法到 5 环 SRD 法术）。物品段本已是 SRD 武器+护甲全表（50 条），未重复追加。
+  - `data/coc7/catalog.json`：神话生物 35 → **57**（增 22，含克苏鲁 / 奈亚拉托提普 / 哈斯塔 / 犹格·索托斯 / 阿撒托斯 / 修格斯 / 米·戈 / 廷达罗斯猎犬 / 古老者 / 伊斯之伟大种族等公有领域神话）。
+  - 玩家预置角色卡 4 → **7**（新增 急诊医生 / 自由黑客 / 古董商，均为原创 GURPS 设定）。
+  - `data/enemies.json` 增 4（镜螨 / 锈影 / 钟楼石像 / 低语者）；`data/items.json` 增 4（信号枪 / 夜视仪 / 防毒面具 / 撬锁工具组）。
+  - 新增 CoC 7e 示例模组 `modules/coc_saltmarsh/《盐沼低语》`（3 幕，引用扩充后的深潜者 / 修格斯目录条目）。
+  - 新增 `tools/expand_catalogs.py` 与 `tools/expand_content.py`：按 `name` 去重、不覆盖既有条目、可重复运行的扩充脚本。
+  - **新增强内容目录真正的消费方 `services/catalog_bridge.py`（`build_enemy_from_catalog(name, system)`）**：把 `data/<system>/catalog.json` 的怪物 / 神话生物落地为 `core.enemy.Enemy`（D&D 输出原生 `attack_skill`=命中加值 / `ac`=护甲等级；CoC 输出原生 `attack_skill`=武器百分比 / `dodge`=DEX×2 / `dr`=护甲值），由战斗引擎按模块 `meta.systems` 自动路由系统画像解释。此前目录数据唯一的活消费方只有 `CatalogService` 自身 + 测试，扩充内容实际未进入玩法——现已解决。
+    - `core/scene_engine.py._handle_combat_node` 新增 `layer_physics.catalog_ref`（字符串或 `{name, system}`），命中目录即由 bridge 生成敌人，未命中回退内联 `unit_stats`。
+    - `mirror_mvp.py` 新增 `spawn_enemy_from_catalog` / `start_combat_from_catalog` 便捷入口。
+    - 示例模组 `modules/coc_saltmarsh` 的 `2.2_ambush` 战斗节点接入 `catalog_ref: {name: "深潜者", system: "coc7"}`，真正引用目录条目（而非仅文字提及）。
+    - **全部示例模组战斗节点接上 `catalog_ref`**：`coc_sample` `2.2_face_creature` → 食尸鬼(coc7)、`dnd_sample` `2.1_goblin_camp` → Goblin(dnd5e)、`wod_sample` `2.1_confront` → 被放逐的长者(wod)、`mirror_house_alley` `2.2_rat_swarm` → 巨鼠群(gurps)、`3.1_the_reflection` → 镜中倒影(gurps)。（GURPS 主模组原内联自制敌人现已收编进目录。）
+    - **新增 WoD 目录支撑**：`data/wod/catalog.json`（`wod-catalog-v1`，自有设定生物，非 White Wolf 官方资料）+ `services/catalog_service.py` 注册 `wod` + `tools/validate_catalogs.py` 增加 `wod` schema 校验 + `catalog_bridge` 新增 `_wod_enemy`（attack_skill/dodge = d10 骰池、dr = 伤害平减）。
+    - **新增 GURPS 目录支撑**：`data/gurps/catalog.json`（`gurps-catalog-v1`，收编 `mirror_house_alley` 自制敌人 巨鼠群/镜中倒影）+ `catalog_service` 注册 `gurps` + `validate_catalogs` 增加 `gurps` schema 校验 + `catalog_bridge` 新增 `_gurps_enemy`（原生 GURPS 数值：attack_skill=3d6 技能目标、dodge=闪避、dr=伤害抗力、damage 含 cut/imp/cr）。节点层的 `special_mechanic`/`minion_threshold` 机制元数据保留并仍由场景引擎套用。
+    - 新增 `tests/test_catalog_bridge.py`（46 项，零第三方依赖：D&D Goblin / CoC 深潜者·食尸鬼 / WoD 被放逐的长者 / GURPS 巨鼠群·镜中倒影 字段映射 + round-trip + 落空 + 系统限定）。
+  - 版权口径：D&D 条目取自 SRD 5.1（OGL + CC BY 4.0，5thsrd.org），带署名；CoC 神话为公有领域，数值按 7e 惯例综合（延续既有 trow-11676 署名）。全部通过 `tools/validate_catalogs.py` 与 `tests/test_catalog_service.py`（12/12）。
+
+### Fixed
+
+- **全部模组检定统一改为属性驱动（v3.8）**：角色卡是 GURPS 尺度的（属性 8~14、技能 9~16），而 CoC 要百分比、D&D 要 d20 加成、WoD 要 2~8 颗骰池——用具名技能跨系统换算会得出离谱数值（5e 里「调查=14」→ +14 加成；WoD 里「潜行=14」→ 14 颗骰 ≈ 99.8% 必成；CoC 里「话术=13」→ 13% 几乎必败）。现全部 12 个模组的单次检定一律写属性名（感知/意志/力量/敏捷/智力/体质），并按各系统重新配平 modifier：GURPS 目标 9~13、CoC 目标 30~75、D&D 加成 0~+2、WoD 骰池 4~8。`tests/test_modules.py` 增加门禁防止技能名回流。
+- **环境标签的三层分工 + 跨节点泄漏修复**：环境系统会把**所有活跃标签的修正值求和无差别加到每个检定上**（不解析标签文案里的属性名），导致全局氛围标签变成"所有检定一律扣分"，GURPS 属性检定被一刀切扣 3~10 点、目标值掉到 1~3。现：全局标签改为纯氛围（无数值）、局部条件用节点级 `environment.tags`（按节点生效）、情境难度用节点 `modifier`；并让 `EnvironmentSystem` 记住全局标签作为 baseline——进入没有局部环境的节点时回退到 baseline，不再把上一个节点的局部条件泄漏到后面。
+- **跨系统模组支持（v3.8 新能力）**：`core/scene_engine.py` 现按 **节点 `system` > 幕 `systems[0]` > 模组 `meta.systems[0]`** 解析生效的系统画像，进入该幕时自动切换检定规则与战斗引擎；`mirror_mvp.start_combat` 同步切换战斗引擎，使「一个模组跨多套规则」成立。配套：
+  - 幕数不再限于 3：引擎按 `act_N` 自动发现（`act_10` 排在 `act_9` 之后），`is_story_complete()` 判定全部幕完成，`get_progress_summary()` 报告当前幕与当前系统。
+  - `core/rules/dnd5e.py` 的 `skill_target` 补上「意志」→ `(Will-10)/2` 映射（此前跨系统模组里的意志检定会退化为 +0，等于白检定）。
+- **战斗节点丢弃 `san_loss`**：CoC 7e 最该掉理智的场合（直面怪物）反而不掉——`core/scene_engine._handle_combat_node` 现无条件应用战斗节点的 SAN 损失，并按 insanity 状态挂「临时疯狂/不定期疯狂」标签。
+- **CoC 双值写法 `0/1d6` 被解析成 0**：`_parse_dice_amount` 现按「取较重的一档」解析 `a/b` 形式（`0/1d6`→1d6、`1d6/1d20`→1d20）。这同时让既有 `coc_saltmarsh` 模组里一直失效的 SAN 损失恢复生效。
+- `modules/mirror_house_alley` 的 `2.1_the_body_and_mirror` 节点原用引擎不读取的 `skill_checks`（复数），导致该节点只做无属性的通用判定；现补上真正的 `skill_check: 感知`，并为该模组显式声明 `meta.systems: ["gurps"]`。
+
 ### Changed
 
 - **v3.6 内容目录工程化**（2026-09-02，多系统裁决中间件化收官）：

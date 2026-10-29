@@ -1,0 +1,649 @@
+{
+  "meta": {
+    "module_id": "gurps_paper_alley",
+    "system_name": "Mirror of the Lost",
+    "module_title": "纸人巷",
+    "version": "1.0",
+    "author": "TRPG Architect",
+    "compatible_core": "GURPS 4e",
+    "systems": [
+      "gurps"
+    ],
+    "playstyle": "市井怪谈 / 手艺行当 / 民俗禁忌",
+    "estimated_duration": "3-4 小时",
+    "player_count": "3-5 人",
+    "synopsis": "北平城南有条纸人巷，专卖丧葬纸活儿。这天早上街坊来报：办完白事的王家，纸人不见了，纸马也不见了——而死者，昨晚回了家。调查员要查清扎纸匠那行半分笔一分命的老规矩，究竟是护着亡者，还是养着别的东西；一路从纸人巷查到城隍庙、纸行库房，直到城西焚化场那坑压了百年的黄灰。多系统引擎 GURPS 4e 示例：3d6 检定、附庸阈值、部位伤害；战斗敌人直接引用 data/gurps/catalog.json 的自制条目。",
+    "base_xp": 4
+  },
+  "global_context_tags": [
+    {
+      "id": "paper_alley_stench",
+      "name": "浆糊与桐油味",
+      "effect": "这味道压不住，也散不掉"
+    },
+    {
+      "id": "mourning_season",
+      "name": "丧期",
+      "effect": "整条巷子都挂着白幡"
+    }
+  ],
+  "act_1": {
+    "scene_id": "act1_paper_alley",
+    "title": "纸人巷",
+    "description": "北平城南，一条三尺宽的窄巷。两侧门板上糊的白纸在风里鼓着，像一排没睡醒的肺。巷底飘着新浆糊和桐油混在一起的味道。",
+    "environment": {
+      "mood": "白幡还没撤。三家铺子关着门，只有一家还亮着灯，剪纸的影子在窗纸上一晃一晃。",
+      "tags": [
+        {
+          "id": "paper_alley_stench",
+          "name": "浆糊与桐油味",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "1.1_workshop",
+        "scene_type": "investigation",
+        "trigger": "推开『义兴纸马铺』的门。",
+        "prerequisite_nodes": [],
+        "next_nodes": [
+          "1.2_wailing"
+        ],
+        "layer_physics": {
+          "skill_check": "智力",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "作坊里横着一排未完工的纸人。骨架是高粱秸扎的，接节处缠着麻线，头脸是泥塑的。你注意到一个规矩：所有纸人，眼白画好了，黑眼珠空着。",
+            "crit_success": "工作台边压着一张手抄的『行规』：『纸人不点睛，纸马不扬鬃』，底下一行小字是『不点睛，夜里不睁眼』。",
+            "failure": "掌柜的挡在门口，脸上堆着笑，手却一直按着柜台下面的东西。"
+          }
+        }
+      },
+      {
+        "node_id": "1.2_wailing",
+        "scene_type": "perception",
+        "trigger": "巷子深处传来哭声——像小孩，又不完全像。",
+        "prerequisite_nodes": [
+          "1.1_workshop"
+        ],
+        "next_nodes": [
+          "1.3_chase"
+        ],
+        "environment": {
+          "mood": "哭声是从最里面那间没招牌的屋子传出来的。灯灭了一半。",
+          "tags": [
+            {
+              "id": "env_1.2_wailing",
+              "name": "半明半暗",
+              "effect": "感知 -2"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "哭声是纸竹的响动——像关节被反复弯折。屋檐下挂着一串童男童女的纸像，红的绿的，脸上的笑被刻意抹平了。",
+            "crit_success": "你数了数：七个人像，六男一女。缺的那一个，纸屑还粘在门槛上，是新撕的。",
+            "failure": "你站住了。哭声也停了。整条巷子安静得能听见自己耳朵里的血流声。"
+          }
+        }
+      },
+      {
+        "node_id": "1.3_chase",
+        "scene_type": "feat",
+        "trigger": "影子在巷尾一晃——追上去。",
+        "prerequisite_nodes": [
+          "1.2_wailing"
+        ],
+        "next_nodes": [
+          "2.1_the_master"
+        ],
+        "layer_physics": {
+          "skill_check": "敏捷",
+          "modifier": -2
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你翻过晾衣绳，抄近路堵在它前面。是个穿红袄的小小身影，纸做的。",
+            "failure": "你踩空了一级台阶。等你爬起来，那串纸响已经绕到巷子另一头去了。"
+          }
+        }
+      }
+    ]
+  },
+  "act_2": {
+    "scene_id": "act2_the_workshop",
+    "title": "吃阴间饭的手艺人",
+    "description": "巷底那间没招牌的屋子里，一个老人正在给纸人上最后一道工序。他手边有个小碟子，碟子里是黑豆。",
+    "environment": {
+      "mood": "屋里没有窗。满墙挂着纸马、纸轿、纸糊的戏台。老人背对着门，手很稳。",
+      "tags": [
+        {
+          "id": "paper_alley_stench",
+          "name": "浆糊与桐油味",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "2.1_the_master",
+        "scene_type": "investigation",
+        "trigger": "和老人搭话。",
+        "prerequisite_nodes": [
+          "1.3_chase"
+        ],
+        "next_nodes": [
+          "2.2_taboo"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": -4
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "老人不抬头，手上活儿不停：『你也是来问王家那事的？』他往碟子里加了一粒黑豆，『不是我不讲，是这行当里有一条：纸人不点睛，点了睛，它就该看人，也该跟人走了。』",
+            "crit_success": "你还问出了另一层：这条规矩不是防鬼，是防『走影』——纸人把活人的影子带走,替它去阴间当差。",
+            "failure": "『买纸活儿还是问丧事？』他答非所问。你再问,他就不再出声了。"
+          }
+        }
+      },
+      {
+        "node_id": "2.2_taboo",
+        "scene_type": "investigation",
+        "trigger": "趁着老人换线，去看墙角的行规手抄本。",
+        "prerequisite_nodes": [
+          "2.1_the_master"
+        ],
+        "next_nodes": [
+          "2.3_boy_effigy"
+        ],
+        "layer_physics": {
+          "checks": [
+            {
+              "id": "read_rules",
+              "type": "automatic",
+              "skill": "智力",
+              "dc": 11,
+              "on_success": {
+                "flag_set": [
+                  "knows_taboo"
+                ]
+              }
+            }
+          ]
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "本子上记着扎、糊、绘、剪四字诀，还有一条最要紧的：点睛要请高功法师，或者亲人亲自动手，在焚化之前最后一刻。",
+            "failure": "你刚翻开第一页，纸人堆里就有东西响了一下。你合上本子退回原处。"
+          }
+        }
+      },
+      {
+        "node_id": "2.3_boy_effigy",
+        "scene_type": "combat",
+        "trigger": "纸人堆里站起来一个。",
+        "prerequisite_nodes": [
+          "2.2_taboo"
+        ],
+        "next_nodes": [
+          "2.4_walking_shadow"
+        ],
+        "layer_physics": {
+          "enemy_type": "elite",
+          "catalog_ref": {
+            "name": "童男纸",
+            "system": "gurps"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你一巴掌拍在它后颈上,那对刚点上的黑眼珠被震散了一半。",
+            "failure": "它比你快得多。纸做的拳头打在身上,比你想的疼得多。"
+          }
+        }
+      },
+      {
+        "node_id": "2.4_walking_shadow",
+        "scene_type": "combat",
+        "trigger": "墙上的纸影脱离墙面，朝你压过来。",
+        "prerequisite_nodes": [
+          "2.3_boy_effigy"
+        ],
+        "next_nodes": [
+          "3.1_funeral"
+        ],
+        "layer_physics": {
+          "enemy_type": "wildcard",
+          "catalog_ref": {
+            "name": "走影",
+            "system": "gurps"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你举起灯。影子缩回墙里,又从另一个方向扑出来。",
+            "failure": "它穿过了你的身体。你低头,自己的影子已经不在脚下了。"
+          }
+        }
+      }
+    ]
+  },
+  "act_3": {
+    "scene_id": "act3_the_funeral",
+    "title": "出殡",
+    "description": "王家的送葬队伍天一亮就要出门。纸人得走在最前面——如果走影真的一直跟着，这支队伍会把它送到该去的地方。",
+    "environment": {
+      "mood": "唢呐吹得很急。纸马纸轿一列列抬出门,围观的街坊谁也不说话。",
+      "tags": [
+        {
+          "id": "mourning_season",
+          "name": "丧期",
+          "effect": "意志 -1"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "3.1_funeral",
+        "scene_type": "combat",
+        "trigger": "纸人队伍走到巷口,前面那一排忽然同时转过了头。",
+        "prerequisite_nodes": [
+          "2.4_walking_shadow"
+        ],
+        "next_nodes": [
+          "3.2_open_eye"
+        ],
+        "layer_physics": {
+          "enemy_type": "mook",
+          "catalog_ref": {
+            "name": "纸扎人",
+            "system": "gurps"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你踢翻了最前面那盏纸灯。火沿着纸边窜过去,纸人们在半路上烧成一串火把。",
+            "failure": "它们一齐扑上来,纸爪子划开你的袖子。它们的脸上没有表情——本来就不该有。"
+          }
+        }
+      },
+      {
+        "node_id": "3.2_open_eye",
+        "scene_type": "feat",
+        "trigger": "在焚化之前，你决定怎么处置最后一对纸眼珠。",
+        "prerequisite_nodes": [
+          "3.1_funeral"
+        ],
+        "next_nodes": [
+          "3.3_ashes"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你什么也没点。你把黑豆倒回碟子,让火自己烧完。火点到最后一刻,那对眼睛始终是白的。",
+            "crit_success": "你在火里看见一个影子站起来,朝你深深鞠了一躬,然后散了。",
+            "failure": "火舌卷过纸面的一瞬,你看见黑眼珠在纸上睁开了。"
+          }
+        }
+      },
+      {
+        "node_id": "3.3_ashes",
+        "scene_type": "explore",
+        "trigger": "灰烬凉了。收拾东西，走出巷子——但账还没算完。",
+        "prerequisite_nodes": [
+          "3.2_open_eye"
+        ],
+        "next_nodes": [
+          "4.1_temple"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "天光大亮。巷口的纸屑被扫成一堆，有人已经在旁边摆好了新的纸扎。你走出巷子时回头看了一眼——街坊们照旧在办白事，只是这一次，他们糊镜子用的纸，比往年厚。"
+          }
+        }
+      }
+    ]
+  },
+  "gm_cheatsheet": {
+    "quick_ref_table": [
+      {
+        "场景": "1.1_workshop",
+        "检定": "智力",
+        "失败": "掌柜挡门"
+      },
+      {
+        "场景": "1.2_wailing",
+        "检定": "感知 -2（环境）",
+        "失败": "哭声与巷子一起静下来"
+      },
+      {
+        "场景": "1.3_chase",
+        "检定": "敏捷 -2",
+        "失败": "被绕开"
+      },
+      {
+        "场景": "2.1_the_master",
+        "检定": "意志 -4",
+        "失败": "老人不再开口"
+      },
+      {
+        "场景": "2.2_taboo",
+        "检定": "3d6 ≤ 11（智力）",
+        "失败": "纸堆里有东西响"
+      },
+      {
+        "场景": "2.3_boy_effigy",
+        "检定": "战斗（童男纸）",
+        "失败": "纸拳打实了"
+      },
+      {
+        "场景": "2.4_walking_shadow",
+        "检定": "战斗（走影）",
+        "失败": "影子被带走"
+      },
+      {
+        "场景": "3.1_funeral",
+        "检定": "战斗（纸扎人群）",
+        "失败": "被围"
+      },
+      {
+        "场景": "3.2_open_eye",
+        "检定": "意志",
+        "失败": "火里睁开了眼"
+      },
+      {
+        "场景": "4.1_temple",
+        "检定": "感知 -3（环境）",
+        "失败": "守庙老人不接话"
+      },
+      {
+        "场景": "4.2_paperhouse",
+        "检定": "3d6 ≤ 11（智力，置 flag knows_ledger）",
+        "失败": "后院有人"
+      },
+      {
+        "场景": "4.3_storehouse",
+        "检定": "战斗（童男纸）",
+        "失败": "纸拳打实了"
+      },
+      {
+        "场景": "4.4_ledger",
+        "检定": "意志 -3",
+        "失败": "一个字也留不住"
+      },
+      {
+        "场景": "5.1_pyre",
+        "检定": "感知 -2（环境）",
+        "失败": "灰太厚"
+      },
+      {
+        "场景": "5.2_progenitor",
+        "检定": "战斗（祖纸 Boss）",
+        "失败": "每一步都想跪下去"
+      },
+      {
+        "场景": "5.3_ashes",
+        "检定": "意志（三选一）",
+        "失败": "笔尖上的墨还没干"
+      }
+    ],
+    "notes": [
+      "GURPS 检定：skill_check 一律写属性名（感知/意志/力量/敏捷/智力/体质），不使用具名技能——这样任何角色卡都能直接用，难度不再取决于角色卡恰好有哪个技能。modifier 为情境修正（负数＝更难）；目标＝属性值＋修正，掷 3d6 不高于目标即成功。",
+      "2.2_taboo 与 4.2_paperhouse 用的是嵌套检定（3d6 直接对 DC，不含属性加成），DC 11 约五成；成功会置 flag knows_taboo——该 flag 仅供 GM 参考，未用作任何节点的准入条件，因此失败也不会卡死流程。",
+      "战斗敌人取自 data/gurps/catalog.json：纸扎人（附庸群）、童男纸、走影。",
+      "民俗依据（均见于公开文献）：『纸人不点睛，纸马不扬鬃』见《太平广记》『面无睛目，以防魅魇』，明《大明律》禁给纸人彩绘眼珠；『男骑马、女骑牛』见《清稗类钞》；扎糊绘剪四字诀与高粱秸骨架、泥塑头脸见各地纸扎工艺志。本模组文字为原创演绎。",
+      "主线五幕：纸人巷(1) → 作坊(2) → 出殡(3) → 城隍庙后的纸行(4) → 焚化场(5)；第 3 幕 3.3_ashes 不再是终点，案子由此转向城隍庙的报庙与纸行的户账。民俗依据：报庙/接三见各地丧葬旧俗（黄昏烧纸替亡者向城隍爷报到），烧还魂钱/黄昏钱见民俗志；蒙面遮鲜（办丧事时以纸糊住屋中镜面）见保定丧葬旧俗记载，镜子里能照见死人的影子正是本案由头。",
+      "角色卡：全部检定走属性，任何预置卡都能直接开局——差异体现在属性高低上（如 3d6 ≤ 智力13 约七成、3d6 ≤ 意志12-4＝8 约两成六）。想更吃检定就选高智力/高意志的卡，想更吃打就选高敏捷/高力量的卡。"
+    ]
+  },
+  "act_4": {
+    "scene_id": "act4_temple_and_paperhouse",
+    "title": "城隍庙后的纸行",
+    "description": "白事办完了。可王家的亡者没有落户——孝子黄昏去城隍庙烧的那一刀纸，是替亡者报到的。报到的人没到，那这一刀就白烧了。",
+    "environment": {
+      "mood": "庙里的泥炉边堆着没烧尽的纸灰。香灰下面压着半张没写完的纸。",
+      "tags": [
+        {
+          "id": "temple_incense",
+          "name": "香灰味",
+          "effect": "感知 -2"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "4.1_temple",
+        "scene_type": "perception",
+        "trigger": "去城隍庙（街口五道庙），找那套报庙的规矩。",
+        "prerequisite_nodes": [
+          "3.3_ashes"
+        ],
+        "next_nodes": [
+          "4.2_paperhouse"
+        ],
+        "environment": {
+          "mood": "守庙的老人正往炉里添纸。火光把他半张脸照得很黄。",
+          "tags": [
+            {
+              "id": "env_4.1_temple",
+              "name": "庙内昏暗",
+              "effect": "感知 -3"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "老人说：黄昏以后是鬼蜮的世界，烧纸不只是给亡者送钱，是替亡者报到——让城隍爷知道，又有一位子民要落户。可这七天里，有一个户，连着报了七回，人却一直没到。",
+            "crit_success": "你数了数炉边的纸灰：每一份上面都压着同样的一撮灰——不是香灰，是纸灰。有人把同一个户的报庙纸，原样又烧了七遍。",
+            "failure": "老人只顾往炉里添纸，一句也不接。他念的是快些归位，念了整整一遍。"
+          }
+        }
+      },
+      {
+        "node_id": "4.2_paperhouse",
+        "scene_type": "investigation",
+        "trigger": "顺着香火找到城隍庙后头那家纸行。",
+        "prerequisite_nodes": [
+          "4.1_temple"
+        ],
+        "next_nodes": [
+          "4.3_storehouse"
+        ],
+        "layer_physics": {
+          "checks": [
+            {
+              "id": "find_ledger",
+              "type": "automatic",
+              "skill": "智力",
+              "dc": 11,
+              "on_success": {
+                "flag_set": [
+                  "knows_ledger"
+                ]
+              }
+            }
+          ]
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "纸行后院堆着成山的白纸，最深处有一本账。不是钱账——是户的账。每一个户后面画着一个人形，有的打了勾，有的空着。空着的那一栏，都在王家这一支名下。",
+            "failure": "后院有人。你退回巷口，只听见算盘声，和一句：这一批的点数，等城南的。"
+          }
+        }
+      },
+      {
+        "node_id": "4.3_storehouse",
+        "scene_type": "combat",
+        "trigger": "库房的门被从里面顶开，里面站着的不是人。",
+        "prerequisite_nodes": [
+          "4.2_paperhouse"
+        ],
+        "next_nodes": [
+          "4.4_ledger"
+        ],
+        "layer_physics": {
+          "enemy_type": "elite",
+          "catalog_ref": {
+            "name": "童男纸",
+            "system": "gurps"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你一巴掌拍在它后颈上，那对刚点上的黑眼珠被震散了一半。",
+            "failure": "它比你快得多。纸做的拳头打在身上，比你想的疼得多。"
+          }
+        }
+      },
+      {
+        "node_id": "4.4_ledger",
+        "scene_type": "feat",
+        "trigger": "翻开那本户的账，看到最后一页。",
+        "prerequisite_nodes": [
+          "4.3_storehouse"
+        ],
+        "next_nodes": [
+          "5.1_pyre"
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": -3
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "最后一页只有一个户，画着一个没有五官的纸人，名字那一栏写着祖。它旁边写着一行小字：首张，民国某年，焚于城西。",
+            "failure": "你翻到最后一页，又翻回第一页。纸上的字一个也不肯留在你眼里。"
+          }
+        }
+      }
+    ]
+  },
+  "act_5": {
+    "scene_id": "act5_the_pyre",
+    "title": "焚化场",
+    "description": "城西的焚化场还在用。民国那年烧掉第一张纸的地方，如今每天清早都有人来烧纸——烧的是别人的魂。",
+    "environment": {
+      "mood": "坑里还有余温。风把纸灰卷成一层薄薄的、贴着地走的白。",
+      "tags": [
+        {
+          "id": "ash_wind",
+          "name": "纸灰风",
+          "effect": "感知 -3"
+        }
+      ]
+    },
+    "nodes": [
+      {
+        "node_id": "5.1_pyre",
+        "scene_type": "perception",
+        "trigger": "在焚化场的坑边蹲下来。",
+        "prerequisite_nodes": [
+          "4.4_ledger"
+        ],
+        "next_nodes": [
+          "5.2_progenitor"
+        ],
+        "environment": {
+          "mood": "坑底压着一层更老的灰，那层灰是黄的。",
+          "tags": [
+            {
+              "id": "env_5.1_pyre",
+              "name": "纸灰风",
+              "effect": "感知 -2"
+            }
+          ]
+        },
+        "layer_physics": {
+          "skill_check": "感知",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "坑底压着一层更老的灰——黄的，压了不知多少年。旁边插着半张烧剩的纸，纸上有一只被点过的眼睛。",
+            "crit_success": "你发现坑是被人特意挖深的。挖出来的土堆在一边，土里混着碎骨——不是人的。",
+            "failure": "灰太厚，什么也看不出来。你只闻到那股熟悉的味道：浆糊、桐油，还有一点点香。"
+          }
+        }
+      },
+      {
+        "node_id": "5.2_progenitor",
+        "scene_type": "combat",
+        "trigger": "坑里的灰立了起来。",
+        "prerequisite_nodes": [
+          "5.1_pyre"
+        ],
+        "next_nodes": [
+          "5.3_ashes"
+        ],
+        "layer_physics": {
+          "enemy_type": "boss",
+          "catalog_ref": {
+            "name": "祖纸",
+            "system": "gurps"
+          }
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "它是由无数张纸叠成的，每一张都还在动。你撕掉最外面一层，里面又是一层。",
+            "crit_success": "你认出最外面那张脸——那是你自己的。它在对你点睛。",
+            "failure": "它不是扑过来的，是走过来的。纸脚落地没有声音，可你每一步都想跪下去。"
+          }
+        }
+      },
+      {
+        "node_id": "5.3_ashes",
+        "scene_type": "feat",
+        "trigger": "坑边还剩最后一样东西：一支笔，一小碟墨，和那张没点睛的祖纸。",
+        "prerequisite_nodes": [
+          "5.2_progenitor"
+        ],
+        "next_nodes": [],
+        "resolution_paths": [
+          {
+            "path": "点睛",
+            "method": "亲手为它点上那双眼睛（需意志检定）",
+            "success": "你落下笔。它站起来，对你鞠了一躬——然后转身走进风里，不再回头。从此它替你去阴间当差，替的是它自己。"
+          },
+          {
+            "path": "不点",
+            "method": "把笔折断，让它永远停在白眼的纸身",
+            "success": "纸塌了，灰散在坑里。天亮以后，城里再没人做噩梦——也没人再记得自己丢过什么。"
+          },
+          {
+            "path": "断户",
+            "method": "回城隍庙，把那本户的账当众烧掉（需敏捷检定）",
+            "success": "账页在香火里卷成灰。这一支的户没了。往后纸人还是纸人，白事还是白事。"
+          }
+        ],
+        "layer_physics": {
+          "skill_check": "意志",
+          "modifier": 0
+        },
+        "layer_narrative": {
+          "anchor_phrases": {
+            "success": "你走出城西的时候，天刚亮。纸人巷那边有人在扫昨夜的纸屑——扫帚一下一下，很慢，像谁也不急。"
+          }
+        }
+      }
+    ]
+  }
+}

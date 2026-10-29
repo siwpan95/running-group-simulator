@@ -1,0 +1,25 @@
+{
+  "character_id": "mirror_investigator",
+  "name": "林砚（镜中调查员）",
+  "version": 1,
+  "attributes": { "ST": 11, "DX": 12, "IQ": 13, "HT": 12 },
+  "secondary": { "HP": 10, "FP": 4, "Will": 12, "Per": 13 },
+  "sanity": { "san": 70, "san_max": 99, "insanity_state": "" },
+  "skills": [],
+  "advantages": ["冷静", "记性好"],
+  "disadvantages": ["失眠"],
+  "features": [
+    { "name": "看镜子的习惯", "trigger_condition": "面对任何镜面、反光面或水面时", "cost": 0, "effect": "察觉镜中世界与现实的差别（相当于一次额外的感知检定）", "per_scene_limit": 2 },
+    { "name": "旧识", "trigger_condition": "需要查询地方志、族谱、碑刻时", "cost": 0, "effect": "自动获得一条背景线索，无需检定", "per_scene_limit": 1 }
+  ],
+  "anchors": ["祖父留下的怀表", "一张撕成两半的旧照片"],
+  "equipment": [
+    { "name": "手电筒", "type": "tool", "slot": "hand", "dr": 0, "effects": [], "uses": -1, "description": "老式金属手电" },
+    { "name": "裁纸刀", "type": "weapon", "slot": "hand", "damage": "1d4 cut", "dr": 0, "effects": [], "uses": -1, "description": "裁纸、拆信、应急" },
+    { "name": "小圆镜", "type": "tool", "slot": "backpack", "dr": 0, "effects": [], "uses": -1, "description": "随身带的旧怀表镜面——有时候用来试探自己" }
+  ],
+  "focus_max": 3,
+  "luck_max": 3,
+  "xp_log": [],
+  "total_xp": 0
+}

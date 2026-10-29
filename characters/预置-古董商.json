@@ -1,0 +1,32 @@
+{
+  "character_id": "antiquarian_he",
+  "name": "何远 · 古董商",
+  "version": 1,
+  "attributes": { "ST": 10, "DX": 11, "IQ": 13, "HT": 10 },
+  "secondary": { "HP": 10, "FP": 10, "Will": 12, "Per": 13 },
+  "skills": [
+    { "name": "鉴赏", "level": 15, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 6 },
+    { "name": "神秘学", "level": 13, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 2 },
+    { "name": "历史", "level": 14, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 4 },
+    { "name": "话术", "level": 14, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 4 },
+    { "name": "估价", "level": 13, "difficulty": "Hard", "base_attribute": "IQ", "points_spent": 2 },
+    { "name": "写作", "level": 12, "difficulty": "Avg", "base_attribute": "IQ", "points_spent": 1 },
+    { "name": "近战", "level": 10, "difficulty": "Avg", "base_attribute": "DX", "points_spent": 1 }
+  ],
+  "advantages": ["人脉广", "古物直觉"],
+  "disadvantages": ["贪财", "好奇过盛"],
+  "features": [
+    { "name": "鉴伪之眼", "trigger_condition": "检视古物/铭文/符号时", "cost": 1, "effect": "请求 GM 给出该物年代/来源/异常的一条线索", "per_scene_limit": 2 },
+    { "name": "旧识门路", "trigger_condition": "需要打探某类旧物/传说时", "cost": 1, "effect": "获得一条可靠的打听渠道或联系人", "per_scene_limit": 1 },
+    { "name": "以物易物", "trigger_condition": "与 NPC 交涉获取情报/通行时", "cost": 1, "effect": "话术检定 +2", "per_scene_limit": 1 }
+  ],
+  "anchors": ["祖传放大镜", "私藏的禁忌手稿（未敢翻阅）"],
+  "equipment": [
+    { "name": "祖传放大镜", "type": "tool", "slot": "hand", "dr": 0, "effects": [{"tool_bonus": 2, "skill": "鉴赏"}], "uses": -1, "description": "黄铜包边，镜片微裂但依旧清晰" },
+    { "name": "笔记本", "type": "key_item", "slot": "backpack", "dr": 0, "effects": [], "uses": -1, "description": "密密麻麻的藏品笔记与符号速记" }
+  ],
+  "focus_max": 3,
+  "luck_max": 2,
+  "xp_log": [],
+  "total_xp": 0
+}
